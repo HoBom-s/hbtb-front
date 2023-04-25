@@ -33,8 +33,32 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
+      "no-unused-vars": [
+        "error",
+        {
+          "args": "none"
+        }
+      ],
       "no-var": [
         "error"
+      ],
+      "vue/html-indent": [
+        "error",
+        2,
+        {
+          "attribute": 1,
+          "baseIndent": 1,
+          "closeBracket": 0,
+          "alignAttributesVertically": true,
+          "ignores": []
+        }
+      ],
+      "vue/attribute-hyphenation": [
+        "error",
+        "never",
+        {
+          "ignore": []
+        }
       ]
     }
   },
