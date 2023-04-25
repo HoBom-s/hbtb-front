@@ -12,7 +12,7 @@
 
 3. Extensions
 
-   - Vuetur 설치
+   - Vetur 설치
    - Eslint 설치
 
 4. Project Settings
