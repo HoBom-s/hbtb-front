@@ -91,8 +91,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import HelloWorld from "./components/HelloWorld.vue";
+import { getAllTagRequestService } from "./apis/tagFetcher";
+import { getAllCategoryRequestService } from "./apis/categoryFetcher";
 
 const leftDrawerOpen = ref(false);
+
+onMounted(async () => {
+  const tags = await getAllTagRequestService();
+  console.log(tags);
+  const categories = await getAllCategoryRequestService();
+  console.log(categories);
+});
 </script>
