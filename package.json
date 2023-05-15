@@ -7,8 +7,13 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "author": [
+    "Robin",
+    "Ethan"
+  ],
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "quasar": "^2.0.0",
     "vue": "^3.2.13"
