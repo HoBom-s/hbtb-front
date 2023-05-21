@@ -4,6 +4,7 @@
 
 <script setup>
 import { onMounted } from "vue";
+import { TagSchemaObject } from "./types";
 import { getAllTagRequestService } from "./apis/tagFetcher";
 import { getAllCategoryRequestService } from "./apis/categoryFetcher";
 
@@ -12,5 +13,6 @@ onMounted(async () => {
   console.log(tags);
   const categories = await getAllCategoryRequestService();
   console.log(categories);
+  console.log(TagSchemaObject);
 });
 </script>
