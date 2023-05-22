@@ -15,17 +15,28 @@ const agent = {};
  *
  * TypeAgent Object 에서 필요한 행위들을 해당 class에 추가하도록 한다.
  */
-class TypeAgent {
+class TypeAgent extends BaseSymbol {
   constructor(namespace) {
-    this.namespace = namespace;
+    super(namespace);
 
     BaseSymbol.freezeSuperClass(this, TypeAgent);
+  }
+
+  /**
+   * Schema의 모든 Property에 대한 Validation 검증 수행
+   *
+   * @param {string} namespace
+   * @returns {boolean}
+   */
+  ofCondition(namespace) {
+    const validateResult = agent[namespace].ofCondition();
+    return validateResult;
   }
 }
 
 {
   // Agent에 대한 TypeAgent Class를 주입
-  BaseSymbol.addSymbol(agent, namespace.types, new TypeAgent(namespace.types));
+  BaseSymbol.addSymbol(agent, new TypeAgent(namespace.types));
 }
 
 {
@@ -35,6 +46,15 @@ class TypeAgent {
   // Agent에 CategorySchema를 주입
   BaseSymbol.addSymbol(agent, new CategorySchema(namespace.categorySchema));
 }
+
+/**
+ * Type Agent를 활용하여 원하는 Schema Instance를 즉시 얻을 수 있도록 한다.
+ *
+ * @param {TypeAgent} obj
+ * @param {string} namespace
+ * @returns {Object}
+ */
+agent.instanceOfName = BaseSymbol.instanceOfName(agent, namespace);
 
 Object.freeze(agent);
 export default agent;
