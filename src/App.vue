@@ -13,6 +13,6 @@ onMounted(async () => {
   // console.log(tags);
   // const categories = await getAllCategoryRequestService();
   // console.log(categories);
-  console.log(agent.TagSchema);
+  console.log(agent);
 });
 </script>
