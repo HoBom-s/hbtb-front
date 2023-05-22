@@ -33,7 +33,7 @@ class BaseSymbol {
 BaseSymbol.addSymbol = function (namespace, target1, target2) {
   const { name, targetObject } = (() => {
     if (target1 instanceof BaseSymbol) {
-      // target1 이 Class 인 경우 ( 이런 경우가 있을진 모르겠지만.. )
+      // target1 이 Class 인 경우
       // 모든 Type Class 는 BaseSymbol 의 name property 를 가지고 있으므로..
       return {
         name: target1.name,
