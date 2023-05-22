@@ -30,10 +30,10 @@ class TagSchema extends BaseSymbol {
    * @param {string} createdAt
    * @returns {TagSchema}
    */
-  createInstance = function (_id, title, path, count, createdAt) {
+  createInstance(_id, title, path, count, createdAt) {
     const resultOfObject = new _TagSchema(_id, title, path, count, createdAt);
     return resultOfObject;
-  };
+  }
 }
 
 /**
