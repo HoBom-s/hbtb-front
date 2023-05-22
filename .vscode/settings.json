@@ -5,15 +5,5 @@
     {
       "mode": "auto"
     }
-  ],
-  "vetur.format.options.tabSize": 2,
-  "vetur.format.defaultFormatterOptions": {
-    "prettyhtml": {
-      "printWidth": 80
-    },
-    "prettier": {
-      "semi": true,
-      "printWidth": 80
-    }
-  }
+  ]
 }
