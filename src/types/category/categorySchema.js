@@ -48,10 +48,12 @@ class CategorySchema extends BaseSymbol {
   /**
    * 모든 Property에 대한 Validation 검증 수행
    *
+   * @param {CategorySchema} target
    * @returns {boolean}
    */
-  ofCondition() {
-    const isValidate = [this.ofPathCondition(this.path)].every((v) => v.status);
+  ofCondition(target) {
+    const { path } = target;
+    const isValidate = [this.ofPathCondition(path)].every((v) => v.status);
     return isValidate;
   }
 
