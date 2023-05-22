@@ -1,5 +1,6 @@
 import BaseSymbol from "./base/baseSymbol";
 import TagSchema from "./tag/tagSchema";
+import CategorySchema from "./category/categorySchema";
 
 import namespace from "../static/name";
 
@@ -12,6 +13,9 @@ const agent = {};
 {
   // agent에 TagSchema를 주입
   BaseSymbol.addSymbol(agent, new TagSchema(namespace.tagSchema));
+
+  // agent에 CategorySchema를 주입
+  BaseSymbol.addSymbol(agent, new CategorySchema(namespace.categorySchema));
 }
 
 Object.freeze(agent);
