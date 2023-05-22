@@ -34,6 +34,45 @@ class TagSchema extends BaseSymbol {
     const resultOfObject = new _TagSchema(_id, title, path, count, createdAt);
     return resultOfObject;
   }
+
+  /**
+   * 모든 Property에 대한 Validation 검증 수행
+   *
+   * @returns {boolean}
+   */
+  ofCondition() {
+    const isValidate = [this.ofPathCondition(this.path)].every((v) => v.status);
+    return isValidate;
+  }
+
+  /**
+   * Tag Property의 Path 검증
+   *
+   * @param {string} path
+   * @returns {Object}
+   */
+  ofPathCondition(path) {
+    const errorObj = {
+      msg: "",
+      status: true,
+    };
+
+    // Path의 첫 문자 검증
+    if (path.charAt(0) === "/") {
+      errorObj.msg = "Tag path's first character must be '/'";
+      errorObj.status = false;
+      return errorObj;
+    }
+
+    // Path의 문자열 길이 검증
+    if (path.length > 1) {
+      errorObj.msg = "Tag path's length must be greater than 1";
+      errorObj.status = false;
+      return errorObj;
+    }
+
+    return errorObj;
+  }
 }
 
 /**
