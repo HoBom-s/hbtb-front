@@ -1,3 +1,3 @@
-import TagSchemaObject from "./tag/tagSchema";
+import agent from "./agent";
 
-export { TagSchemaObject };
+export { agent };

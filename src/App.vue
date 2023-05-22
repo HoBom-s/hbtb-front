@@ -4,15 +4,15 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { TagSchemaObject } from "./types";
-import { getAllTagRequestService } from "./apis/tagFetcher";
-import { getAllCategoryRequestService } from "./apis/categoryFetcher";
+// import { getAllTagRequestService } from "./apis/tagFetcher";
+// import { getAllCategoryRequestService } from "./apis/categoryFetcher";
+import { agent } from "./types";
 
 onMounted(async () => {
-  const tags = await getAllTagRequestService();
-  console.log(tags);
-  const categories = await getAllCategoryRequestService();
-  console.log(categories);
-  console.log(TagSchemaObject);
+  // const tags = await getAllTagRequestService();
+  // console.log(tags);
+  // const categories = await getAllCategoryRequestService();
+  // console.log(categories);
+  console.log(agent.TagSchema);
 });
 </script>
