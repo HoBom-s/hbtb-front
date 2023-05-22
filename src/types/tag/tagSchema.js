@@ -14,6 +14,8 @@ import namespace from "../../static/name";
 class TagSchema extends BaseSymbol {
   constructor(name) {
     super(name);
+
+    BaseSymbol.freezeSuperClass(this, TagSchema);
   }
 
   /**
