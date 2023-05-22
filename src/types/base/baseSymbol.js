@@ -71,7 +71,7 @@ BaseSymbol.freezeSuperClass = function (target, claz) {
  *
  * @param {Object} obj
  * @param {string} namespace
- * @returns
+ * @returns {null | Object}
  */
 BaseSymbol.instanceOfName = function (obj) {
   return function (namespace) {
