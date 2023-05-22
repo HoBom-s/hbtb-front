@@ -19,6 +19,8 @@ class TagSchema extends BaseSymbol {
   /**
    * TagSchema instance를 생성한 후 반환하는 함수 정의
    *
+   * PUBLIC PROPERTY
+   *
    * @param {string} _id
    * @param {string} title
    * @param {string} path
