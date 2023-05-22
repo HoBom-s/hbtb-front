@@ -70,14 +70,14 @@ class CategorySchema extends BaseSymbol {
     };
 
     // Path의 첫 시작 문자 검증.
-    if (path.charAt(0) === "/") {
+    if (path.charAt(0) !== "/") {
       errorObj.msg = "Category path's first character must be '/'";
       errorObj.status = false;
       return errorObj;
     }
 
     // Path의 문자열 길이 검증
-    if (path.length > 1) {
+    if (path.length < 1) {
       errorObj.msg = "Category path's length must be greater than 1";
       errorObj.status = false;
       return errorObj;
