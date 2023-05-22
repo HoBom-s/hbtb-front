@@ -66,5 +66,31 @@ BaseSymbol.freezeSuperClass = function (target, claz) {
   }
 };
 
+/**
+ * Namespace를 활용하여 원하는 Schema Class Instance를 얻도록 하는 함수 정의
+ *
+ * @param {Object} obj
+ * @param {string} namespace
+ * @returns
+ */
+BaseSymbol.instanceOfName = function (obj) {
+  return function (namespace) {
+    // 이름 공간이 string이 아닐 경우는 [개발자의 실수] 로 판단
+    errorUtil.invalidParameter(
+      typeof namespace === "string",
+      "Namespace must be string"
+    );
+    if (!obj[namespace]) {
+      return null;
+    }
+    // 모든 Class는 BaseSymbol을 상속 받아야만 하므로...
+    errorUtil.assert(
+      obj[namespace] instanceof BaseSymbol,
+      "Target object must be BaseSymbol Class"
+    );
+    return obj[namespace];
+  };
+};
+
 Object.freeze(BaseSymbol);
 export default BaseSymbol;
