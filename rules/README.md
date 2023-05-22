@@ -13,3 +13,5 @@
    - 5. Types 관련 Class 및 Object
 
    - 6. Util 함수
+
+   - 7. Static Data
