@@ -9,7 +9,7 @@ import namespace from "../../static/name";
  *
  * 모든 Class는 BaseSymbol을 상속받아야만 한다.
  *
- * 해당 Class에서 TagSchema에 필요한 Class를 정의하도록 한다.
+ * 해당 Class에서 TagSchema에 필요한 Class를 정의 하도록 한다.
  */
 class TagSchema extends BaseSymbol {
   constructor(name) {
