@@ -11,7 +11,10 @@ import errorUtil from "../../utils/errorUtil";
  */
 class BaseSymbol {
   constructor(name) {
-    errorUtil.invalidParameter(typeof name === "string");
+    errorUtil.invalidParameter(
+      typeof name === "string",
+      "BaseSymbol's name must be string"
+    );
 
     // PUBLIC Property
     this.name = name;
