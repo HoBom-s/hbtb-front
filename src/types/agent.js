@@ -51,7 +51,6 @@ class TypeAgent extends BaseSymbol {
  * Type Agent를 활용하여 원하는 Schema Instance를 즉시 얻을 수 있도록 한다.
  *
  * @param {TypeAgent} obj
- * @param {string} namespace
  * @returns {Object}
  */
 agent.instanceOfName = BaseSymbol.instanceOfName(agent);
