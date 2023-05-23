@@ -54,7 +54,7 @@ class TypeAgent extends BaseSymbol {
  * @param {string} namespace
  * @returns {Object}
  */
-agent.instanceOfName = BaseSymbol.instanceOfName(agent, namespace);
+agent.instanceOfName = BaseSymbol.instanceOfName(agent);
 
 Object.freeze(agent);
 export default agent;
