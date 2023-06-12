@@ -1,26 +1,31 @@
 <template>
   <div>
-    <q-chip color="blue-grey-3" @click="onTagItemClickEvent(props.tag)">
-      {{ props.tag.title }}
-    </q-chip>
+    <TagItem
+      v-for="tag of tags"
+      :key="tag._id"
+      :tag="tag"
+      @onTagItemClickEvent="onTagItemClickEvent"
+    />
   </div>
 </template>
 <script setup>
 import { defineProps, defineEmits } from "vue";
 
+import TagItem from "./TagItem.vue";
+
 const props = defineProps({
-  tag: {
-    type: Object,
+  tags: {
+    type: Array,
     required: true,
   },
 });
 
+// Methods
 const emits = defineEmits({
   // No validation
   onTagItemClickEvent: () => true,
 });
 
-// Methods
 function onTagItemClickEvent(clickedTag) {
   emits("onTagItemClickEvent", clickedTag);
 }
