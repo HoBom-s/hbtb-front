@@ -1,7 +1,7 @@
 <template>
   <div>
     <TagItem
-      v-for="tag of tags"
+      v-for="tag of props."
       :key="tag._id"
       :tag="tag"
       @onTagItemClickEvent="onTagItemClickEvent"
