@@ -20,12 +20,12 @@ const props = defineProps({
   },
 });
 
-// Methods
 const emits = defineEmits({
   // No validation
   onTagItemClickEvent: () => true,
 });
 
+// Methods
 function onTagItemClickEvent(clickedTag) {
   emits("onTagItemClickEvent", clickedTag);
 }
