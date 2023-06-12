@@ -1,12 +1,14 @@
 <template>
   <div>
-    <q-chip color="blue-grey-3" @click="onTagItemClickEvent(props.tag)">
+    <q-chip :style="tagStyle" @click="onTagItemClickEvent(props.tag)">
       {{ props.tag.title }}
     </q-chip>
   </div>
 </template>
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, computed } from "vue";
+
+import palette from "../../utils/palette";
 
 const props = defineProps({
   tag: {
@@ -18,6 +20,14 @@ const props = defineProps({
 const emits = defineEmits({
   // No validation
   onTagItemClickEvent: () => true,
+});
+
+// Computed
+const tagStyle = computed(() => {
+  return {
+    background: `${palette.colors.chipGray} !important`,
+    cursor: "pointer",
+  };
 });
 
 // Methods
