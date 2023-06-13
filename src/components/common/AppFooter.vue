@@ -1,7 +1,7 @@
 <template>
   <div :style="footerStyle">
     <div :style="footerFontStyle">© HOBOM TECH BLOG.</div>
-    <div>관련사이트</div>
+    <div :style="footerFontStyle">관련사이트</div>
   </div>
 </template>
 
