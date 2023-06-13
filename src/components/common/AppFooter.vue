@@ -24,9 +24,9 @@ const footerStyle = computed(() => {
 
 const footerFontStyle = computed(() => {
   return {
-    color: "#ffffff7a",
+    color: palette.colors.fontGray,
     fontSize: palette.fontSize.l,
-    fontWeight: 800,
+    fontWeight: palette.fontWeight.bigBold,
   };
 });
 </script>
