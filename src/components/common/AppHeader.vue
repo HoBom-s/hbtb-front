@@ -6,7 +6,9 @@
       <CategoryItemList
         :categories="props.categories"
         :selectedCategory="props.selectedCategory"
+        :isSearchItemClick="state.isSearchItemClick"
         @onCategoryItemClickEvent="onCategoryItemClickEvent"
+        @onSearchItemClickEvent="onSearchItemClickEvent"
       />
     </q-toolbar>
     <div :style="mainContentStyle">
@@ -29,9 +31,12 @@ import { reactive, defineProps, defineEmits, onMounted, computed } from "vue";
 import CategoryItemList from "../categories/CategoryItemList.vue";
 
 import palette from "@/utils/palette";
+import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   headerScrollPosition: null,
+
+  isSearchItemClick: false,
 });
 
 const props = defineProps({
@@ -48,6 +53,7 @@ const props = defineProps({
 
 const emits = defineEmits({
   onCategoryItemClickEvent: () => true,
+  onSearchItemClickEvent: () => true,
 });
 
 onMounted(() => {
@@ -134,5 +140,11 @@ const mainFontSecondStyle = computed(() => {
 // Methods
 function onCategoryItemClickEvent(clickedCategory) {
   emits("onCategoryItemClickEvent", clickedCategory);
+}
+
+function onSearchItemClickEvent(isSearchItemClick) {
+  state.isSearchItemClick = !isSearchItemClick;
+  // TODO Search Item Button Click Event 구현
+  errorUtil.notImplemented("The onSearchItemClickEvent is not implemented");
 }
 </script>

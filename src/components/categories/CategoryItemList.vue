@@ -7,13 +7,17 @@
       :selectedCategory="props.selectedCategory"
       @onCategoryItemClickEvent="onCategoryItemClickEvent"
     />
-    <q-btn flat round dense color="white" icon="search" class="q-mr-xs" />
+    <CategorySearchItem
+      :isSearchItemClick="props.isSearchItemClick"
+      @onSearchItemClickEvent="onSearchItemClickEvent"
+    />
   </div>
 </template>
 <script setup>
 import { defineProps, defineEmits, computed } from "vue";
 
 import CategoryItem from "./CategoryItem.vue";
+import CategorySearchItem from "./CategorySearchItem.vue";
 
 const props = defineProps({
   categories: {
@@ -25,10 +29,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  isSearchItemClick: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const emits = defineEmits({
   onCategoryItemClickEvent: () => true,
+  onSearchItemClickEvent: () => true,
 });
 
 const filteredCategoryList = computed(() => {
@@ -48,5 +58,9 @@ const categoriesStyle = computed(() => {
 // Methods
 function onCategoryItemClickEvent(clickedCategory) {
   emits("onCategoryItemClickEvent", clickedCategory);
+}
+
+function onSearchItemClickEvent(isSearchItemClick) {
+  emits("onSearchItemClickEvent", isSearchItemClick);
 }
 </script>
