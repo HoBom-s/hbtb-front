@@ -5,6 +5,7 @@
       <q-space />
       <CategoryItemList
         :categories="props.categories"
+        :selectedCategory="props.selectedCategory"
         @onCategoryItemClickEvent="onCategoryItemClickEvent"
       />
     </q-toolbar>
@@ -36,6 +37,11 @@ const state = reactive({
 const props = defineProps({
   categories: {
     type: Array,
+    required: true,
+  },
+
+  selectedCategory: {
+    type: Object,
     required: true,
   },
 });
