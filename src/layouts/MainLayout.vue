@@ -5,13 +5,13 @@
       :selectedCategory="state.selectedCategory"
       @onCategoryItemClickEvent="onCategoryItemClickEvent"
     />
-    <router-view />
+    <div :style="mainContainerStyle"><router-view /></div>
     <AppFooter />
   </q-layout>
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, computed } from "vue";
 
 import AppHeader from "../components/common/AppHeader.vue";
 import AppFooter from "../components/common/AppFooter.vue";
@@ -43,6 +43,14 @@ onMounted(async () => {
   } else {
     state.categories = [];
   }
+});
+
+const mainContainerStyle = computed(() => {
+  return {
+    width: "1200px",
+    height: "100%",
+    margin: "100px auto",
+  };
 });
 
 // Methods

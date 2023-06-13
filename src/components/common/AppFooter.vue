@@ -1,10 +1,8 @@
 <template>
-  <q-footer reveal>
-    <div :style="footerStyle">
-      <div :style="footerFontStyle">© HOBOM TECH BLOG.</div>
-      <div>관련사이트</div>
-    </div>
-  </q-footer>
+  <div :style="footerStyle">
+    <div :style="footerFontStyle">© HOBOM TECH BLOG.</div>
+    <div>관련사이트</div>
+  </div>
 </template>
 
 <script setup>

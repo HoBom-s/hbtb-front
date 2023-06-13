@@ -29,7 +29,9 @@ const categoryStyle = computed(() => {
     margin: "0 auto",
     fontSize: palette.fontSize.l,
     fontWeight: palette.fontWeight.bold,
+    color: palette.colors.mainWhite,
     borderBottom: `3px solid ${palette.colors.mainOrange}`,
+    cursor: "pointer",
   };
 });
 

@@ -1,5 +1,13 @@
 <template>
-  <TagItemList :tags="state.tags" />
+  <div>
+    <TagItemList :tags="state.tags" />
+    <TagItemList :tags="state.tags" />
+    <TagItemList :tags="state.tags" />
+    <TagItemList :tags="state.tags" />
+    <TagItemList :tags="state.tags" />
+    <TagItemList :tags="state.tags" />
+    <TagItemList :tags="state.tags" />
+  </div>
 </template>
 
 <script setup>
