@@ -89,7 +89,8 @@ const imgStyle = computed(() => {
     height: "420px",
     objectFit: "cover",
     position: "absolute",
-    filter: "brightness(50%)",
+    // 기본 100%
+    filter: "brightness(100%)",
   };
 });
 
