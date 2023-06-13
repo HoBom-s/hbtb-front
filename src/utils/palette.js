@@ -4,11 +4,13 @@ const palette = {
     mainOrange: "#FFA630",
     mainWhite: "#FAFAFF",
     chipGray: "#b0bec5",
+    fontGray: "#ffffff7a",
   },
   fontWeight: {
     thin: 200,
     regular: 400,
     bold: 700,
+    bigBold: 800,
   },
   fontSize: {
     xs: "12px",
