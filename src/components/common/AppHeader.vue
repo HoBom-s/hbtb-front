@@ -66,7 +66,7 @@ const toolbarStyle = computed(() => {
 
 const logoStyle = computed(() => {
   return {
-    fontSize: palette.fontSize.l,
+    fontSize: palette.fontSize.xl,
     fontWeight: palette.fontWeight.bold,
     color: palette.colors.mainWhite,
   };
