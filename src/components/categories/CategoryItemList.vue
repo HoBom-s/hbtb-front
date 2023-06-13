@@ -7,6 +7,7 @@
       :selectedCategory="props.selectedCategory"
       @onCategoryItemClickEvent="onCategoryItemClickEvent"
     />
+    <q-btn flat round dense color="white" icon="search" class="q-mr-xs" />
   </div>
 </template>
 <script setup>
