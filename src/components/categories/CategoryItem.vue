@@ -18,6 +18,11 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  selectedCategory: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emits = defineEmits({
@@ -30,7 +35,10 @@ const categoryStyle = computed(() => {
     fontSize: palette.fontSize.l,
     fontWeight: palette.fontWeight.bold,
     color: palette.colors.mainWhite,
-    borderBottom: `3px solid ${palette.colors.mainOrange}`,
+    borderBottom:
+      props.selectedCategory._id === props.category._id
+        ? `3px solid ${palette.colors.mainOrange}`
+        : "",
     cursor: "pointer",
   };
 });

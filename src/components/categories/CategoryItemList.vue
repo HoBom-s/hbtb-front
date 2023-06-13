@@ -4,6 +4,7 @@
       v-for="category of props.categories"
       :key="category._id"
       :category="category"
+      :selectedCategory="props.selectedCategory"
       @onCategoryItemClickEvent="onCategoryItemClickEvent"
     />
   </div>
@@ -16,6 +17,11 @@ import CategoryItem from "./CategoryItem.vue";
 const props = defineProps({
   categories: {
     type: Array,
+    required: true,
+  },
+
+  selectedCategory: {
+    type: Object,
     required: true,
   },
 });
