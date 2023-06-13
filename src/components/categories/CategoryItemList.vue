@@ -1,7 +1,7 @@
 <template>
   <div :style="categoriesStyle">
     <CategoryItem
-      v-for="category of props.categories"
+      v-for="category of filteredCategoryList"
       :key="category._id"
       :category="category"
       :selectedCategory="props.selectedCategory"
@@ -28,6 +28,11 @@ const props = defineProps({
 
 const emits = defineEmits({
   onCategoryItemClickEvent: () => true,
+});
+
+const filteredCategoryList = computed(() => {
+  const filtered = props.categories.filter((cat) => cat.spot === "H");
+  return filtered;
 });
 
 const categoriesStyle = computed(() => {
