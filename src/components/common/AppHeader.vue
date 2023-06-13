@@ -10,6 +10,14 @@
     </q-toolbar>
     <div :style="mainContentStyle">
       <img :style="imgStyle" src="../../assets/main-bg.jpg" />
+      <div :style="mainFontStyle">
+        <div>
+          <h1 :style="mainFontFirstStyle">Tech Blog</h1>
+          <p :style="mainFontSecondStyle">
+            HoBom 서비스의 기술과 노하우를 공유합니다.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -78,8 +86,41 @@ const mainContentStyle = computed(() => {
 const imgStyle = computed(() => {
   return {
     width: "100%",
-    height: "100%",
+    height: "420px",
     objectFit: "cover",
+    position: "absolute",
+    filter: "brightness(50%)",
+  };
+});
+
+const mainFontStyle = computed(() => {
+  return {
+    width: "1200px",
+    height: "420px",
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+});
+
+const mainFontFirstStyle = computed(() => {
+  return {
+    color: palette.colors.mainWhite,
+    height: "70px",
+    fontSize: "52px",
+    fontWeight: palette.fontWeight.bigBold,
+    marginBottom: "24px",
+  };
+});
+
+const mainFontSecondStyle = computed(() => {
+  return {
+    color: palette.colors.fontGray,
+    fontSize: palette.fontSize.l,
+    fontWeight: palette.fontWeight.bold,
+    letterSpacing: "-1px",
+    lineHeight: "28px",
   };
 });
 
