@@ -2,7 +2,10 @@
   <q-layout>
     <q-page-container>
       <q-page class="flex flex-center bg-grey-2">
-        <LoginFormBox @onInputValueChangeEvent="onInputValueChangeEvent" />
+        <LoginFormBox
+          @onInputValueChangeEvent="onInputValueChangeEvent"
+          @onLoginSubmitButtonClickEvent="onLoginSubmitButtonClickEvent"
+        />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -12,6 +15,8 @@
 import { reactive } from "vue";
 
 import LoginFormBox from "@/components/auth/LoginFormBox.vue";
+
+import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   inputValues: {
@@ -23,5 +28,9 @@ const state = reactive({
 // Methods
 function onInputValueChangeEvent(name, value) {
   state.inputValues[name] = value;
+}
+
+function onLoginSubmitButtonClickEvent() {
+  errorUtil.notImplemented("Login Button is not implemented");
 }
 </script>

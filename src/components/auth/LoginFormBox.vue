@@ -32,6 +32,7 @@
         label="SIGN IN"
         class="full-width"
         :style="signInButtonStyle"
+        @click="onLoginSubmitButtonClickEvent"
       />
     </q-card-section>
   </q-card>
@@ -46,6 +47,8 @@ import palette from "@/utils/palette";
 
 const emits = defineEmits({
   onInputValueChangeEvent: () => true,
+
+  onLoginSubmitButtonClickEvent: () => true,
 });
 
 const signInButtonStyle = computed(() => {
@@ -60,5 +63,9 @@ const signInButtonStyle = computed(() => {
 // Methods
 function onInputValueChangeEvent(name, value) {
   emits("onInputValueChangeEvent", name, value);
+}
+
+function onLoginSubmitButtonClickEvent() {
+  emits("onLoginSubmitButtonClickEvent");
 }
 </script>
