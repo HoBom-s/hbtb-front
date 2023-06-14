@@ -12,8 +12,9 @@
     <q-card-section>
       <AppInput
         :inputType="'text'"
-        :inputLabel="'Email Address'"
-        :inputName="'email'"
+        :inputLabel="'Nickname'"
+        :inputName="'nickname'"
+        :inputValue="props.inputValues.nickname"
         :isMarginTop="false"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
@@ -21,6 +22,7 @@
         :inputType="'password'"
         :inputLabel="'Password'"
         :inputName="'password'"
+        :inputValue="props.inputValues.password"
         :isMarginTop="true"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
@@ -39,11 +41,18 @@
 </template>
 
 <script setup>
-import { defineEmits, computed } from "vue";
+import { defineProps, defineEmits, computed } from "vue";
 
 import AppInput from "@/components/common/AppInput.vue";
 
 import palette from "@/utils/palette";
+
+const props = defineProps({
+  inputValues: {
+    type: Object,
+    required: true,
+  },
+});
 
 const emits = defineEmits({
   onInputValueChangeEvent: () => true,

@@ -3,6 +3,7 @@
     <q-page-container>
       <q-page class="flex flex-center bg-grey-2">
         <LoginFormBox
+          :inputValues="state.inputValues"
           @onInputValueChangeEvent="onInputValueChangeEvent"
           @onLoginSubmitButtonClickEvent="onLoginSubmitButtonClickEvent"
         />
@@ -20,7 +21,8 @@ import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   inputValues: {
-    email: "",
+    nickname: "",
+
     password: "",
   },
 });
