@@ -5,6 +5,7 @@
     :type="props.inputType"
     :label="props.inputLabel"
     :name="props.inputName"
+    :modelValue="props.inputValue"
     @update:modelValue="onInputValueChangeEvent"
   />
 </template>
@@ -24,6 +25,11 @@ const props = defineProps({
   },
 
   inputName: {
+    type: String,
+    required: true,
+  },
+
+  inputValue: {
     type: String,
     required: true,
   },
