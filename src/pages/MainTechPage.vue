@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <CommonLayoutContainer>
     <TagItemList :tags="state.tags" />
     <TagItemList :tags="state.tags" />
     <TagItemList :tags="state.tags" />
@@ -7,12 +7,13 @@
     <TagItemList :tags="state.tags" />
     <TagItemList :tags="state.tags" />
     <TagItemList :tags="state.tags" />
-  </div>
+  </CommonLayoutContainer>
 </template>
 
 <script setup>
 import { reactive, onMounted } from "vue";
 
+import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
