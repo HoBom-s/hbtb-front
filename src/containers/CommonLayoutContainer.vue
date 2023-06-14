@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHn 1pR fFf">
+  <q-layout>
     <AppHeader
       :categories="state.categories"
       :selectedCategory="state.selectedCategory"
