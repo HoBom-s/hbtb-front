@@ -1,94 +1,53 @@
 <template>
-  <q-layout>
-    <AppManageHeader />
-    <q-drawer
-      v-model="leftDrawerOpen"
-      showIfAbove
-      bordered
-      class="bg-primary text-white"
-    >
-      <q-list>
-        <q-item activeClass="q-item-no-link-highlighting">
-          <q-item-section avatar>
-            <q-icon name="dashboard" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>HoBom Dashboard</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item activeClass="q-item-no-link-highlighting">
-          <q-item-section avatar>
-            <q-icon name="dashboard" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Dashboard</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-expansion-item icon="pages" label="Pages">
-          <q-list class="q-pl-lg">
-            <q-item activeClass="q-item-no-link-highlighting">
-              <q-item-section avatar>
-                <q-icon name="email" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Page - 1</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item activeClass="q-item-no-link-highlighting">
-              <q-item-section avatar>
-                <q-icon name="lock" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Lock Page</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item activeClass="q-item-no-link-highlighting">
-              <q-item-section avatar>
-                <q-icon name="lock" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Lock Page</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item activeClass="q-item-no-link-highlighting">
-              <q-item-section avatar>
-                <q-icon name="list" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Page - 2</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item activeClass="q-item-no-link-highlighting">
-              <q-item-section avatar>
-                <q-icon name="person" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Page - 3</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-expansion-item>
-        <q-item to="/TreeTable" activeClass="q-item-no-link-highlighting">
-          <q-item-section avatar>
-            <q-icon name="list" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Category</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item to="/Charts" activeClass="q-item-no-link-highlighting">
-          <q-item-section avatar>
-            <q-icon name="insert_chart" />
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Charts</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-    </q-drawer>
-  </q-layout>
+  <q-drawer
+    showIfAbove
+    bordered
+    :width="260"
+    :breakpoint="500"
+    class="bg-grey-9 text-white"
+  >
+    <q-list>
+      <div
+        v-for="menuItem of props.manageSidebarItems"
+        :key="menuItem.menuTitle"
+        activeClass="q-item-no-link-highlighting"
+      >
+        <div v-if="menuItem.hasChild">
+          <q-expansion-item
+            :icon="menuItem.iconName"
+            :label="menuItem.menuTitle"
+            expandSeparator
+          >
+            <q-list class="q-pl-lg">
+              <q-item
+                v-for="childItem of menuItem.childMenuItems"
+                :key="childItem.menuTitle"
+                activeClass="q-item-no-link-highlighting"
+              >
+                <AppMannageSidebarItem :menuItem="childItem" />
+              </q-item>
+            </q-list>
+          </q-expansion-item>
+        </div>
+        <div v-else>
+          <q-item>
+            <AppMannageSidebarItem :menuItem="menuItem" />
+          </q-item>
+        </div>
+      </div>
+    </q-list>
+  </q-drawer>
 </template>
 
 <script setup>
-import AppManageHeader from "@/components/common/AppManageHeader.vue";
+import { defineProps } from "vue";
+
+import AppMannageSidebarItem from "@/components/common/AppMannageSidebarItem.vue";
+
+const props = defineProps({
+  manageSidebarItems: {
+    type: Array,
+    required: true,
+  },
+});
 </script>

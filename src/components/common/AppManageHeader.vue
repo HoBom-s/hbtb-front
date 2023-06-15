@@ -1,12 +1,12 @@
 <template>
   <q-header elevated>
-    <q-toolbar>
-      <q-btn flat dense round icon="menu" ariaLabel="Menu" />
-      <q-toolbar-title>HoBom Tech Blog Service</q-toolbar-title>
+    <q-toolbar class="bg-grey-9">
+      <q-btn flat round dense icon="menu" />
+      <q-toolbar-title class="q-ml-sm">
+        HoBom Tech Blog Service
+      </q-toolbar-title>
       <q-space />
-      <div class="q-gutter-sm row items-center no-wrap">
-        <q-btn round dense flat color="white" icon="fab fa-github" type="a">
-        </q-btn>
+      <div class="q-gutter-sm row items-center no-wrap q-mr-sm">
         <q-btn round dense flat style="color: red !important" type="a">
           <i class="fa fa-heart fa-2x fa-beat"></i>
         </q-btn>

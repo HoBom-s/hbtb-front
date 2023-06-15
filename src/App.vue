@@ -1,5 +1,8 @@
 <template>
-  <router-view></router-view>
+  <!-- <router-view></router-view> -->
+  <CommonManageLayoutContainer />
 </template>
 
-<script setup></script>
+<script setup>
+import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
+</script>
