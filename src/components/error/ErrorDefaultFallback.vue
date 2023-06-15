@@ -14,10 +14,10 @@
           </div>
           <p class="text-center group">
             <q-btn
-              color="primary"
               class="q-pl-md q-pr-md"
               iconRight="home"
               push
+              :style="{ background: palette.color.mainOrange }"
               @click="onGoHomeButtonClickEvent"
             >
               Go home
