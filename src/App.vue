@@ -1,8 +1,9 @@
 <template>
-  <!-- <router-view></router-view> -->
-  <CommonManageLayoutContainer />
+  <ErrorBoundary :stopPropagation="false">
+    <router-view />
+  </ErrorBoundary>
 </template>
 
 <script setup>
-import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
+import ErrorBoundary from "./components/error/ErrorBoundary.vue";
 </script>
