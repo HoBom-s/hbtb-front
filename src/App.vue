@@ -1,5 +1,9 @@
 <template>
-  <router-view></router-view>
+  <ErrorBoundary :stopPropagation="false">
+    <router-view />
+  </ErrorBoundary>
 </template>
 
-<script setup></script>
+<script setup>
+import ErrorBoundary from "./components/error/ErrorBoundary.vue";
+</script>
