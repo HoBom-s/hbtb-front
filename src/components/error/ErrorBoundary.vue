@@ -1,7 +1,7 @@
 <template>
   <div>
-    <slot v-if="state.isError"></slot>
-    <component v-else :is="props.fallback" />
+    <component v-if="state.isError" :is="props.fallback" />
+    <slot v-else></slot>
   </div>
 </template>
 
@@ -17,7 +17,10 @@ const state = reactive({
 });
 
 const props = defineProps({
-  fallback: ErrorDefaultFallback,
+  fallback: {
+    type: Object,
+    default: ErrorDefaultFallback,
+  },
 
   stopPropagation: {
     type: Boolean,
@@ -30,7 +33,10 @@ onErrorCaptured((error, _, info) => {
 
   state.info = info;
 
-  // Error를 상위 컴포넌트로 Propagation 할 것인지?
+  // Browser에 오류를 전파할 것인지
+  // return false이면 Browser console에서 확인 불가능
   if (props.stopPropagation) return false;
+  // return true이면 브라우저에서 감지 가능
+  return true;
 });
 </script>
