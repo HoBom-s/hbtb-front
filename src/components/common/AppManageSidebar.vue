@@ -22,6 +22,7 @@
               <q-item
                 v-for="childItem of menuItem.childMenuItems"
                 :key="childItem.menuTitle"
+                class="cursor-pointer"
                 activeClass="q-item-no-link-highlighting"
               >
                 <AppMannageSidebarItem :menuItem="childItem" />
@@ -30,7 +31,7 @@
           </q-expansion-item>
         </div>
         <div v-else>
-          <q-item>
+          <q-item class="cursor-pointer">
             <AppMannageSidebarItem :menuItem="menuItem" />
           </q-item>
         </div>
