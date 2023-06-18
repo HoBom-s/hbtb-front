@@ -1,25 +1,41 @@
 <template>
-  <q-card class="no-shadow" bordered>
-    <q-item>
-      <q-item-section avatar>
-        <q-avatar size="70px">
-          <img :src="imgUrl" />
-        </q-avatar>
-      </q-item-section>
-      <q-item-section>
-        <q-item-label>{{ props.title }}</q-item-label>
-        <q-item-label caption>
-          {{ props.description }}
-        </q-item-label>
-      </q-item-section>
-      <q-item-section side>
-        <q-btn
-          label="add"
-          side="sm"
-          class="bg-indigo-8 text-capitalize text-white"
-        />
-      </q-item-section>
-    </q-item>
+  <q-card class="bg-transparent no-shadow no-border" bordered>
+    <q-card-section class="q-pa-none">
+      <div class="row q-col-gutter-sm">
+        <div
+          v-for="(item, index) in props.cardItems"
+          :key="index"
+          class="col-md-3 col-sm-12 col-xs-12"
+        >
+          <q-item
+            :style="`background-color: ${item.bgColor}`"
+            class="q-pa-none"
+          >
+            <q-item-section
+              v-if="props.iconPosition === 'left'"
+              side
+              :style="`background-color: ${item.iconColor}`"
+              class="q-pa-lg q-mr-none text-white"
+            >
+              <q-icon :name="item.icon" color="white" size="24px" />
+            </q-item-section>
+            <q-item-section class="q-pa-md q-ml-none text-white">
+              <q-item-label class="text-white text-h6 text-weight-bolder">{{
+                item.value
+              }}</q-item-label>
+              <q-item-label>{{ item.title }}</q-item-label>
+            </q-item-section>
+            <q-item-section
+              v-if="props.iconPosition === 'right'"
+              side
+              class="q-mr-md text-white"
+            >
+              <q-icon :name="item.icon" color="white" size="44px" />
+            </q-item-section>
+          </q-item>
+        </div>
+      </div>
+    </q-card-section>
   </q-card>
 </template>
 
@@ -27,21 +43,15 @@
 import { defineProps } from "vue";
 
 const props = defineProps({
-  props: {
-    imgUrl: {
-      type: String,
-      requird: true,
-    },
+  iconPosition: {
+    type: String,
+    required: true,
+    default: "left",
+  },
 
-    title: {
-      type: String,
-      required: true,
-    },
-
-    description: {
-      type: String,
-      required: true,
-    },
+  cardItems: {
+    type: Array,
+    required: true,
   },
 });
 </script>
