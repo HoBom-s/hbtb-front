@@ -41,6 +41,7 @@ const props = defineProps({
 });
 
 const emits = defineEmits({
+  // No validation
   onInputValueChangeEvent: () => true,
 });
 
