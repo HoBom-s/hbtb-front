@@ -4,7 +4,10 @@
       <q-page class="flex flex-center bg-grey-2">
         <RegisterFormBox
           :inputValues="state.inputValues"
+          :roleOptions="roleOptions"
           @onInputValueChangeEvent="onInputValueChangeEvent"
+          @onUploadButtonClickEvent="onUploadButtonClickEvent"
+          @onSelectValueChangeEvent="onSelectValueChangeEvent"
           @onRegsiterubmitButtonClickEvent="onRegsiterubmitButtonClickEvent"
         />
       </q-page>
@@ -26,12 +29,28 @@ const state = reactive({
     password: "",
 
     passwordCheck: "",
+
+    profileImg: "",
+
+    role: "",
+
+    introduction: "",
   },
 });
+
+const roleOptions = ["Admin", "Normal"];
 
 // Methods
 function onInputValueChangeEvent(name, value) {
   state.inputValues[name] = value;
+}
+
+function onUploadButtonClickEvent(value) {
+  state.inputValues.profileImg = value;
+}
+
+function onSelectValueChangeEvent(value) {
+  state.inputValues.role = value;
 }
 
 function onRegsiterubmitButtonClickEvent() {
