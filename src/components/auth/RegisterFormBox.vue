@@ -28,9 +28,29 @@
       />
       <AppInput
         :inputType="'password'"
-        :inputLabel="'Password Check'"
+        :inputLabel="'Password check'"
         :inputName="'passwordCheck'"
         :inputValue="props.inputValues.passwordCheck"
+        :isMarginTop="true"
+        @onInputValueChangeEvent="onInputValueChangeEvent"
+      />
+      <AppUploader
+        :isMarginTop="true"
+        :uploadLabel="'Profile image file upload'"
+        @onUploadButtonClickEvent="onUploadButtonClickEvent"
+      />
+      <AppSelect
+        :selectLabel="'Role'"
+        :options="props.roleOptions"
+        :isMarginTop="true"
+        :modelValues="props.inputValues.role"
+        @onSelectValueChangeEvent="onSelectValueChangeEvent"
+      />
+      <AppInput
+        :inputType="'text'"
+        :inputLabel="'Introduction'"
+        :inputName="'introduction'"
+        :inputValue="props.inputValues.introduction"
         :isMarginTop="true"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
@@ -52,6 +72,8 @@
 import { defineProps, defineEmits, computed } from "vue";
 
 import AppInput from "@/components/common/AppInput.vue";
+import AppSelect from "@/components/common/AppSelect.vue";
+import AppUploader from "@/components/common/AppUploader.vue";
 
 import palette from "@/utils/palette";
 
@@ -60,11 +82,24 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  roleOptions: {
+    type: Array,
+    required: true,
+  },
 });
 
 const emits = defineEmits({
+  // No validation
   onInputValueChangeEvent: () => true,
 
+  // No validation
+  onUploadButtonClickEvent: () => true,
+
+  // No validation
+  onSelectValueChangeEvent: () => true,
+
+  // No validation
   onRegisterSubmitButtonClickEvent: () => true,
 });
 
@@ -80,6 +115,14 @@ const signUpButtonStyle = computed(() => {
 // Methods
 function onInputValueChangeEvent(name, value) {
   emits("onInputValueChangeEvent", name, value);
+}
+
+function onUploadButtonClickEvent(value) {
+  emits("onUploadButtonClickEvent", value);
+}
+
+function onSelectValueChangeEvent(value) {
+  emits("onSelectValueChangeEvent", value);
 }
 
 function onRegisterSubmitButtonClickEvent() {
