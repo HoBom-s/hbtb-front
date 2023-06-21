@@ -119,7 +119,7 @@ const validator = {};
     // 8자리 미만이면 Error
     if (trimedPassword.length < 8) {
       validateError.setHasError(true);
-      validateError.setMsg("Password must be 8 characters or longer !");
+      validateError.setMsg("8 digits or more including symbol and number !");
       return validateError.asObject();
     }
 
