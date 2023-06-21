@@ -10,7 +10,22 @@
         <CardArticleRecent />
       </div>
     </div>
-    <TagItemList :tags="state.tags" />
+    <div :style="mainContentBoxStyle">
+      <div class="flex q-mb-md">
+        <div class="text-h6 q-mb-md" :style="mainContentArticleFontTitleStyle">
+          Articles
+        </div>
+        <div class="text-h6 q-mb-md" :style="mainContentTagListFontTitleStyle">
+          Tags
+        </div>
+      </div>
+      <div class="flex">
+        <div :style="mainArticleBoxStyle">Main Article</div>
+        <div :style="mainArticleTagBoxStyle">
+          <TagItemList :tags="state.tags" />
+        </div>
+      </div>
+    </div>
   </CommonLayoutContainer>
 </template>
 
@@ -59,6 +74,44 @@ const recentPostFontStyle = computed(() => {
 const recentArticleBoxStyle = computed(() => {
   return {
     gap: "15px",
+  };
+});
+
+const mainContentBoxStyle = computed(() => {
+  return {
+    marginTop: "100px",
+  };
+});
+
+const mainContentArticleFontTitleStyle = computed(() => {
+  return {
+    width: "800px",
+    fontSize: palette.fontSize.l,
+    fontWeight: palette.fontWeight.bold,
+    color: palette.colors.authorGray,
+  };
+});
+
+const mainContentTagListFontTitleStyle = computed(() => {
+  return {
+    width: "400px",
+    fontSize: palette.fontSize.l,
+    fontWeight: palette.fontWeight.bold,
+    color: palette.colors.authorGray,
+  };
+});
+
+const mainArticleBoxStyle = computed(() => {
+  return {
+    width: "800px",
+  };
+});
+
+const mainArticleTagBoxStyle = computed(() => {
+  return {
+    width: "400px",
+    display: "flex",
+    flexWrap: "wrap",
   };
 });
 </script>
