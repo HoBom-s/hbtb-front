@@ -1,6 +1,6 @@
 <template>
   <CommonManageLayoutContainer>
-    <CardManagement :iconPosition="'left'" :cardItems="getCardItems" />
+    <CardManagementList :iconPosition="'left'" :cardItems="getCardItems" />
   </CommonManageLayoutContainer>
 </template>
 
@@ -8,7 +8,7 @@
 import { computed } from "vue";
 
 import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
-import CardManagement from "@/components/cards/CardManagement.vue";
+import CardManagementList from "@/components/cards/CardManagementList.vue";
 
 const getCardItems = computed(() => {
   const cardItems = [

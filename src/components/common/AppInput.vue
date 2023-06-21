@@ -6,6 +6,8 @@
     :label="props.inputLabel"
     :name="props.inputName"
     :modelValue="props.inputValue"
+    :error="getValidateHasErrorValue"
+    :errorMessage="getValidateErrorMessageValue"
     @update:modelValue="onInputValueChangeEvent"
   />
 </template>
@@ -38,14 +40,30 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+
+  validateFormValue: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emits = defineEmits({
+  // No validation
   onInputValueChangeEvent: () => true,
 });
 
 const inputMarginStyle = computed(() => {
   return props.isMarginTop ? "q-mt-md" : "";
+});
+
+const getValidateHasErrorValue = computed(() => {
+  const isValid = props.validateFormValue.hasError;
+  return isValid;
+});
+
+const getValidateErrorMessageValue = computed(() => {
+  const message = props.validateFormValue.msg;
+  return message;
 });
 
 // Methods
