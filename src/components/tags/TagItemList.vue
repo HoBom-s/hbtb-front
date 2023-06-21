@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <TagItem
-      v-for="tag of props.tags"
-      :key="tag._id"
-      :tag="tag"
-      @onTagItemClickEvent="onTagItemClickEvent"
-    />
-  </div>
+  <TagItem
+    v-for="tag of props.tags"
+    :key="tag._id"
+    :tag="tag"
+    @onTagItemClickEvent="onTagItemClickEvent"
+  />
 </template>
 <script setup>
 import { defineProps, defineEmits } from "vue";
