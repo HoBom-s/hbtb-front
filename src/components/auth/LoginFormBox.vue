@@ -109,6 +109,10 @@ function onInputValueChangeEvent(name, value) {
   emits("onInputValueChangeEvent", name, value);
 }
 
+function onLoginSubmitButtonClickEvent() {
+  emits("onLoginSubmitButtonClickEvent");
+}
+
 function onHomeButtonClickEvent() {
   emits("onHomeButtonClickEvent");
 }
