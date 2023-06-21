@@ -16,6 +16,7 @@
         :inputName="'nickname'"
         :inputValue="props.inputValues.nickname"
         :isMarginTop="false"
+        :validateFormValue="props.validateRegisterNickname"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
       <AppInput
@@ -24,6 +25,7 @@
         :inputName="'password'"
         :inputValue="props.inputValues.password"
         :isMarginTop="true"
+        :validateFormValue="props.validateRegisterPassword"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
       <AppInput
@@ -32,6 +34,7 @@
         :inputName="'passwordCheck'"
         :inputValue="props.inputValues.passwordCheck"
         :isMarginTop="true"
+        :validateFormValue="props.validateRegisterPasswordCheck"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
       <AppUploader
@@ -52,6 +55,7 @@
         :inputName="'introduction'"
         :inputValue="props.inputValues.introduction"
         :isMarginTop="true"
+        :validateFormValue="props.validateRegisterIntroduction"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
     </q-card-section>
@@ -85,6 +89,26 @@ const props = defineProps({
 
   roleOptions: {
     type: Array,
+    required: true,
+  },
+
+  validateRegisterNickname: {
+    type: Object,
+    required: true,
+  },
+
+  validateRegisterPassword: {
+    type: Object,
+    required: true,
+  },
+
+  validateRegisterPasswordCheck: {
+    type: Object,
+    required: true,
+  },
+
+  validateRegisterIntroduction: {
+    type: Object,
     required: true,
   },
 });

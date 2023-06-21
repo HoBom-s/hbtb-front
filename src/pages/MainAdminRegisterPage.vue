@@ -5,6 +5,10 @@
         <RegisterFormBox
           :inputValues="state.inputValues"
           :roleOptions="roleOptions"
+          :validateRegisterNickname="validateRegisterNickname"
+          :validateRegisterPassword="validateRegisterPassword"
+          :validateRegisterPasswordCheck="validateRegisterPasswordCheck"
+          :validateRegisterIntroduction="validateRegisterIntroduction"
           @onInputValueChangeEvent="onInputValueChangeEvent"
           @onUploadButtonClickEvent="onUploadButtonClickEvent"
           @onSelectValueChangeEvent="onSelectValueChangeEvent"
@@ -16,10 +20,11 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 
 import RegisterFormBox from "@/components/auth/RegisterFormBox.vue";
 
+import validator from "@/utils/validator";
 import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
@@ -39,6 +44,33 @@ const state = reactive({
 });
 
 const roleOptions = ["Admin", "Normal"];
+
+const validateRegisterNickname = computed(() => {
+  const nicknameValue = state.inputValues.nickname;
+  const validateObject = validator.validateNickname(nicknameValue);
+  return validateObject;
+});
+
+const validateRegisterPassword = computed(() => {
+  const passwordValue = state.inputValues.password;
+  const validateObject = validator.validatePassword(passwordValue);
+  return validateObject;
+});
+
+const validateRegisterPasswordCheck = computed(() => {
+  const passwordCheckValue = state.inputValues.password;
+  const validateObject = validator.validatePasswordCheck(
+    passwordCheckValue,
+    state.inputValues.passwordCheck
+  );
+  return validateObject;
+});
+
+const validateRegisterIntroduction = computed(() => {
+  const introductionValue = state.inputValues.introduction;
+  const validateObject = validator.validateIntroduction(introductionValue);
+  return validateObject;
+});
 
 // Methods
 function onInputValueChangeEvent(name, value) {

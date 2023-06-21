@@ -26,8 +26,6 @@ class ValidateError extends BaseSymbol {
     // Error가 있다면 에러에 대한 message 정의
     // 초기값은 ""
     this.msg = "";
-
-    BaseSymbol.freezeSuperClass(this, ValidateError);
   }
 
   /**
@@ -141,6 +139,55 @@ const validator = {};
     return validateError.asObject();
   };
 }
+
+{
+  /**
+   * User register password 검사
+   *
+   * @param {string} value1
+   * @param {string} value2
+   * @returns {Object}
+   */
+  validator.validatePasswordCheck = function (value1, value2) {
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (value1 === value2) {
+      return validateError.asObject();
+    } else {
+      validateError.setHasError(true);
+      validateError.setMsg("Please check your password");
+      return validateError.asObject();
+    }
+  };
+}
+
+{
+  /**
+   * User introduction 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateIntroduction = function (value) {
+    const trimedIntroduction = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedIntroduction.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Introduction length must be 1 charactor or longer");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+BaseSymbol.freezeSuperClass(ValidateError, ValidateError);
 
 Object.freeze(validator);
 export default validator;
