@@ -69,6 +69,21 @@
         @click="onRegisterSubmitButtonClickEvent"
       />
     </q-card-section>
+    <q-card-section>
+      <q-breadcrumbs align="center">
+        <q-breadcrumbs-el
+          label="Home"
+          icon="home"
+          class="cursor-pointer"
+          @click="onHomeButtonClickEvent"
+        />
+        <q-breadcrumbs-el
+          label="Sign in"
+          class="cursor-pointer"
+          @click="onSignInSubmitButtonClickEvent"
+        />
+      </q-breadcrumbs>
+    </q-card-section>
   </q-card>
 </template>
 
@@ -125,6 +140,12 @@ const emits = defineEmits({
 
   // No validation
   onRegisterSubmitButtonClickEvent: () => true,
+
+  // No validation
+  onHomeButtonClickEvent: () => true,
+
+  // No validation
+  onSignInSubmitButtonClickEvent: () => true,
 });
 
 const signUpButtonStyle = computed(() => {
@@ -151,5 +172,13 @@ function onSelectValueChangeEvent(value) {
 
 function onRegisterSubmitButtonClickEvent() {
   emits("onRegisterSubmitButtonClickEvent");
+}
+
+function onHomeButtonClickEvent() {
+  emits("onHomeButtonClickEvent");
+}
+
+function onSignInSubmitButtonClickEvent() {
+  emits("onSignInSubmitButtonClickEvent");
 }
 </script>

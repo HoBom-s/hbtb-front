@@ -16,6 +16,7 @@
         :inputName="'nickname'"
         :inputValue="props.inputValues.nickname"
         :isMarginTop="false"
+        :validateFormValue="props.validateLoginNickname"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
       <AppInput
@@ -24,6 +25,7 @@
         :inputName="'password'"
         :inputValue="props.inputValues.password"
         :isMarginTop="true"
+        :validateFormValue="props.validateLoginPassword"
         @onInputValueChangeEvent="onInputValueChangeEvent"
       />
     </q-card-section>
@@ -36,6 +38,21 @@
         :style="signInButtonStyle"
         @click="onLoginSubmitButtonClickEvent"
       />
+    </q-card-section>
+    <q-card-section>
+      <q-breadcrumbs align="center">
+        <q-breadcrumbs-el
+          label="Home"
+          icon="home"
+          class="cursor-pointer"
+          @click="onHomeButtonClickEvent"
+        />
+        <q-breadcrumbs-el
+          label="Sign up"
+          class="cursor-pointer"
+          @click="onSignUpButtonClickEvent"
+        />
+      </q-breadcrumbs>
     </q-card-section>
   </q-card>
 </template>
@@ -52,12 +69,30 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  validateLoginNickname: {
+    type: Object,
+    required: true,
+  },
+
+  validateLoginPassword: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emits = defineEmits({
+  // No validation
   onInputValueChangeEvent: () => true,
 
+  // No validation
   onLoginSubmitButtonClickEvent: () => true,
+
+  // No validation
+  onHomeButtonClickEvent: () => true,
+
+  // No validation
+  onSignUpButtonClickEvent: () => true,
 });
 
 const signInButtonStyle = computed(() => {
@@ -74,7 +109,11 @@ function onInputValueChangeEvent(name, value) {
   emits("onInputValueChangeEvent", name, value);
 }
 
-function onLoginSubmitButtonClickEvent() {
-  emits("onLoginSubmitButtonClickEvent");
+function onHomeButtonClickEvent() {
+  emits("onHomeButtonClickEvent");
+}
+
+function onSignUpButtonClickEvent() {
+  emits("onSignUpButtonClickEvent");
 }
 </script>

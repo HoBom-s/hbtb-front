@@ -13,6 +13,8 @@
           @onUploadButtonClickEvent="onUploadButtonClickEvent"
           @onSelectValueChangeEvent="onSelectValueChangeEvent"
           @onRegsiterubmitButtonClickEvent="onRegsiterubmitButtonClickEvent"
+          @onHomeButtonClickEvent="onHomeButtonClickEvent"
+          @onSignInSubmitButtonClickEvent="onSignInSubmitButtonClickEvent"
         />
       </q-page>
     </q-page-container>
@@ -21,6 +23,7 @@
 
 <script setup>
 import { reactive, computed } from "vue";
+import { useRouter } from "vue-router";
 
 import RegisterFormBox from "@/components/auth/RegisterFormBox.vue";
 
@@ -42,6 +45,8 @@ const state = reactive({
     introduction: "",
   },
 });
+
+const router = useRouter();
 
 const roleOptions = ["Admin", "Normal"];
 
@@ -87,5 +92,13 @@ function onSelectValueChangeEvent(value) {
 
 function onRegsiterubmitButtonClickEvent() {
   errorUtil.notImplemented("Login Button is not implemented");
+}
+
+function onHomeButtonClickEvent() {
+  router.push("/");
+}
+
+function onSignInSubmitButtonClickEvent() {
+  router.push("/admin/login");
 }
 </script>
