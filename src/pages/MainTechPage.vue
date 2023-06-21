@@ -1,26 +1,33 @@
 <template>
   <CommonLayoutContainer>
-    <TagItemList :tags="state.tags" />
-    <TagItemList :tags="state.tags" />
-    <TagItemList :tags="state.tags" />
-    <TagItemList :tags="state.tags" />
-    <TagItemList :tags="state.tags" />
-    <TagItemList :tags="state.tags" />
+    <div>
+      <div class="text-h6 q-mb-md" :style="recentPostFontStyle">
+        Recent articles
+      </div>
+      <div class="q-mb-md flex" :style="recentArticleBoxStyle">
+        <CardArticleRecent />
+        <CardArticleRecent />
+        <CardArticleRecent />
+      </div>
+    </div>
     <TagItemList :tags="state.tags" />
   </CommonLayoutContainer>
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, computed } from "vue";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
+import CardArticleRecent from "@/components/cards/CardArticleRecent.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
 
 import { agent } from "@/types";
 
 import namespace from "@/static/name";
+
+import palette from "@/utils/palette";
 
 const state = reactive({
   tags: [],
@@ -40,5 +47,18 @@ onMounted(async () => {
   } else {
     state.tags = [];
   }
+});
+
+const recentPostFontStyle = computed(() => {
+  return {
+    fontSize: palette.fontSize.l,
+    color: palette.colors.authorGray,
+  };
+});
+
+const recentArticleBoxStyle = computed(() => {
+  return {
+    gap: "15px",
+  };
 });
 </script>
