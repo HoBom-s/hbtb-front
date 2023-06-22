@@ -4,6 +4,13 @@ import errorUtil from "@/utils/errorUtil";
 
 import namespace from "@/static/name";
 
+/**
+ * ArticleSchema Class 정의
+ *
+ * 모든 Class는 BaseSymbol을 상속받아야만 한다.
+ *
+ * 해당 Class에서 ArticleSchema에 필요한 Class를 정의 하도록 한다.
+ */
 class ArticleSchema extends BaseSymbol {
   constructor(name) {
     super(name);
