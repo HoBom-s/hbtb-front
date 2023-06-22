@@ -12,10 +12,13 @@ const namespace = {
   categorySchema: "CategorySchema",
 
   // User Register Schema에 대한 Const
-  userRegisterSchema: "userRegisterSchema",
+  userRegisterSchema: "UserRegisterSchema",
 
   // User Login Schema에 대한 Const
-  userLoginSchema: "userLoginSchema",
+  userLoginSchema: "UserLoginSchema",
+
+  // Article에 대한 Const
+  articleSchema: "ArticleSchema",
 };
 
 Object.freeze(namespace);
