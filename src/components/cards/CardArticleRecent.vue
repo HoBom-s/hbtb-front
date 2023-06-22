@@ -1,19 +1,19 @@
 <template>
-  <div :style="cardStyle">
+  <div class="cursor-pointer" :style="cardStyle">
     <q-card>
       <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
       <q-card-section>
         <div :style="cardTitleFontStyle">
-          The HoBom's Front End - Vue3 Composition
+          {{ props.item.title }}
         </div>
         <div class="q-mt-sm q-mb-sm text-subtitle2">
           <q-avatar size="26px">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           </q-avatar>
-          by Robin
+          by {{ props.item.author }}
         </div>
         <div class="text-subtitle2" :style="cardAuthorFontStyle">
-          2023-06-21
+          {{ props.item.createdAt }}
         </div>
       </q-card-section>
     </q-card>
@@ -21,9 +21,16 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { defineProps, computed } from "vue";
 
 import palette from "@/utils/palette";
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+});
 
 const cardStyle = computed(() => {
   return {
