@@ -22,7 +22,10 @@
           <CardArticleList :cardItems="cardItems" />
         </div>
         <div :style="mainArticleTagBoxStyle">
-          <TagItemList :tags="state.tags" />
+          <TagItemList
+            :tags="state.tags"
+            @onTagItemClickEvent="onTagItemClickEvent"
+          />
         </div>
       </div>
     </div>
@@ -44,6 +47,7 @@ import { agent } from "@/types";
 import namespace from "@/static/name";
 
 import palette from "@/utils/palette";
+import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   tags: [],
@@ -143,4 +147,10 @@ const mainArticleTagBoxStyle = computed(() => {
     overflowY: "auto",
   };
 });
+
+// Methods
+function onTagItemClickEvent(clickedTag) {
+  console.log(clickedTag);
+  errorUtil.notImplemented();
+}
 </script>
