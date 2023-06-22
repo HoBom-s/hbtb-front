@@ -1,6 +1,6 @@
 <template>
-  <div :style="tagBoxStyle">
-    <q-chip :style="tagStyle" @click="onTagItemClickEvent(props.tag)">
+  <div :style="tagBoxStyle" @click="onTagItemClickEvent(props.tag)">
+    <q-chip :style="tagStyle">
       {{ props.tag.title }}
     </q-chip>
   </div>
