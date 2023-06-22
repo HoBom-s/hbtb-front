@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="tagBoxStyle">
     <q-chip :style="tagStyle" @click="onTagItemClickEvent(props.tag)">
       {{ props.tag.title }}
     </q-chip>
@@ -23,6 +23,12 @@ const emits = defineEmits({
 });
 
 // Computed
+const tagBoxStyle = computed(() => {
+  return {
+    display: "inline-block",
+  };
+});
+
 const tagStyle = computed(() => {
   return {
     background: `${palette.colors.chipGray} !important`,
