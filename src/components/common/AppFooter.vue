@@ -1,14 +1,48 @@
 <template>
   <div :style="footerStyle">
-    <div :style="footerFontStyle">© HOBOM TECH BLOG.</div>
-    <div :style="footerFontStyle">관련사이트</div>
+    <div :style="footerFontStyle">
+      © HOBOM SERVICE.
+      <q-breadcrumbs align="left" class="text-subtitle2">
+        <q-breadcrumbs-el
+          label="Admin"
+          icon="supervisor_account"
+          class="cursor-pointer"
+          @click="onAdminPageButtonClickEvent"
+        />
+      </q-breadcrumbs>
+    </div>
+    <div>
+      <q-btn :style="footerButtonStyle" label="Related Pages" class="q-pa-md">
+        <q-menu transitionShow="scale" transitionHide="scale">
+          <q-list style="min-width: 100px">
+            <q-item
+              v-for="item of relatedPageItems"
+              :key="item.title"
+              clickable
+            >
+              <q-item-section>{{ item.title }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 
 import palette from "@/utils/palette";
+
+const router = useRouter();
+
+// TODO: BackEnd에서 데이터 가져오기
+const relatedPageItems = [
+  {
+    title: "HoBom Tech Blog",
+  },
+];
 
 const footerStyle = computed(() => {
   return {
@@ -29,4 +63,17 @@ const footerFontStyle = computed(() => {
     fontWeight: palette.fontWeight.bigBold,
   };
 });
+
+const footerButtonStyle = computed(() => {
+  return {
+    border: `1px solid ${palette.colors.fontGray}`,
+    background: "transparent",
+    color: palette.colors.fontGray,
+  };
+});
+
+// Methods
+function onAdminPageButtonClickEvent() {
+  router.push("/admin/login");
+}
 </script>

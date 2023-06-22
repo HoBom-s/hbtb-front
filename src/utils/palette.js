@@ -3,6 +3,7 @@ const palette = {
     mainBlack: "#08090A",
     mainOrange: "#FFA630",
     mainWhite: "#FAFAFF",
+    authorGray: "#060b117a",
     chipGray: "#b0bec5",
     fontGray: "#ffffff7a",
   },

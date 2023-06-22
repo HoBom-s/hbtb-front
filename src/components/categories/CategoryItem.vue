@@ -4,7 +4,7 @@
       :style="categoryStyle"
       @click="onCategoryItemClickEvent(props.category)"
     >
-      {{ props.category.title }}
+      {{ props.category.title.toUpperCase() }}
     </span>
   </div>
 </template>
