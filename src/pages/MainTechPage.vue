@@ -29,6 +29,15 @@
         </div>
       </div>
     </div>
+    <PaginateCreator
+      :paginator="'list'"
+      :curPageNumber="state.curPageNumer"
+      :totalPageNumber="10"
+      :divider="5"
+      @onPrevButtonClickEvent="onPrevButtonClickEvent"
+      @onNextButtonClickEvent="onNextButtonClickEvent"
+      @onPageNumberButtonClickEvent="onPageNumberButtonClickEvent"
+    />
   </CommonLayoutContainer>
 </template>
 
@@ -39,6 +48,7 @@ import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
 import CardArticleRecentList from "@/components/cards/CardArticleRecentList.vue";
 import CardArticleList from "@/components/cards/CardArticleList.vue";
+import PaginateCreator from "@/components/paginator/PaginateCreator.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
 
@@ -51,9 +61,13 @@ import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   tags: [],
+
+  curPageNumer: 1,
 });
 
 // TODO - BackEnd Data
+const totalPageNumber = 10;
+
 const cardItems = [
   {
     _id: 1,
@@ -95,6 +109,14 @@ onMounted(async () => {
   } else {
     state.tags = [];
   }
+});
+
+const isFirstPage = computed(() => {
+  return state.curPageNumer === 1;
+});
+
+const isLastPage = computed(() => {
+  return state.curPageNumer === totalPageNumber;
 });
 
 const recentPostFontStyle = computed(() => {
@@ -152,5 +174,25 @@ const mainArticleTagBoxStyle = computed(() => {
 function onTagItemClickEvent(clickedTag) {
   console.log(clickedTag);
   errorUtil.notImplemented();
+}
+
+function onPrevButtonClickEvent() {
+  if (isFirstPage.value) {
+    return;
+  }
+
+  state.curPageNumer -= 1;
+}
+
+function onNextButtonClickEvent() {
+  if (isLastPage.value) {
+    return;
+  }
+
+  state.curPageNumer += 1;
+}
+
+function onPageNumberButtonClickEvent(clickedPageNumner) {
+  state.curPageNumer = clickedPageNumner;
 }
 </script>
