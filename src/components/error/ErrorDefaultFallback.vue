@@ -17,7 +17,7 @@
               class="q-pl-md q-pr-md"
               iconRight="home"
               push
-              :style="{ background: palette.color.mainOrange }"
+              :style="{ background: palette.colors.mainOrange }"
               @click="onGoHomeButtonClickEvent"
             >
               Go home
