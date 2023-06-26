@@ -70,5 +70,26 @@ const funcUtil = {};
   funcUtil.match = match;
 }
 
+{
+  /**
+   * Object의 Key 검사
+   *    Key가 존재한다면 해당 Key값으로 Object의 Value 반환
+   *
+   * @param {Object} target
+   * @param {string} key
+   * @returns {any}
+   */
+  funcUtil.pick = function (target, key) {
+    errorUtil.invalidParameter(
+      typeof key === "string",
+      "The key must be string"
+    );
+    if (key in target) {
+      return target[key];
+    }
+    return null;
+  };
+}
+
 Object.freeze(funcUtil);
 export default funcUtil;
