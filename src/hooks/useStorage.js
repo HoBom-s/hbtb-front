@@ -1,6 +1,5 @@
 import { ref } from "vue";
 
-import CookieStorage from "@/utils/cookieStorage";
 import funcUtil from "@/utils/funcUtil";
 import errorUtil from "@/utils/errorUtil";
 
@@ -28,10 +27,6 @@ const useStorage = (key, type = "session") => {
       () => type === "local",
       () => localStorage
     )
-    .on(
-      () => type === "cookie",
-      () => CookieStorage
-    )
     .otherwise(() => errorUtil.notImplemented());
 
   /**
@@ -51,7 +46,7 @@ const useStorage = (key, type = "session") => {
    *    State의 집합이 아니므로
    *    단순하게 ref를 사용하도록 한다.
    */
-  const value = ref(getStorageItem(storage));
+  const value = ref(getStorageItem(storage)());
 
   /**
    * setStorageItem을 순수함수로 유지하기 위해 storage 값을 Hook 에서
