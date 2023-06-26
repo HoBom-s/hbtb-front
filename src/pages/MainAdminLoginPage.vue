@@ -13,6 +13,14 @@
         />
       </q-page>
     </q-page-container>
+    <BaseAlertDialog
+      :isDialogOpen="state.isLoginWarningDialogOpen"
+      :title="'WARNING'"
+      :content="'Please check your accounts'"
+      @onBaseAlertDialogCloseButtonClickEvent="
+        onBaseAlertDialogCloseButtonClickEvent
+      "
+    />
   </q-layout>
 </template>
 
@@ -20,10 +28,15 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 
+import useValidate from "@/hooks/useValidate";
+import useStorage from "@/hooks/useStorage";
+
 import LoginFormBox from "@/components/auth/LoginFormBox.vue";
+import BaseAlertDialog from "@/components/dialog/BaseAlertDialog.vue";
+
+import { userLoginRequestService } from "@/apis/userFetcher";
 
 import validator from "@/utils/validator";
-import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   inputValues: {
@@ -31,6 +44,8 @@ const state = reactive({
 
     password: "",
   },
+
+  isLoginWarningDialogOpen: false,
 });
 
 const router = useRouter();
@@ -52,8 +67,31 @@ function onInputValueChangeEvent(name, value) {
   state.inputValues[name] = value;
 }
 
-function onLoginSubmitButtonClickEvent() {
-  errorUtil.notImplemented("Login Button is not implemented");
+async function onLoginSubmitButtonClickEvent() {
+  const nicknameValue = state.inputValues.nickname;
+  const passwordValue = state.inputValues.password;
+
+  const [isValidUserInformation] = useValidate([
+    () => validator.validateNickname(nicknameValue).hasError,
+    () => validator.validatePassword(passwordValue).hasError,
+  ]);
+
+  if (!isValidUserInformation) {
+    state.isLoginWarningDialogOpen = true;
+    return;
+  }
+
+  const [setSessionItem] = useStorage("accessToken", "session");
+  const [refreshTokenValue] = useStorage("refreshToken", "cookie");
+  const authAccessToken = await userLoginRequestService(
+    nicknameValue,
+    passwordValue
+  );
+  setSessionItem(authAccessToken);
+  if (!refreshTokenValue) {
+    state.isLoginWarningDialogOpen = true;
+    return;
+  }
 }
 
 function onHomeButtonClickEvent() {
@@ -62,5 +100,9 @@ function onHomeButtonClickEvent() {
 
 function onSignUpButtonClickEvent() {
   router.push("/admin/register");
+}
+
+function onBaseAlertDialogCloseButtonClickEvent(isClose) {
+  state.isLoginWarningDialogOpen = isClose;
 }
 </script>
