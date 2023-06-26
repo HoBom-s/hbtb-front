@@ -1,5 +1,6 @@
 import { ref } from "vue";
 
+import CookieStorage from "@/utils/cookieStorage";
 import funcUtil from "@/utils/funcUtil";
 import errorUtil from "@/utils/errorUtil";
 
@@ -26,6 +27,10 @@ const useStorage = (key, type = "session") => {
     .on(
       () => type === "local",
       () => localStorage
+    )
+    .on(
+      () => type === "cookie",
+      () => CookieStorage
     )
     .otherwise(() => errorUtil.notImplemented());
 
