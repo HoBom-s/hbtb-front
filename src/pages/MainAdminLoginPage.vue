@@ -37,6 +37,7 @@ import BaseAlertDialog from "@/components/dialog/BaseAlertDialog.vue";
 import { userLoginRequestService } from "@/apis/userFetcher";
 
 import validator from "@/utils/validator";
+import funcUtil from "@/utils/funcUtil";
 
 const state = reactive({
   inputValues: {
@@ -77,8 +78,8 @@ async function onLoginSubmitButtonClickEvent() {
   }
 
   const [isValidUserInformation] = useValidate([
-    () => validator.validateNickname(nicknameValue).hasError,
-    () => validator.validatePassword(passwordValue).hasError,
+    () => validator.validateNickname(nicknameValue).hasError === false,
+    () => validator.validatePassword(passwordValue).hasError === false,
   ]);
 
   if (!isValidUserInformation) {
@@ -86,17 +87,21 @@ async function onLoginSubmitButtonClickEvent() {
     return;
   }
 
-  const [setSessionItem] = useStorage("accessToken", "session");
-  const [refreshTokenValue] = useStorage("refreshToken", "cookie");
-  const authAccessToken = await userLoginRequestService(
+  const authAccessTokenObject = await userLoginRequestService(
     nicknameValue,
     passwordValue
   );
-  setSessionItem(authAccessToken);
-  if (!refreshTokenValue) {
+
+  // eslint-disable-next-line no-unused-vars
+  const [_, setSessionItem] = useStorage("accessToken", "session");
+
+  if (!funcUtil.pick(authAccessTokenObject, "accessToken")) {
     state.isLoginWarningDialogOpen = true;
     return;
   }
+
+  setSessionItem(authAccessTokenObject);
+  router.push("/management");
 }
 
 function onHomeButtonClickEvent() {
