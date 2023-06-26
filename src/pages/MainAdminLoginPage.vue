@@ -71,6 +71,11 @@ async function onLoginSubmitButtonClickEvent() {
   const nicknameValue = state.inputValues.nickname;
   const passwordValue = state.inputValues.password;
 
+  if (!nicknameValue || !passwordValue) {
+    state.isLoginWarningDialogOpen = true;
+    return;
+  }
+
   const [isValidUserInformation] = useValidate([
     () => validator.validateNickname(nicknameValue).hasError,
     () => validator.validatePassword(passwordValue).hasError,
