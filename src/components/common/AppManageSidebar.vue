@@ -37,13 +37,30 @@
         </div>
       </div>
     </q-list>
+    <div
+      class="fixed-bottom q-mb-md"
+      :style="{ display: 'flex', justifyContent: 'center' }"
+    >
+      <q-btn
+        outline
+        label="Publish"
+        class="q-pa-sm"
+        :style="{
+          width: '220px',
+          fontWeight: palette.fontWeight.bigBold,
+        }"
+        @click="onPublishButtonClickEvent"
+      />
+    </div>
   </q-drawer>
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 
 import AppMannageSidebarItem from "@/components/common/AppMannageSidebarItem.vue";
+
+import palette from "@/utils/palette";
 
 const props = defineProps({
   manageSidebarItems: {
@@ -51,4 +68,14 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emtis = defineEmits({
+  // No validation
+  onPublishButtonClickEvent: () => true,
+});
+
+// Methods
+function onPublishButtonClickEvent() {
+  emtis("onPublishButtonClickEvent");
+}
 </script>
