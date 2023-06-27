@@ -1,5 +1,9 @@
 <template>
-  <q-list class="rounded-borders" separator>
+  <q-list
+    class="rounded-borders"
+    separator
+    :style="{ overflowY: 'auto', height: '348px', maxHeight: '348px' }"
+  >
     <q-item
       v-for="item of getItemListByItemKind"
       :key="item._id"
