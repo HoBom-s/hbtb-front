@@ -5,7 +5,7 @@
         Recent articles
       </div>
       <div class="q-mb-md flex" :style="recentArticleBoxStyle">
-        <CardArticleRecentList :cardItems="cardItems" />
+        <CardArticleRecentList :cardItems="recentArticleList" />
       </div>
     </div>
     <div :style="mainContentBoxStyle">
@@ -19,7 +19,7 @@
       </div>
       <div class="flex">
         <div :style="mainArticleBoxStyle">
-          <CardArticleList :cardItems="cardItems" />
+          <CardArticleList :cardItems="state.articles" />
         </div>
         <div :style="mainArticleTagBoxStyle">
           <TagItemList
@@ -51,6 +51,7 @@ import CardArticleList from "@/components/cards/CardArticleList.vue";
 import PaginateCreator from "@/components/paginator/PaginateCreator.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
+import { getAllArticleRequestService } from "@/apis/articleFetcher";
 
 import { agent } from "@/types";
 
@@ -62,41 +63,17 @@ import errorUtil from "@/utils/errorUtil";
 const state = reactive({
   tags: [],
 
+  articles: [],
+
   curPageNumer: 1,
 });
 
 // TODO - BackEnd Data
 const totalPageNumber = 10;
 
-const cardItems = [
-  {
-    _id: 1,
-    title: "The HoBom's FrontEnd - Vue3 Composition",
-    subTitle:
-      "The HoBom's Monitoring System with Vue3 Composition API and Node Express",
-    author: "Robin",
-    createdAt: "2023-06-21",
-  },
-  {
-    _id: 2,
-    title: "The HoBom's FrontEnd - Vue3 Composition",
-    subTitle:
-      "The HoBom's Monitoring System with Vue3 Composition API and Node Express",
-    author: "Robin",
-    createdAt: "2023-06-21",
-  },
-  {
-    _id: 3,
-    title: "The HoBom's FrontEnd - Vue3 Composition",
-    subTitle:
-      "The HoBom's Monitoring System with Vue3 Composition API and Node Express",
-    author: "Robin",
-    createdAt: "2023-06-21",
-  },
-];
-
 onMounted(async () => {
   const tags = await getAllTagRequestService();
+
   const tagInstanceArray = tags.map((tag) => {
     const { _id, title, path, createdAt, count } = tag;
     const tagObj = agent
@@ -104,11 +81,46 @@ onMounted(async () => {
       .createInstance(_id, title, path, count, createdAt);
     return tagObj;
   });
+
   if (tagInstanceArray.every((tag) => tag.ofPathCondition(tag.path))) {
     state.tags = tagInstanceArray;
   } else {
     state.tags = [];
   }
+
+  const articles = await getAllArticleRequestService();
+
+  const articleInstanceArray = articles.map((art) => {
+    const {
+      _id,
+      thumbnail,
+      title,
+      subtitle,
+      contents,
+      tags,
+      writers,
+      path,
+      createdAt,
+      updatedAt,
+    } = art;
+    const articleObject = agent
+      .instanceOfName(namespace.articleSchema)
+      .createInstance(
+        _id,
+        thumbnail,
+        title,
+        subtitle,
+        contents,
+        tags,
+        writers,
+        path,
+        createdAt,
+        updatedAt
+      );
+    return articleObject;
+  });
+
+  state.articles = articleInstanceArray;
 });
 
 const isFirstPage = computed(() => {
@@ -117,6 +129,11 @@ const isFirstPage = computed(() => {
 
 const isLastPage = computed(() => {
   return state.curPageNumer === totalPageNumber;
+});
+
+const recentArticleList = computed(() => {
+  const recentArticles = state.articles.slice(0, 3);
+  return recentArticles;
 });
 
 const recentPostFontStyle = computed(() => {
