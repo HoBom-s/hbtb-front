@@ -26,12 +26,8 @@ const router = useRouter();
 const manageSidebarItems = [
   {
     iconName: "dashboard",
-    menuTitle: "HoBom Dashboard",
-    hasChild: false,
-  },
-  {
-    iconName: "dashboard",
     menuTitle: "Dashboard",
+    path: "/management",
     hasChild: false,
   },
   {
@@ -63,8 +59,8 @@ const manageSidebarItems = [
     hasChild: false,
   },
   {
-    iconName: "insert_chart",
-    menuTitle: "Charts",
+    iconName: "tag",
+    menuTitle: "Tag",
     hasChild: false,
   },
 ];
