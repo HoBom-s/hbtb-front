@@ -11,7 +11,9 @@
           @onTabValueChangeEvent="onTabValueChangeEvent"
         />
       </div>
-      <div class="col"></div>
+      <div class="col">
+        <CircleChart :itemObject="getChartItemObject" />
+      </div>
     </div>
     <DataGridChart :title="'ARTICLES'" :columns="columns" :rows="rows" />
   </CommonManageLayoutContainer>
@@ -27,6 +29,7 @@ import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContaine
 import CardManagementList from "@/components/cards/CardManagementList.vue";
 import ManagementItemBox from "@/components/management/ManagementItemBox.vue";
 import DataGridChart from "@/components/charts/DataGridChart.vue";
+import CircleChart from "@/components/charts/CircleChart.vue";
 
 import { getAllCategoryRequestService } from "@/apis/categoryFetcher";
 import { getAllTagRequestService } from "@/apis/tagFetcher";
@@ -157,6 +160,13 @@ const getCardItems = computed(() => {
   ];
 
   return cardItems;
+});
+
+const getChartItemObject = computed(() => {
+  const itemObj = {};
+  itemObj.categories = state.categories;
+  itemObj.tags = state.tags;
+  return itemObj;
 });
 
 const columns = computed(() => {
