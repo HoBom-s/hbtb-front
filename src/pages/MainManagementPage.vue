@@ -1,7 +1,7 @@
 <template>
   <CommonManageLayoutContainer>
     <CardManagementList :iconPosition="'left'" :cardItems="getCardItems" />
-    <div class="row q-gutter-sm">
+    <div class="row q-gutter-sm" :style="{ height: '450px' }">
       <div class="col">
         <ManagementItemBox
           :tabItems="tabItems"
@@ -19,6 +19,9 @@
 
 <script setup>
 import { reactive, onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
+
+import useStorage from "@/hooks/useStorage";
 
 import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
 import CardManagementList from "@/components/cards/CardManagementList.vue";
@@ -32,6 +35,8 @@ import { getAllArticleRequestService } from "@/apis/articleFetcher";
 import { agent } from "@/types";
 
 import namespace from "@/static/name";
+
+const router = useRouter();
 
 const tabItems = [
   { name: "category", label: "Category", iconName: "list" },
@@ -49,6 +54,11 @@ const state = reactive({
 });
 
 onMounted(async () => {
+  const [accessTokenValue] = useStorage("accessToken", "session");
+  if (!accessTokenValue) {
+    router.push("/");
+  }
+
   const categories = await getAllCategoryRequestService();
 
   const categoryInstanceArray = categories.map((cat) => {
