@@ -3,7 +3,10 @@
     <AppManageHeader
       @onHoBomTitleButtonClickEvent="onHoBomTitleButtonClickEvent"
     />
-    <AppManageSidebar :manageSidebarItems="manageSidebarItems" />
+    <AppManageSidebar
+      :manageSidebarItems="manageSidebarItems"
+      @onPublishButtonClickEvent="onPublishButtonClickEvent"
+    />
     <q-page-container>
       <q-page padding>
         <slot></slot>
@@ -69,5 +72,9 @@ const manageSidebarItems = [
 // Methods
 function onHoBomTitleButtonClickEvent() {
   router.push("/");
+}
+
+function onPublishButtonClickEvent() {
+  router.push("/post");
 }
 </script>

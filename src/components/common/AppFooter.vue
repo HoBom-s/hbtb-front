@@ -77,6 +77,8 @@ const footerButtonStyle = computed(() => {
 // Methods
 function onAdminPageButtonClickEvent() {
   const [accessTokenValue] = useStorage("accessToken");
-  accessTokenValue ? router.push("/management") : router.push("/admin/login");
+  accessTokenValue.value
+    ? router.push("/management")
+    : router.push("/admin/login");
 }
 </script>
