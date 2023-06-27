@@ -2,7 +2,10 @@
   <q-header elevated>
     <q-toolbar class="bg-grey-9">
       <q-btn flat round dense icon="menu" />
-      <q-toolbar-title class="q-ml-sm">
+      <q-toolbar-title
+        class="q-ml-sm cursor-pointer"
+        @click="onHoBomTitleButtonClickEvent"
+      >
         HoBom Tech Blog Service
       </q-toolbar-title>
       <q-space />
@@ -23,4 +26,16 @@
   </q-header>
 </template>
 
-<script setup></script>
+<script setup>
+import { defineEmits } from "vue";
+
+const emits = defineEmits({
+  // No validation
+  onHoBomTitleButtonClickEvent: () => true,
+});
+
+// Methods
+function onHoBomTitleButtonClickEvent() {
+  emits("onHoBomTitleButtonClickEvent");
+}
+</script>
