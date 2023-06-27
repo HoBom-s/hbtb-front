@@ -95,12 +95,13 @@ async function onLoginSubmitButtonClickEvent() {
   // eslint-disable-next-line no-unused-vars
   const [_, setSessionItem] = useStorage("accessToken", "session");
 
-  if (!funcUtil.pick(authAccessTokenObject, "accessToken")) {
+  const accessTokenValue = funcUtil.pick(authAccessTokenObject, "accessToken");
+  if (!accessTokenValue) {
     state.isLoginWarningDialogOpen = true;
     return;
   }
 
-  setSessionItem(authAccessTokenObject);
+  setSessionItem(accessTokenValue);
   router.push("/management");
 }
 
