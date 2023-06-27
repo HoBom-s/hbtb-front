@@ -1,11 +1,6 @@
 <template>
-  <div class="q-mt-md">
-    <q-card class="q-pa-md flex" bordered :style="{ height: '423px' }">
-      <div :style="{ display: 'flex', width: '380px' }">
-        <Doughnut :data="dataForRender" :options="optionForRender" />
-        <Doughnut :data="dataForRender" :options="optionForRender" />
-      </div>
-    </q-card>
+  <div :style="{ width: '326px', maxWidth: '326px' }">
+    <Doughnut :data="dataForRender" :options="optionForRender" />
   </div>
 </template>
 

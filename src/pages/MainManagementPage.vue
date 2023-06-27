@@ -12,7 +12,26 @@
         />
       </div>
       <div class="col">
-        <CircleChart :itemObject="getChartItemObject" />
+        <div class="q-mt-md">
+          <q-card :style="{ maxHeight: '450px' }">
+            <q-card-section class>
+              <div
+                class="text-h6"
+                :style="{ fontWeight: palette.fontWeight.bigBold }"
+              >
+                TOTAL ITEM COUNT
+              </div>
+            </q-card-section>
+            <q-card-section
+              class="q-pa-md flex q-gutter-md"
+              bordered
+              :style="{ justifyContent: 'center' }"
+            >
+              <CircleChart :itemObject="getChartCategoryTagItemObject" />
+              <CircleChart :itemObject="getChartArticleItemObject" />
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
     </div>
     <DataGridChart :title="'ARTICLES'" :columns="columns" :rows="rows" />
@@ -38,6 +57,7 @@ import { getAllArticleRequestService } from "@/apis/articleFetcher";
 import { agent } from "@/types";
 
 import namespace from "@/static/name";
+import palette from "@/utils/palette";
 
 const router = useRouter();
 
@@ -162,10 +182,16 @@ const getCardItems = computed(() => {
   return cardItems;
 });
 
-const getChartItemObject = computed(() => {
+const getChartCategoryTagItemObject = computed(() => {
   const itemObj = {};
   itemObj.categories = state.categories;
   itemObj.tags = state.tags;
+  return itemObj;
+});
+
+const getChartArticleItemObject = computed(() => {
+  const itemObj = {};
+  itemObj.articles = state.articles;
   return itemObj;
 });
 
