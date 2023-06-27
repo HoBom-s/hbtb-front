@@ -13,6 +13,14 @@
         />
       </q-page>
     </q-page-container>
+    <BaseAlertDialog
+      :isDialogOpen="state.isLoginWarningDialogOpen"
+      :title="'WARNING'"
+      :content="'Please check your accounts'"
+      @onBaseAlertDialogCloseButtonClickEvent="
+        onBaseAlertDialogCloseButtonClickEvent
+      "
+    />
   </q-layout>
 </template>
 
@@ -20,10 +28,16 @@
 import { reactive, computed } from "vue";
 import { useRouter } from "vue-router";
 
+import useValidate from "@/hooks/useValidate";
+import useStorage from "@/hooks/useStorage";
+
 import LoginFormBox from "@/components/auth/LoginFormBox.vue";
+import BaseAlertDialog from "@/components/dialog/BaseAlertDialog.vue";
+
+import { userLoginRequestService } from "@/apis/userFetcher";
 
 import validator from "@/utils/validator";
-import errorUtil from "@/utils/errorUtil";
+import funcUtil from "@/utils/funcUtil";
 
 const state = reactive({
   inputValues: {
@@ -31,6 +45,8 @@ const state = reactive({
 
     password: "",
   },
+
+  isLoginWarningDialogOpen: false,
 });
 
 const router = useRouter();
@@ -52,8 +68,41 @@ function onInputValueChangeEvent(name, value) {
   state.inputValues[name] = value;
 }
 
-function onLoginSubmitButtonClickEvent() {
-  errorUtil.notImplemented("Login Button is not implemented");
+async function onLoginSubmitButtonClickEvent() {
+  const nicknameValue = state.inputValues.nickname;
+  const passwordValue = state.inputValues.password;
+
+  if (!nicknameValue || !passwordValue) {
+    state.isLoginWarningDialogOpen = true;
+    return;
+  }
+
+  const [isValidUserInformation] = useValidate([
+    () => validator.validateNickname(nicknameValue).hasError === false,
+    () => validator.validatePassword(passwordValue).hasError === false,
+  ]);
+
+  if (!isValidUserInformation) {
+    state.isLoginWarningDialogOpen = true;
+    return;
+  }
+
+  const authAccessTokenObject = await userLoginRequestService(
+    nicknameValue,
+    passwordValue
+  );
+
+  // eslint-disable-next-line no-unused-vars
+  const [_, setSessionItem] = useStorage("accessToken", "session");
+
+  const accessTokenValue = funcUtil.pick(authAccessTokenObject, "accessToken");
+  if (!accessTokenValue) {
+    state.isLoginWarningDialogOpen = true;
+    return;
+  }
+
+  setSessionItem(accessTokenValue);
+  router.push("/management");
 }
 
 function onHomeButtonClickEvent() {
@@ -62,5 +111,9 @@ function onHomeButtonClickEvent() {
 
 function onSignUpButtonClickEvent() {
   router.push("/admin/register");
+}
+
+function onBaseAlertDialogCloseButtonClickEvent(isClose) {
+  state.isLoginWarningDialogOpen = isClose;
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="cursor-pointer" :style="cardStyle">
     <q-card>
-      <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
+      <q-img :src="props.item.thumbnail" width="385px" height="256px" />
       <q-card-section>
         <div :style="cardTitleFontStyle">
           {{ props.item.title }}
@@ -10,10 +10,10 @@
           <q-avatar size="26px">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           </q-avatar>
-          by {{ props.item.author }}
+          by {{ authorInformation }}
         </div>
         <div class="text-subtitle2" :style="cardAuthorFontStyle">
-          {{ props.item.createdAt }}
+          {{ props.item.createdAt.split("T")[0] }}
         </div>
       </q-card-section>
     </q-card>
@@ -32,6 +32,13 @@ const props = defineProps({
   },
 });
 
+const authorInformation = computed(() => {
+  const toNickname = props.item.writers
+    .map((author) => author.nickname)
+    .join(", ");
+  return toNickname;
+});
+
 const cardStyle = computed(() => {
   return {
     width: "385px",
@@ -41,7 +48,8 @@ const cardStyle = computed(() => {
 
 const cardTitleFontStyle = computed(() => {
   return {
-    fontSize: palette.fontSize.md,
+    fontSize: palette.fontSize.sm,
+    fontWeight: palette.fontWeight.bold,
   };
 });
 

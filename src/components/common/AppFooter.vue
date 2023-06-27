@@ -33,6 +33,8 @@
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 
+import useStorage from "@/hooks/useStorage";
+
 import palette from "@/utils/palette";
 
 const router = useRouter();
@@ -74,6 +76,7 @@ const footerButtonStyle = computed(() => {
 
 // Methods
 function onAdminPageButtonClickEvent() {
-  router.push("/admin/login");
+  const [accessTokenValue] = useStorage("accessToken");
+  accessTokenValue ? router.push("/management") : router.push("/admin/login");
 }
 </script>

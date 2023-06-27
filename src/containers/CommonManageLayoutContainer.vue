@@ -1,6 +1,8 @@
 <template>
   <q-layout>
-    <AppManageHeader />
+    <AppManageHeader
+      @onHoBomTitleButtonClickEvent="onHoBomTitleButtonClickEvent"
+    />
     <AppManageSidebar :manageSidebarItems="manageSidebarItems" />
     <q-page-container>
       <q-page padding>
@@ -11,8 +13,12 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+
 import AppManageHeader from "@/components/common/AppManageHeader.vue";
 import AppManageSidebar from "@/components/common/AppManageSidebar.vue";
+
+const router = useRouter();
 
 const manageSidebarItems = [
   {
@@ -59,4 +65,9 @@ const manageSidebarItems = [
     hasChild: false,
   },
 ];
+
+// Methods
+function onHoBomTitleButtonClickEvent() {
+  router.push("/");
+}
 </script>

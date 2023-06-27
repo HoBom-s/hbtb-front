@@ -24,21 +24,38 @@ class ArticleSchema extends BaseSymbol {
    * PUBLIC PROPERTY
    *
    * @param {string} _id
+   * @param {string} thumbnail
    * @param {string} title
+   * @param {string} subtitle
+   * @param {string} contents
+   * @param {Array} tags
+   * @param {Array} writers
    * @param {string} path
-   * @param {string} sortIndex
-   * @param {string} spot
    * @param {string} createdAt
    * @param {string} updatedAt
    * @returns {ArticleSchema}
    */
-  createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt) {
+  createInstance(
+    _id,
+    thumbnail,
+    title,
+    subtitle,
+    contents,
+    tags,
+    writers,
+    path,
+    createdAt,
+    updatedAt
+  ) {
     const resultOfObject = new _ArticleSchema(
       _id,
+      thumbnail,
       title,
+      subtitle,
+      contents,
+      tags,
+      writers,
       path,
-      sortIndex,
-      spot,
       createdAt,
       updatedAt
     );
@@ -50,8 +67,19 @@ class ArticleSchema extends BaseSymbol {
  * 실질적인 ArticleSchema의 Instance를 생성한다면 아래의 Class의 Instance가 반환된다.
  */
 class _ArticleSchema extends ArticleSchema {
-  constructor(_id, title, path, sortIndex, spot, createdAt, updatedAt) {
-    super(namespace);
+  constructor(
+    _id,
+    thumbnail,
+    title,
+    subtitle,
+    contents,
+    tags,
+    writers,
+    path,
+    createdAt,
+    updatedAt
+  ) {
+    super(namespace.articleSchema);
 
     // PUBLIC PROPERTY
     errorUtil.invalidParameter(
@@ -62,6 +90,13 @@ class _ArticleSchema extends ArticleSchema {
 
     // PUBLIC PROPERTY
     errorUtil.invalidParameter(
+      typeof thumbnail === "string",
+      "Article thumbnail must be string"
+    );
+    this.thumbnail = thumbnail;
+
+    // PUBLIC PROPERTY
+    errorUtil.invalidParameter(
       typeof title === "string",
       "Article title must be string"
     );
@@ -69,24 +104,38 @@ class _ArticleSchema extends ArticleSchema {
 
     // PUBLIC PROPERTY
     errorUtil.invalidParameter(
+      typeof subtitle === "string",
+      "Article subtitle must be string"
+    );
+    this.subtitle = subtitle;
+
+    // PUBLIC PROPERTY
+    errorUtil.invalidParameter(
+      typeof contents === "string",
+      "Article contents must be string"
+    );
+    this.contents = contents;
+
+    // PUBLIC PROPERTY
+    errorUtil.invalidParameter(
+      Array.isArray(tags),
+      "Article tags must be array"
+    );
+    this.tags = tags;
+
+    // PUBLIC PROPERTY
+    errorUtil.invalidParameter(
+      Array.isArray(writers),
+      "Article writers must be array"
+    );
+    this.writers = writers;
+
+    // PUBLIC PROPERTY
+    errorUtil.invalidParameter(
       typeof path === "string",
       "Article title must be string"
     );
     this.path = path;
-
-    // PUBLIC PROPERTY
-    errorUtil.invalidParameter(
-      typeof sortIndex === "string",
-      "Article title must be string"
-    );
-    this.sortIndex = sortIndex;
-
-    // PUBLIC PROPERTY
-    errorUtil.invalidParameter(
-      typeof spot === "string",
-      "Article title must be string"
-    );
-    this.spot = spot;
 
     // PUBLIC PROPERTY
     errorUtil.invalidParameter(
@@ -98,7 +147,7 @@ class _ArticleSchema extends ArticleSchema {
     // PUBLIC PROPERTY
     errorUtil.invalidParameter(
       typeof updatedAt === "string",
-      "Article title must be string"
+      "Article updatedAt must be string"
     );
     this.updatedAt = updatedAt;
 
