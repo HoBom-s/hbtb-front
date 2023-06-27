@@ -1,6 +1,18 @@
 <template>
   <CommonManageLayoutContainer>
     <CardManagementList :iconPosition="'left'" :cardItems="getCardItems" />
+    <div class="row q-gutter-sm">
+      <div class="col">
+        <ManagementItemBox
+          :tabItems="tabItems"
+          :selectedTabItem="state.selectedTabItem"
+          :categories="state.categories"
+          :tags="state.tags"
+          @onTabValueChangeEvent="onTabValueChangeEvent"
+        />
+      </div>
+      <div class="col"></div>
+    </div>
     <DataGridChart :title="'ARTICLES'" :columns="columns" :rows="rows" />
   </CommonManageLayoutContainer>
 </template>
@@ -10,19 +22,61 @@ import { reactive, onMounted, computed } from "vue";
 
 import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
 import CardManagementList from "@/components/cards/CardManagementList.vue";
+import ManagementItemBox from "@/components/management/ManagementItemBox.vue";
 import DataGridChart from "@/components/charts/DataGridChart.vue";
 
+import { getAllCategoryRequestService } from "@/apis/categoryFetcher";
+import { getAllTagRequestService } from "@/apis/tagFetcher";
 import { getAllArticleRequestService } from "@/apis/articleFetcher";
 
 import { agent } from "@/types";
 
 import namespace from "@/static/name";
 
+const tabItems = [
+  { name: "category", label: "Category", iconName: "list" },
+  { name: "tag", label: "Tag", iconName: "tag" },
+];
+
 const state = reactive({
   articles: [],
+
+  categories: [],
+
+  tags: [],
+
+  selectedTabItem: "category",
 });
 
 onMounted(async () => {
+  const categories = await getAllCategoryRequestService();
+
+  const categoryInstanceArray = categories.map((cat) => {
+    const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
+
+    const categoryObject = agent
+      .instanceOfName(namespace.categorySchema)
+      .createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt);
+
+    return categoryObject;
+  });
+
+  state.categories = categoryInstanceArray;
+
+  const tags = await getAllTagRequestService();
+
+  const tagInstanceArray = tags.map((tag) => {
+    const { _id, title, path, count, createdAt } = tag;
+
+    const tagObject = agent
+      .instanceOfName(namespace.tagSchema)
+      .createInstance(_id, title, path, count, createdAt);
+
+    return tagObject;
+  });
+
+  state.tags = tagInstanceArray;
+
   const articles = await getAllArticleRequestService();
 
   const articleInstanceArray = articles.map((art) => {
@@ -38,6 +92,7 @@ onMounted(async () => {
       createdAt,
       updatedAt,
     } = art;
+
     const articleObject = agent
       .instanceOfName(namespace.articleSchema)
       .createInstance(
@@ -90,6 +145,7 @@ const getCardItems = computed(() => {
       bgColor: "#9932CC",
     },
   ];
+
   return cardItems;
 });
 
@@ -98,7 +154,7 @@ const columns = computed(() => {
     {
       name: "name",
       label: "Article (Author)",
-      field: (row) => row.name,
+      field: "name",
       format: (value) => `${value}`,
       align: "left",
       required: true,
@@ -142,6 +198,7 @@ const columns = computed(() => {
       sortable: true,
     },
   ];
+
   return col;
 });
 
@@ -159,6 +216,12 @@ const rows = computed(() => {
 
     return obj;
   });
+
   return rowArray;
 });
+
+// Methods
+function onTabValueChangeEvent(value) {
+  state.selectedTabItem = value;
+}
 </script>
