@@ -1,7 +1,6 @@
 <template>
   <div class="q-mt-md">
     <q-table
-      flat
       bordered
       seperator="cell"
       rowKey="name"
