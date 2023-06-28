@@ -31,9 +31,9 @@
     </div>
     <PaginateCreator
       :paginator="'list'"
-      :curPageNumber="state.curPageNumer"
-      :totalPageNumber="10"
-      :divider="5"
+      :curPageNumber="state.curPageNumber"
+      :totalPageNumber="state.totalPageNumber"
+      :divider="perPageNumber"
       @onPrevButtonClickEvent="onPrevButtonClickEvent"
       @onNextButtonClickEvent="onNextButtonClickEvent"
       @onPageNumberButtonClickEvent="onPageNumberButtonClickEvent"
@@ -51,7 +51,7 @@ import CardArticleList from "@/components/cards/CardArticleList.vue";
 import PaginateCreator from "@/components/paginator/PaginateCreator.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
-import { getAllArticleRequestService } from "@/apis/articleFetcher";
+import { getArticlePerPageRequestService } from "@/apis/articleFetcher";
 
 import { agent } from "@/types";
 
@@ -60,16 +60,17 @@ import namespace from "@/static/name";
 import palette from "@/utils/palette";
 import errorUtil from "@/utils/errorUtil";
 
+const perPageNumber = 5;
+
 const state = reactive({
   tags: [],
 
   articles: [],
 
-  curPageNumer: 1,
-});
+  curPageNumber: 1,
 
-// TODO - BackEnd Data
-const totalPageNumber = 10;
+  totalPageNumber: 1,
+});
 
 onMounted(async () => {
   const tags = await getAllTagRequestService();
@@ -88,7 +89,11 @@ onMounted(async () => {
     state.tags = [];
   }
 
-  const articles = await getAllArticleRequestService();
+  const articleResult = await getArticlePerPageRequestService(
+    state.curPageNumber,
+    perPageNumber
+  );
+  const { articles } = articleResult;
 
   const articleInstanceArray = articles.map((art) => {
     const {
@@ -121,14 +126,15 @@ onMounted(async () => {
   });
 
   state.articles = articleInstanceArray;
+  state.totalPageNumber = articleResult.totalPageNumber;
 });
 
 const isFirstPage = computed(() => {
-  return state.curPageNumer === 1;
+  return state.curPageNumber === 1;
 });
 
 const isLastPage = computed(() => {
-  return state.curPageNumer === totalPageNumber;
+  return state.curPageNumber === state.totalPageNumber;
 });
 
 const recentArticleList = computed(() => {
@@ -139,6 +145,7 @@ const recentArticleList = computed(() => {
 const recentPostFontStyle = computed(() => {
   return {
     fontSize: palette.fontSize.l,
+    fontWeight: palette.fontWeight.bigBold,
     color: palette.colors.authorGray,
   };
 });
@@ -198,7 +205,7 @@ function onPrevButtonClickEvent() {
     return;
   }
 
-  state.curPageNumer -= 1;
+  state.curPageNumber -= 1;
 }
 
 function onNextButtonClickEvent() {
@@ -206,10 +213,10 @@ function onNextButtonClickEvent() {
     return;
   }
 
-  state.curPageNumer += 1;
+  state.curPageNumber += 1;
 }
 
 function onPageNumberButtonClickEvent(clickedPageNumner) {
-  state.curPageNumer = clickedPageNumner;
+  state.curPageNumber = clickedPageNumner;
 }
 </script>
