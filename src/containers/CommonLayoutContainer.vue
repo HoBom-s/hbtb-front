@@ -17,6 +17,7 @@
  */
 
 import { reactive, onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
 
 import AppHeader from "../components/common/AppHeader.vue";
 import AppFooter from "../components/common/AppFooter.vue";
@@ -26,6 +27,8 @@ import { getAllCategoryRequestService } from "@/apis/categoryFetcher";
 import { agent } from "@/types";
 
 import namespace from "@/static/name";
+
+const router = useRouter();
 
 const state = reactive({
   categories: [],
@@ -71,5 +74,7 @@ const mainContainerStyle = computed(() => {
 // Methods
 function onCategoryItemClickEvent(clickedCategory) {
   state.selectedCategory = clickedCategory;
+  const path = clickedCategory.path;
+  router.push(path);
 }
 </script>
