@@ -13,4 +13,19 @@ async function getAllArticleRequestService() {
   }
 }
 
-export { getAllArticleRequestService };
+async function getArticlePerPageRequestService(pageNumber, perPageNumber) {
+  try {
+    const articleResult = await axiosInstance.get(
+      `/article/list?pageNumber=${pageNumber}&perPage=${perPageNumber}`
+    );
+    const { data } = articleResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Get article per page request service fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
+export { getAllArticleRequestService, getArticlePerPageRequestService };
