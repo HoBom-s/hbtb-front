@@ -247,6 +247,28 @@ const validator = {};
 
 {
   /**
+   * Category sort index 검사
+   *
+   * @param {number} value
+   * @returns {Object}
+   */
+  validator.validateCategorySortIndex = function (value) {
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (value < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Category sort index must be bigger than 1");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
    * Tag Title 검사
    *
    * @param {string} value
