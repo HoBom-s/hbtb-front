@@ -187,6 +187,118 @@ const validator = {};
   };
 }
 
+{
+  /**
+   * Category title 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateCategoryTitle = function (value) {
+    const trimedCategoryTitle = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedCategoryTitle.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg(
+        "Category title length must be 1 charactor or longer"
+      );
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Category Path 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateCategoryPath = function (value) {
+    const trimedCategoryPath = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedCategoryPath.charAt(0) !== "/") {
+      validateError.setHasError(true);
+      validateError.setMsg("Category path's first charactor must be '/'");
+      return validateError.asObject();
+    }
+
+    if (trimedCategoryPath.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg(
+        "Category path length must be 1 charactor or longer"
+      );
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Tag Title 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateTagTitle = function (value) {
+    const trimedTagTitle = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedTagTitle.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Tag title length must be 1 charactor or longer");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Tag Path 검사
+   *
+   * @param {*} value
+   * @returns {Object}
+   */
+  validator.validateTagPath = function (value) {
+    const trimedTagPath = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedTagPath.charAt(0) !== "/") {
+      validateError.setHasError(true);
+      validateError.setMsg("Tag path's first charactor must be '/'");
+      return validateError.asObject();
+    }
+
+    if (trimedTagPath.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Tag path length must be 1 charactor or longer");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
 BaseSymbol.freezeSuperClass(ValidateError, ValidateError);
 
 Object.freeze(validator);
