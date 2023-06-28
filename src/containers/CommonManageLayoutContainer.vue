@@ -239,12 +239,11 @@ async function onBaseCategoryEditDialogAddButtonClickEvent() {
     return;
   }
 
-  const spot = categorySpot === "Header" ? "H" : "F";
   const createdCategoryResult = await createCategoryRequestService(
     categoryTitle,
     categoryPath,
     1,
-    spot
+    categorySpot
   );
 
   if (createdCategoryResult._id) {
