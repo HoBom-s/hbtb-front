@@ -119,7 +119,7 @@ const validator = {};
     // 8자리 미만이면 Error
     if (trimedPassword.length < 8) {
       validateError.setHasError(true);
-      validateError.setMsg("8 digits or more including symbol and number !");
+      validateError.setMsg("More than 8 digits including symbol and number !");
       return validateError.asObject();
     }
 
@@ -180,6 +180,140 @@ const validator = {};
     if (trimedIntroduction.length < 1) {
       validateError.setHasError(true);
       validateError.setMsg("Introduction length must be 1 charactor or longer");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Category title 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateCategoryTitle = function (value) {
+    const trimedCategoryTitle = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedCategoryTitle.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg(
+        "Category title length must be 1 charactor or longer"
+      );
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Category Path 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateCategoryPath = function (value) {
+    const trimedCategoryPath = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedCategoryPath.charAt(0) !== "/") {
+      validateError.setHasError(true);
+      validateError.setMsg("Category path's first charactor must be '/'");
+      return validateError.asObject();
+    }
+
+    if (trimedCategoryPath.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg(
+        "Category path length must be 1 charactor or longer"
+      );
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Category sort index 검사
+   *
+   * @param {number} value
+   * @returns {Object}
+   */
+  validator.validateCategorySortIndex = function (value) {
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (value < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Category sort index must be bigger than 1");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Tag Title 검사
+   *
+   * @param {string} value
+   * @returns {Object}
+   */
+  validator.validateTagTitle = function (value) {
+    const trimedTagTitle = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedTagTitle.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Tag title length must be 1 charactor or longer");
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Tag Path 검사
+   *
+   * @param {*} value
+   * @returns {Object}
+   */
+  validator.validateTagPath = function (value) {
+    const trimedTagPath = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedTagPath.charAt(0) !== "/") {
+      validateError.setHasError(true);
+      validateError.setMsg("Tag path's first charactor must be '/'");
+      return validateError.asObject();
+    }
+
+    if (trimedTagPath.length < 1) {
+      validateError.setHasError(true);
+      validateError.setMsg("Tag path length must be 1 charactor or longer");
       return validateError.asObject();
     }
 

@@ -2,9 +2,9 @@
   <q-dialog
     :modelValue="props.isDialogOpen"
     noEscDismiss
-    @update:modelValue="onBaseAlertDialogCloseButtonClickEvent"
+    @update:modelValue="onBaseEditDialogCloseButtonClickEvent"
   >
-    <q-card style="width: 300px">
+    <q-card style="min-width: 350px">
       <q-card-section>
         <div
           class="text-h6"
@@ -20,17 +20,22 @@
         </div>
       </q-card-section>
       <q-card-section class="q-pt-none">
-        {{ props.content }}
+        <slot></slot>
       </q-card-section>
-      <q-card-section
-        align="right"
-        class="bg-white"
-        :style="{ color: palette.colors.mainOrange }"
-      >
+      <q-card-section align="right" class="text-primary">
         <q-btn
           flat
-          label="OK"
-          @click="onBaseAlertDialogCloseButtonClickEvent"
+          label="Cancel"
+          :style="{ fontWeight: palette.fontWeight.bold }"
+          @click="onBaseEditDialogCloseButtonClickEvent"
+        />
+        <q-btn
+          flat
+          bordered
+          color="orange"
+          label="Confirm"
+          :style="{ fontWeight: palette.fontWeight.bold }"
+          @click="onBaseEditDialogConfirmButtonClickEvent"
         />
       </q-card-section>
     </q-card>
@@ -52,20 +57,20 @@ const props = defineProps({
     type: String,
     required: true,
   },
-
-  content: {
-    type: String,
-    required: true,
-  },
 });
 
 const emits = defineEmits({
   // No validation
-  onBaseAlertDialogCloseButtonClickEvent: () => true,
+  onBaseEditDialogCloseButtonClickEvent: () => true,
+
+  onBaseEditDialogConfirmButtonClickEvent: () => true,
 });
 
-// Methods
-function onBaseAlertDialogCloseButtonClickEvent() {
-  emits("onBaseAlertDialogCloseButtonClickEvent", false);
+function onBaseEditDialogCloseButtonClickEvent() {
+  emits("onBaseEditDialogCloseButtonClickEvent", false);
+}
+
+function onBaseEditDialogConfirmButtonClickEvent() {
+  emits("onBaseEditDialogConfirmButtonClickEvent");
 }
 </script>
