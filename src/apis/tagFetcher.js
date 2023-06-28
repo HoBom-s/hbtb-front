@@ -13,4 +13,20 @@ async function getAllTagRequestService() {
   }
 }
 
-export { getAllTagRequestService };
+async function createTagRequestService(title, path) {
+  try {
+    const createdTagResult = await axiosInstance.post("/tag/create", {
+      title: title,
+      path: path,
+    });
+    const { data } = createdTagResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Tag create request service fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
+export { getAllTagRequestService, createTagRequestService };
