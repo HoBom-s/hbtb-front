@@ -16,7 +16,10 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+
+import useStorage from "@/hooks/useStorage";
 
 import AppManageHeader from "@/components/common/AppManageHeader.vue";
 import AppManageSidebar from "@/components/common/AppManageSidebar.vue";
@@ -64,6 +67,13 @@ const manageSidebarItems = [
     hasChild: false,
   },
 ];
+
+onMounted(() => {
+  const [accessTokenValue] = useStorage("accessToken", "session");
+  if (!accessTokenValue) {
+    router.push("/admin/login");
+  }
+});
 
 // Methods
 function onHoBomTitleButtonClickEvent() {
