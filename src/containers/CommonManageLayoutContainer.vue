@@ -18,7 +18,7 @@
       @onBaseEditDialogCloseButtonClickEvent="
         onBaseCategoryEditDialogCloseButtonClickEvent
       "
-      @onBaseEditDialogAddButtonClickEvent="
+      @onBaseEditDialogConfirmButtonClickEvent="
         onBaseCategoryEditDialogAddButtonClickEvent
       "
     >
@@ -54,7 +54,7 @@
       @onBaseEditDialogCloseButtonClickEvent="
         onBaseTagEditDialogCloseButtonClickEvent
       "
-      @onBaseEditDialogAddButtonClickEvent="
+      @onBaseEditDialogConfirmButtonClickEvent="
         onBaseTagEditDialogAddButtonClickEvent
       "
     >
@@ -106,6 +106,7 @@ const manageSidebarItems = [
     menuTitle: "Dashboard",
     path: "/management",
     hasChild: false,
+    onClick: () => router.push("/management"),
   },
   {
     iconName: "pages",
@@ -113,24 +114,14 @@ const manageSidebarItems = [
     hasChild: true,
     childMenuItems: [
       {
-        iconName: "email",
-        menuTitle: "Page - 1",
-        onClick: () => true,
+        iconName: "code",
+        menuTitle: "HoBom Techk Blog",
+        onClick: () => router.push("/"),
       },
       {
-        iconName: "lock",
-        menuTitle: "Lock Page",
-        onClick: () => true,
-      },
-      {
-        iconName: "list",
-        menuTitle: "Page - 2",
-        onClick: () => true,
-      },
-      {
-        iconName: "person",
-        menuTitle: "Page - 3",
-        onClick: () => true,
+        iconName: "vpn_lock",
+        menuTitle: "Management",
+        onClick: () => router.push("/management"),
       },
     ],
   },
@@ -166,7 +157,8 @@ const state = reactive({
 
 onMounted(() => {
   const [accessTokenValue] = useStorage("accessToken", "session");
-  if (!accessTokenValue) {
+
+  if (!accessTokenValue.value) {
     router.push("/admin/login");
   }
 });
@@ -251,6 +243,7 @@ async function onBaseCategoryEditDialogAddButtonClickEvent() {
     state.inputValues.categoryPath = "";
     state.inputValues.categorySpot = "Header";
     state.isCategoryCreateDialogOpen = false;
+    window.location.reload();
   }
 }
 
@@ -278,6 +271,7 @@ async function onBaseTagEditDialogAddButtonClickEvent() {
     state.inputValues.tagTitle = "";
     state.inputValues.tagPath = "";
     state.isTagCreateDialogOpen = false;
+    window.location.reload();
   }
 }
 </script>

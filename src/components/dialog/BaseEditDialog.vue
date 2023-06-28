@@ -1,5 +1,9 @@
 <template>
-  <q-dialog :modelValue="props.isDialogOpen">
+  <q-dialog
+    :modelValue="props.isDialogOpen"
+    noEscDismiss
+    @update:modelValue="onBaseEditDialogCloseButtonClickEvent"
+  >
     <q-card style="min-width: 350px">
       <q-card-section>
         <div

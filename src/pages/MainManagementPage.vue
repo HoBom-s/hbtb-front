@@ -1,7 +1,7 @@
 <template>
   <CommonManageLayoutContainer>
     <CardManagementList :iconPosition="'left'" :cardItems="getCardItems" />
-    <div class="row q-gutter-sm" :style="{ height: '450px' }">
+    <div class="row q-gutter-sm" :style="{ maxHieght: '450px' }">
       <div class="col">
         <ManagementItemBox
           :tabItems="tabItems"
@@ -27,7 +27,11 @@
             <q-card-section
               class="q-pa-md flex q-gutter-md"
               bordered
-              :style="{ justifyContent: 'center' }"
+              :style="{
+                justifyContent: 'center',
+                maxHeight: '374px',
+                overflowY: 'auto',
+              }"
             >
               <CircleChart :itemObject="getChartCategoryTagItemObject" />
               <CircleChart :itemObject="getChartArticleItemObject" />
@@ -121,9 +125,7 @@
 
 <script setup>
 import { reactive, onBeforeMount, onMounted, computed } from "vue";
-import { useRouter } from "vue-router";
 
-import useStorage from "@/hooks/useStorage";
 import useValidate from "@/hooks/useValidate";
 
 import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
@@ -155,8 +157,6 @@ import palette from "@/utils/palette";
 import funcUtil from "@/utils/funcUtil";
 import validator from "@/utils/validator";
 import errorUtil from "@/utils/errorUtil";
-
-const router = useRouter();
 
 let timer;
 
@@ -199,74 +199,7 @@ onBeforeMount(() => {
 });
 
 onMounted(async () => {
-  const [accessTokenValue] = useStorage("accessToken", "session");
-  if (!accessTokenValue) {
-    router.push("/");
-  }
-
-  const categories = await getAllCategoryRequestService();
-
-  const categoryInstanceArray = categories.map((cat) => {
-    const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
-
-    const categoryObject = agent
-      .instanceOfName(namespace.categorySchema)
-      .createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt);
-
-    return categoryObject;
-  });
-
-  state.categories = categoryInstanceArray;
-
-  const tags = await getAllTagRequestService();
-
-  const tagInstanceArray = tags.map((tag) => {
-    const { _id, title, path, count, createdAt } = tag;
-
-    const tagObject = agent
-      .instanceOfName(namespace.tagSchema)
-      .createInstance(_id, title, path, count, createdAt);
-
-    return tagObject;
-  });
-
-  state.tags = tagInstanceArray;
-
-  const articles = await getAllArticleRequestService();
-
-  const articleInstanceArray = articles.map((art) => {
-    const {
-      _id,
-      thumbnail,
-      title,
-      subtitle,
-      contents,
-      tags,
-      writers,
-      path,
-      createdAt,
-      updatedAt,
-    } = art;
-
-    const articleObject = agent
-      .instanceOfName(namespace.articleSchema)
-      .createInstance(
-        _id,
-        thumbnail,
-        title,
-        subtitle,
-        contents,
-        tags,
-        writers,
-        path,
-        createdAt,
-        updatedAt
-      );
-
-    return articleObject;
-  });
-
-  state.articles = articleInstanceArray;
+  await doFetchAllSchema();
 });
 
 const getCardItems = computed(() => {
@@ -547,6 +480,7 @@ async function onBaseEditDialogConfirmButtonClickEvent() {
     if (updateResult._id) {
       state.selectedUpdateItem = {};
       state.isUpdateDialogOpen = false;
+      await doFetchAllSchema();
     }
   } else if (state.isRemoveDialogOpen) {
     const removeResult = await funcUtil
@@ -564,8 +498,75 @@ async function onBaseEditDialogConfirmButtonClickEvent() {
     if (removeResult) {
       state.selectedRemoveItem = "";
       state.isRemoveDialogOpen = false;
+      await doFetchAllSchema();
     }
   }
+}
+
+async function doFetchAllSchema() {
+  const categories = await getAllCategoryRequestService();
+
+  const categoryInstanceArray = categories.map((cat) => {
+    const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
+
+    const categoryObject = agent
+      .instanceOfName(namespace.categorySchema)
+      .createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt);
+
+    return categoryObject;
+  });
+
+  state.categories = categoryInstanceArray;
+
+  const tags = await getAllTagRequestService();
+
+  const tagInstanceArray = tags.map((tag) => {
+    const { _id, title, path, count, createdAt } = tag;
+
+    const tagObject = agent
+      .instanceOfName(namespace.tagSchema)
+      .createInstance(_id, title, path, count, createdAt);
+
+    return tagObject;
+  });
+
+  state.tags = tagInstanceArray;
+
+  const articles = await getAllArticleRequestService();
+
+  const articleInstanceArray = articles.map((art) => {
+    const {
+      _id,
+      thumbnail,
+      title,
+      subtitle,
+      contents,
+      tags,
+      writers,
+      path,
+      createdAt,
+      updatedAt,
+    } = art;
+
+    const articleObject = agent
+      .instanceOfName(namespace.articleSchema)
+      .createInstance(
+        _id,
+        thumbnail,
+        title,
+        subtitle,
+        contents,
+        tags,
+        writers,
+        path,
+        createdAt,
+        updatedAt
+      );
+
+    return articleObject;
+  });
+
+  state.articles = articleInstanceArray;
 }
 
 function quasarFinalReset(reset) {

@@ -1,5 +1,9 @@
 <template>
-  <q-dialog :modelValue="props.isDialogOpen">
+  <q-dialog
+    :modelValue="props.isDialogOpen"
+    noEscDismiss
+    @update:modelValue="onBaseAlertDialogCloseButtonClickEvent"
+  >
     <q-card style="width: 300px">
       <q-card-section>
         <div

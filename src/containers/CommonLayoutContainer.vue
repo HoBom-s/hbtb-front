@@ -35,13 +35,23 @@ const state = reactive({
 
 onMounted(async () => {
   const categories = await getAllCategoryRequestService();
-  const categoryInstanceArray = categories.map((cat) => {
-    const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
-    const catObj = agent
-      .instanceOfName(namespace.categorySchema)
-      .createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt);
-    return catObj;
-  });
+  const categoryInstanceArray = categories
+    .map((cat) => {
+      const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
+      const catObj = agent
+        .instanceOfName(namespace.categorySchema)
+        .createInstance(
+          _id,
+          title,
+          path,
+          sortIndex,
+          spot,
+          createdAt,
+          updatedAt
+        );
+      return catObj;
+    })
+    .filter((cat) => cat.spot === "H");
   if (categoryInstanceArray.every((cat) => cat.ofPathCondition(cat.path))) {
     state.categories = categoryInstanceArray;
     state.selectedCategory = categoryInstanceArray[0];
