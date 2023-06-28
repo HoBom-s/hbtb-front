@@ -26,6 +26,8 @@
               :itemKind="'categories'"
               :categories="props.categories"
               :tags="props.tags"
+              @onItemSlideLeftEvent="onItemSlideLeftEvent"
+              @onItemSlideRightEvent="onItemSlideRightEvent"
             />
           </q-list>
         </q-tab-panel>
@@ -35,6 +37,8 @@
               :itemKind="'tags'"
               :categories="props.categories"
               :tags="props.tags"
+              @onItemSlideLeftEvent="onItemSlideLeftEvent"
+              @onItemSlideRightEvent="onItemSlideRightEvent"
             />
           </q-list>
         </q-tab-panel>
@@ -73,10 +77,22 @@ const props = defineProps({
 const emits = defineEmits({
   // No validation
   onTabValueChangeEvent: () => true,
+
+  onItemSlideLeftEvent: () => true,
+
+  onItemSlideRightEvent: () => true,
 });
 
 // Methods
 function onTabValueChangeEvent(value) {
   emits("onTabValueChangeEvent", value);
+}
+
+function onItemSlideLeftEvent(e, item) {
+  emits("onItemSlideLeftEvent", e, item);
+}
+
+function onItemSlideRightEvent(e, _id) {
+  emits("onItemSlideRightEvent", e, _id);
 }
 </script>
