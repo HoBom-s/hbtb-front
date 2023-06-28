@@ -1,5 +1,5 @@
 <template>
-  <q-dialog :modelValue="props.isDialogOpen" persistent>
+  <q-dialog :modelValue="props.isDialogOpen">
     <q-card style="min-width: 350px">
       <q-card-section>
         <div
