@@ -5,7 +5,7 @@
         Recent articles
       </div>
       <div class="q-mb-md flex" :style="recentArticleBoxStyle">
-        <CardArticleRecentList :cardItems="recentArticleList" />
+        <CardArticleRecentList :cardItems="state.recentArticles" />
       </div>
     </div>
     <div :style="mainContentBoxStyle">
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, computed } from "vue";
+import { reactive, onMounted, watch, computed } from "vue";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
@@ -51,7 +51,10 @@ import CardArticleList from "@/components/cards/CardArticleList.vue";
 import PaginateCreator from "@/components/paginator/PaginateCreator.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
-import { getArticlePerPageRequestService } from "@/apis/articleFetcher";
+import {
+  getAllArticleRequestService,
+  getArticlePerPageRequestService,
+} from "@/apis/articleFetcher";
 
 import { agent } from "@/types";
 
@@ -64,6 +67,8 @@ const perPageNumber = 5;
 
 const state = reactive({
   tags: [],
+
+  recentArticles: [],
 
   articles: [],
 
@@ -88,6 +93,10 @@ onMounted(async () => {
   } else {
     state.tags = [];
   }
+
+  const recentArticleResult = await getAllArticleRequestService();
+
+  state.recentArticles = recentArticleResult.slice(0, 3);
 
   const articleResult = await getArticlePerPageRequestService(
     state.curPageNumber,
@@ -129,17 +138,56 @@ onMounted(async () => {
   state.totalPageNumber = articleResult.totalPageNumber;
 });
 
+watch(
+  () => state.curPageNumber,
+  async (newCurPageNumber) => {
+    const articleResult = await getArticlePerPageRequestService(
+      newCurPageNumber,
+      perPageNumber
+    );
+
+    const { articles } = articleResult;
+
+    const articleInstanceArray = articles.map((art) => {
+      const {
+        _id,
+        thumbnail,
+        title,
+        subtitle,
+        contents,
+        tags,
+        writers,
+        path,
+        createdAt,
+        updatedAt,
+      } = art;
+      const articleObject = agent
+        .instanceOfName(namespace.articleSchema)
+        .createInstance(
+          _id,
+          thumbnail,
+          title,
+          subtitle,
+          contents,
+          tags,
+          writers,
+          path,
+          createdAt,
+          updatedAt
+        );
+      return articleObject;
+    });
+
+    state.articles = articleInstanceArray;
+  }
+);
+
 const isFirstPage = computed(() => {
   return state.curPageNumber === 1;
 });
 
 const isLastPage = computed(() => {
   return state.curPageNumber === state.totalPageNumber;
-});
-
-const recentArticleList = computed(() => {
-  const recentArticles = state.articles.slice(0, 3);
-  return recentArticles;
 });
 
 const recentPostFontStyle = computed(() => {
