@@ -1,6 +1,7 @@
 import BaseSymbol from "./base/baseSymbol";
 import TagSchema from "./tag/tagSchema";
 import CategorySchema from "./category/categorySchema";
+import UserSchema from "./user/userSchema";
 import UserRegisterSchema from "./user/userRegisterSchema";
 import UserLoginSchema from "./user/userLoginSchema";
 import ArticleSchema from "./article/articleSchema";
@@ -54,6 +55,9 @@ class TypeAgent extends BaseSymbol {
     agent,
     new UserRegisterSchema(namespace.userRegisterSchema)
   );
+
+  // Agent에 User Schema를 주입
+  BaseSymbol.addSymbol(agent, new UserSchema(namespace.userSchema));
 
   // Agent에 User Login Schema를 주입
   BaseSymbol.addSymbol(agent, new UserLoginSchema(namespace.userLoginSchema));
