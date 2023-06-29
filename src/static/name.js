@@ -11,6 +11,9 @@ const namespace = {
   // Category Schema에 대한 Const
   categorySchema: "CategorySchema",
 
+  // User Schema에 대한 Const
+  userSchema: "UserSchema",
+
   // User Register Schema에 대한 Const
   userRegisterSchema: "UserRegisterSchema",
 
