@@ -43,6 +43,7 @@
 
 <script setup>
 import { reactive, onMounted, watch, computed } from "vue";
+import { useRouter } from "vue-router";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
@@ -61,7 +62,8 @@ import { agent } from "@/types";
 import namespace from "@/static/name";
 
 import palette from "@/utils/palette";
-import errorUtil from "@/utils/errorUtil";
+
+const router = useRouter();
 
 const perPageNumber = 5;
 
@@ -244,8 +246,15 @@ const mainArticleTagBoxStyle = computed(() => {
 
 // Methods
 function onTagItemClickEvent(clickedTag) {
-  console.log(clickedTag);
-  errorUtil.notImplemented();
+  const { path } = clickedTag;
+
+  router.push({
+    path: "/tag",
+    name: "MainTechTagSearchPage",
+    params: {
+      searchTag: path,
+    },
+  });
 }
 
 function onPrevButtonClickEvent() {
