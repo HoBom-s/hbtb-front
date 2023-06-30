@@ -127,6 +127,7 @@
 import { reactive, onBeforeMount, onMounted, computed } from "vue";
 
 import useValidate from "@/hooks/useValidate";
+import useStorage from "@/hooks/useStorage";
 
 import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
 import CardManagementList from "@/components/cards/CardManagementList.vue";
@@ -137,6 +138,7 @@ import BaseEditDialog from "@/components/dialog/BaseEditDialog.vue";
 import AppInput from "@/components/common/AppInput.vue";
 import AppSelect from "@/components/common/AppSelect.vue";
 
+import { userGetMyInformationService } from "@/apis/userFetcher";
 import {
   getAllCategoryRequestService,
   updateCategoryRequestService,
@@ -174,6 +176,8 @@ const state = reactive({
 
   tags: [],
 
+  myInformation: {},
+
   selectedTabItem: "category",
 
   selectedUpdateItem: {},
@@ -203,32 +207,47 @@ onMounted(async () => {
 });
 
 const getCardItems = computed(() => {
+  const nickname = funcUtil.pick(state.myInformation, "nickname");
+  const role = funcUtil.pick(state.myInformation, "role");
+
+  const articleCounts = (() => {
+    let cnt = 0;
+    state.articles.forEach((art) => {
+      art.writers.forEach((writer) => {
+        if (writer.nickname === nickname) {
+          cnt++;
+        }
+      });
+    });
+    return cnt;
+  })();
+
   const cardItems = [
     {
       title: "My Account",
       icon: "person",
-      value: "Robin",
+      value: nickname,
       iconColor: "#3e51b5",
       bgColor: "#5064b5",
     },
     {
-      title: "Total Likes",
-      icon: "favorite",
-      value: "500",
+      title: "Role",
+      icon: "badge",
+      value: role,
       iconColor: "#FFA630",
       bgColor: "#FFA07A",
     },
     {
-      title: "Comments",
-      icon: "comments",
-      value: "50",
+      title: "Articles",
+      icon: "article",
+      value: articleCounts,
       iconColor: "#ea4b64",
       bgColor: "#ea6a7f",
     },
     {
-      title: "Website Visits",
+      title: "Serivce Name",
       icon: "monitoring",
-      value: "1020",
+      value: "HoBom Tech Blog",
       iconColor: "#9400D3",
       bgColor: "#9932CC",
     },
@@ -567,6 +586,21 @@ async function doFetchAllSchema() {
   });
 
   state.articles = articleInstanceArray;
+
+  const [accessTokenValue] = useStorage("accessToken", "session");
+  const accessToken = accessTokenValue.value;
+
+  const myInforMationObjectResult = await userGetMyInformationService(
+    accessToken
+  );
+  const { _id, nickname, introduction, role, profileImg } =
+    myInforMationObjectResult;
+
+  const userInformationObject = agent
+    .instanceOfName(namespace.userSchema)
+    .createInstance(_id, nickname, introduction, role, profileImg);
+
+  state.myInformation = userInformationObject;
 }
 
 function quasarFinalReset(reset) {
