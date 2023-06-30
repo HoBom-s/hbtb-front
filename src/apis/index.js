@@ -26,9 +26,14 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    const { status, message } = error;
+    const { message } = error;
+    const { status } = error.request;
     if (status >= 400 && status < 500) {
       // Client Error
+      if (status === 401) {
+        sessionStorage.clear();
+        window.location.replace("/admin/login");
+      }
       return Promise.reject({
         status: status,
         message: `The client request error with ${message}`,
@@ -59,9 +64,14 @@ axiosInstance.interceptors.response.use(
     return config;
   },
   (error) => {
-    const { status, message } = error;
+    const { message } = error;
+    const { status } = error.response;
     if (status >= 400 && status < 500) {
       // Client Error
+      if (status === 401) {
+        sessionStorage.clear();
+        window.location.replace("/admin/login");
+      }
       return Promise.reject({
         status: status,
         message: `The client response error with ${message}`,
