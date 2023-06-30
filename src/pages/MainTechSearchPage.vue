@@ -27,7 +27,7 @@
       </div>
       <div class="flex">
         <div
-          v-if="state.articles.length === 0"
+          v-if="state.searchResultArticles.length === 0"
           class="q-pt-xl q-pb-xl"
           :style="{
             width: '800px',
