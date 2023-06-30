@@ -9,7 +9,7 @@ import namespace from "@/static/name";
  *
  * 모든 Class는 BaseSymbol을 상속받아야 한다.
  *
- * 해당 Class에서 UserSchema에 필요한 것들을 정의 하도록 한다.
+ * 해당 Class에서 UserLoginSchema에 필요한 것들을 정의 하도록 한다.
  */
 class UserLoginSchema extends BaseSymbol {
   constructor(name) {

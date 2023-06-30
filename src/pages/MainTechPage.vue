@@ -5,7 +5,7 @@
         Recent articles
       </div>
       <div class="q-mb-md flex" :style="recentArticleBoxStyle">
-        <CardArticleRecentList :cardItems="recentArticleList" />
+        <CardArticleRecentList :cardItems="state.recentArticles" />
       </div>
     </div>
     <div :style="mainContentBoxStyle">
@@ -31,9 +31,9 @@
     </div>
     <PaginateCreator
       :paginator="'list'"
-      :curPageNumber="state.curPageNumer"
-      :totalPageNumber="10"
-      :divider="5"
+      :curPageNumber="state.curPageNumber"
+      :totalPageNumber="state.totalPageNumber"
+      :divider="perPageNumber"
       @onPrevButtonClickEvent="onPrevButtonClickEvent"
       @onNextButtonClickEvent="onNextButtonClickEvent"
       @onPageNumberButtonClickEvent="onPageNumberButtonClickEvent"
@@ -42,7 +42,8 @@
 </template>
 
 <script setup>
-import { reactive, onMounted, computed } from "vue";
+import { reactive, onMounted, watch, computed } from "vue";
+import { useRouter } from "vue-router";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
@@ -51,25 +52,32 @@ import CardArticleList from "@/components/cards/CardArticleList.vue";
 import PaginateCreator from "@/components/paginator/PaginateCreator.vue";
 
 import { getAllTagRequestService } from "@/apis/tagFetcher";
-import { getAllArticleRequestService } from "@/apis/articleFetcher";
+import {
+  getAllArticleRequestService,
+  getArticlePerPageRequestService,
+} from "@/apis/articleFetcher";
 
 import { agent } from "@/types";
 
 import namespace from "@/static/name";
 
 import palette from "@/utils/palette";
-import errorUtil from "@/utils/errorUtil";
+
+const router = useRouter();
+
+const perPageNumber = 5;
 
 const state = reactive({
   tags: [],
 
+  recentArticles: [],
+
   articles: [],
 
-  curPageNumer: 1,
-});
+  curPageNumber: 1,
 
-// TODO - BackEnd Data
-const totalPageNumber = 10;
+  totalPageNumber: 1,
+});
 
 onMounted(async () => {
   const tags = await getAllTagRequestService();
@@ -88,7 +96,15 @@ onMounted(async () => {
     state.tags = [];
   }
 
-  const articles = await getAllArticleRequestService();
+  const recentArticleResult = await getAllArticleRequestService();
+
+  state.recentArticles = recentArticleResult.slice(0, 3);
+
+  const articleResult = await getArticlePerPageRequestService(
+    state.curPageNumber,
+    perPageNumber
+  );
+  const { articles } = articleResult;
 
   const articleInstanceArray = articles.map((art) => {
     const {
@@ -121,24 +137,65 @@ onMounted(async () => {
   });
 
   state.articles = articleInstanceArray;
+  state.totalPageNumber = articleResult.totalPageNumber;
 });
 
+watch(
+  () => state.curPageNumber,
+  async (newCurPageNumber) => {
+    const articleResult = await getArticlePerPageRequestService(
+      newCurPageNumber,
+      perPageNumber
+    );
+
+    const { articles } = articleResult;
+
+    const articleInstanceArray = articles.map((art) => {
+      const {
+        _id,
+        thumbnail,
+        title,
+        subtitle,
+        contents,
+        tags,
+        writers,
+        path,
+        createdAt,
+        updatedAt,
+      } = art;
+      const articleObject = agent
+        .instanceOfName(namespace.articleSchema)
+        .createInstance(
+          _id,
+          thumbnail,
+          title,
+          subtitle,
+          contents,
+          tags,
+          writers,
+          path,
+          createdAt,
+          updatedAt
+        );
+      return articleObject;
+    });
+
+    state.articles = articleInstanceArray;
+  }
+);
+
 const isFirstPage = computed(() => {
-  return state.curPageNumer === 1;
+  return state.curPageNumber === 1;
 });
 
 const isLastPage = computed(() => {
-  return state.curPageNumer === totalPageNumber;
-});
-
-const recentArticleList = computed(() => {
-  const recentArticles = state.articles.slice(0, 3);
-  return recentArticles;
+  return state.curPageNumber === state.totalPageNumber;
 });
 
 const recentPostFontStyle = computed(() => {
   return {
     fontSize: palette.fontSize.l,
+    fontWeight: palette.fontWeight.bigBold,
     color: palette.colors.authorGray,
   };
 });
@@ -189,8 +246,15 @@ const mainArticleTagBoxStyle = computed(() => {
 
 // Methods
 function onTagItemClickEvent(clickedTag) {
-  console.log(clickedTag);
-  errorUtil.notImplemented();
+  const { path } = clickedTag;
+
+  router.push({
+    path: "/tag",
+    name: "MainTechTagSearchPage",
+    params: {
+      searchTag: path,
+    },
+  });
 }
 
 function onPrevButtonClickEvent() {
@@ -198,7 +262,7 @@ function onPrevButtonClickEvent() {
     return;
   }
 
-  state.curPageNumer -= 1;
+  state.curPageNumber -= 1;
 }
 
 function onNextButtonClickEvent() {
@@ -206,10 +270,10 @@ function onNextButtonClickEvent() {
     return;
   }
 
-  state.curPageNumer += 1;
+  state.curPageNumber += 1;
 }
 
 function onPageNumberButtonClickEvent(clickedPageNumner) {
-  state.curPageNumer = clickedPageNumner;
+  state.curPageNumber = clickedPageNumner;
 }
 </script>

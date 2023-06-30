@@ -20,6 +20,10 @@
           <q-avatar size="26px">
             <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
           </q-avatar>
+          <LogoutAuthMenuBox
+            :userInformation="props.userInformation"
+            @onLogoutButtonClickEvent="onLogoutButtonClickEvent"
+          />
         </q-btn>
       </div>
     </q-toolbar>
@@ -27,15 +31,30 @@
 </template>
 
 <script setup>
-import { defineEmits } from "vue";
+import { defineProps, defineEmits } from "vue";
+
+import LogoutAuthMenuBox from "../auth/LogoutAuthMenuBox.vue";
+
+const props = defineProps({
+  userInformation: {
+    type: Object,
+    required: true,
+  },
+});
 
 const emits = defineEmits({
   // No validation
   onHoBomTitleButtonClickEvent: () => true,
+
+  onLogoutButtonClickEvent: () => true,
 });
 
 // Methods
 function onHoBomTitleButtonClickEvent() {
   emits("onHoBomTitleButtonClickEvent");
+}
+
+function onLogoutButtonClickEvent() {
+  emits("onLogoutButtonClickEvent");
 }
 </script>

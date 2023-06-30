@@ -60,7 +60,7 @@ function onCategoryItemClickEvent(clickedCategory) {
   emits("onCategoryItemClickEvent", clickedCategory);
 }
 
-function onSearchItemClickEvent(isSearchItemClick) {
-  emits("onSearchItemClickEvent", isSearchItemClick);
+function onSearchItemClickEvent() {
+  emits("onSearchItemClickEvent");
 }
 </script>

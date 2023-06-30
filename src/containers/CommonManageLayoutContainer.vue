@@ -1,7 +1,9 @@
 <template>
   <q-layout>
     <AppManageHeader
+      :userInformation="state.userInofrmation"
       @onHoBomTitleButtonClickEvent="onHoBomTitleButtonClickEvent"
+      @onLogoutButtonClickEvent="onLogoutButtonClickEvent"
     />
     <AppManageSidebar
       :manageSidebarItems="manageSidebarItems"
@@ -95,8 +97,17 @@ import BaseEditDialog from "@/components/dialog/BaseEditDialog.vue";
 
 import { createCategoryRequestService } from "@/apis/categoryFetcher";
 import { createTagRequestService } from "@/apis/tagFetcher";
+import {
+  userGetMyInformationService,
+  userLogoutRequestService,
+} from "@/apis/userFetcher";
+
+import { agent } from "@/types";
+
+import namespace from "@/static/name";
 
 import validator from "@/utils/validator";
+import funcUtil from "@/utils/funcUtil";
 
 const router = useRouter();
 
@@ -115,7 +126,7 @@ const manageSidebarItems = [
     childMenuItems: [
       {
         iconName: "code",
-        menuTitle: "HoBom Techk Blog",
+        menuTitle: "HoBom Tech Blog",
         onClick: () => router.push("/"),
       },
       {
@@ -153,14 +164,28 @@ const state = reactive({
     tagTitle: "",
     tagPath: "",
   },
+
+  userInofrmation: {},
 });
 
-onMounted(() => {
+onMounted(async () => {
   const [accessTokenValue] = useStorage("accessToken", "session");
 
-  if (!accessTokenValue.value) {
+  const tokenValue = accessTokenValue.value;
+
+  if (!tokenValue) {
     router.push("/admin/login");
   }
+
+  const userInformationResult = await userGetMyInformationService(tokenValue);
+  const { _id, nickname, introduction, role, profileImg } =
+    userInformationResult;
+
+  const userInformationInstance = agent
+    .instanceOfName(namespace.userSchema)
+    .createInstance(_id, nickname, introduction, role, profileImg);
+
+  state.userInofrmation = userInformationInstance;
 });
 
 const validateCategoryTitle = computed(() => {
@@ -190,6 +215,25 @@ const validateTagPath = computed(() => {
 // Methods
 function onHoBomTitleButtonClickEvent() {
   router.push("/");
+}
+
+async function onLogoutButtonClickEvent() {
+  // eslint-disable-next-line no-unused-vars
+  const [accessTokenValue, _, removeSessionStorageItem] = useStorage(
+    "accessToken",
+    "session"
+  );
+
+  const tokenValue = accessTokenValue.value;
+
+  const { _id } = state.userInofrmation;
+
+  const logoutResult = await userLogoutRequestService(tokenValue, _id);
+  const pickedUserId = funcUtil.pick(logoutResult, "_id");
+  if (pickedUserId) {
+    removeSessionStorageItem();
+    router.push("/");
+  }
 }
 
 function onPublishButtonClickEvent() {

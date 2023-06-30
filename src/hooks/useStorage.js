@@ -61,7 +61,12 @@ const useStorage = (key, type = "session") => {
     storage.setItem(key, JSON.stringify(newValue));
   };
 
-  return [value, setStorageItem(storage)];
+  const removeStorageItem = (storage) => () => {
+    value.value = null;
+    storage.removeItem(key);
+  };
+
+  return [value, setStorageItem(storage), removeStorageItem(storage)];
 };
 
 export default useStorage;

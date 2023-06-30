@@ -1,7 +1,12 @@
 <template>
   <div>
     <q-toolbar :style="toolbarStyle">
-      <q-btn flat label="HBTB" :style="logoStyle" />
+      <q-btn
+        flat
+        label="HoBom Tech"
+        :style="logoStyle"
+        @click="onLogoButtonClickEvent"
+      />
       <q-space />
       <CategoryItemList
         :categories="props.categories"
@@ -22,6 +27,53 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="searchContentOpenCondition"
+      class="fade-in-box"
+      :style="mainSearchContentStyle"
+    >
+      <div
+        :style="{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+        }"
+      >
+        <div
+          :style="{
+            width: '1200px',
+          }"
+        >
+          <q-input
+            filled
+            square
+            label="검색어를 입력하세요."
+            bgColor="white"
+            :modelValue="props.keyword"
+            @keydown="onKeywordChangeEvent($event)"
+          />
+          <div
+            class="q-mt-md"
+            :style="{
+              color: palette.colors.chipGray,
+              fontSize: palette.fontSize.xl,
+              fontWeight: palette.fontWeight.bold,
+            }"
+          >
+            추천 키워드
+          </div>
+          <div class="q-mt-md">
+            <TagItemList
+              :tags="props.tags"
+              @onTagItemClickEvent="onTagItemClickEvent"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,9 +81,9 @@
 import { reactive, defineProps, defineEmits, onMounted, computed } from "vue";
 
 import CategoryItemList from "../categories/CategoryItemList.vue";
+import TagItemList from "../tags/TagItemList.vue";
 
 import palette from "@/utils/palette";
-import errorUtil from "@/utils/errorUtil";
 
 const state = reactive({
   headerScrollPosition: null,
@@ -45,15 +97,38 @@ const props = defineProps({
     required: true,
   },
 
+  tags: {
+    type: Array,
+    required: true,
+  },
+
   selectedCategory: {
     type: Object,
+    required: true,
+  },
+
+  isSearchItemClick: {
+    type: Boolean,
+    required: true,
+  },
+
+  keyword: {
+    type: String,
     required: true,
   },
 });
 
 const emits = defineEmits({
+  // No validation
   onCategoryItemClickEvent: () => true,
+
+  onTagItemClickEvent: () => true,
+
   onSearchItemClickEvent: () => true,
+
+  onLogoButtonClickEvent: () => true,
+
+  onKeywordChangeEvent: () => true,
 });
 
 onMounted(() => {
@@ -62,10 +137,15 @@ onMounted(() => {
   });
 });
 
+const searchContentOpenCondition = computed(() => {
+  if (props.isSearchItemClick && state.headerScrollPosition < 84) return true;
+  return false;
+});
+
 const toolbarStyle = computed(() => {
   return {
     height: "84px",
-    zIndex: 1,
+    zIndex: 2,
     transition: "0.5s",
     top: 0,
     position: "fixed",
@@ -92,6 +172,18 @@ const mainContentStyle = computed(() => {
     top: 0,
     left: 0,
     zIndex: 0,
+  };
+});
+
+const mainSearchContentStyle = computed(() => {
+  return {
+    width: "100%",
+    height: `${420}px`,
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    position: "fixed",
+    background: palette.colors.mainBlack,
   };
 });
 
@@ -142,9 +234,34 @@ function onCategoryItemClickEvent(clickedCategory) {
   emits("onCategoryItemClickEvent", clickedCategory);
 }
 
-function onSearchItemClickEvent(isSearchItemClick) {
-  state.isSearchItemClick = !isSearchItemClick;
-  // TODO Search Item Button Click Event 구현
-  errorUtil.notImplemented("The onSearchItemClickEvent is not implemented");
+function onTagItemClickEvent(clickedTag) {
+  emits("onTagItemClickEvent", clickedTag);
+}
+
+function onSearchItemClickEvent() {
+  emits("onSearchItemClickEvent");
+}
+
+function onLogoButtonClickEvent() {
+  emits("onLogoButtonClickEvent");
+}
+
+function onKeywordChangeEvent(e) {
+  emits("onKeywordChangeEvent", e);
 }
 </script>
+
+<style scoped>
+.fade-in-box {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+</style>
