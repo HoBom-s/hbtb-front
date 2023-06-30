@@ -214,7 +214,7 @@ const validateTagPath = computed(() => {
 
 // Methods
 function onHoBomTitleButtonClickEvent() {
-  router.push("/");
+  router.push("/management");
 }
 
 async function onLogoutButtonClickEvent() {
