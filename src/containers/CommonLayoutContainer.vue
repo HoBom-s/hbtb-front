@@ -4,12 +4,13 @@
       :categories="state.categories"
       :tags="state.tags"
       :selectedCategory="state.selectedCategory"
-      :selectedTag="state.selectedTag"
       :isSearchItemClick="state.isSearchItemClick"
+      :keyword="state.keyword"
       @onCategoryItemClickEvent="onCategoryItemClickEvent"
       @onTagItemClickEvent="onTagItemClickEvent"
       @onSearchItemClickEvent="onSearchItemClickEvent"
       @onLogoButtonClickEvent="onLogoButtonClickEvent"
+      @onKeywordChangeEvent="onKeywordChangeEvent"
     />
     <div :style="mainContainerStyle"><slot></slot></div>
     <AppFooter />
@@ -44,9 +45,9 @@ const state = reactive({
 
   selectedCategory: {},
 
-  selectedTag: {},
-
   isSearchItemClick: false,
+
+  keyword: "",
 });
 
 onMounted(async () => {
@@ -106,7 +107,15 @@ function onCategoryItemClickEvent(clickedCategory) {
 }
 
 function onTagItemClickEvent(clickedTag) {
-  state.selectedTag = clickedTag;
+  const { path } = clickedTag;
+
+  router.push({
+    path: "/tag",
+    name: "MainTechTagSearchPage",
+    params: {
+      searchTag: path,
+    },
+  });
 }
 
 function onSearchItemClickEvent() {
@@ -115,5 +124,18 @@ function onSearchItemClickEvent() {
 
 function onLogoButtonClickEvent() {
   router.push("/");
+}
+
+function onKeywordChangeEvent(e) {
+  const { value } = e.target;
+  state.keyword = value;
+  if (e.key === "Enter") {
+    router.push({
+      path: "/search",
+      query: {
+        keyword: state.keyword,
+      },
+    });
+  }
 }
 </script>
