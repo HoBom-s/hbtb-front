@@ -26,7 +26,19 @@
         </div>
       </div>
       <div class="flex">
-        <div :style="{ width: '800px' }">
+        <div
+          v-if="state.articles.length === 0"
+          class="q-pt-xl q-pb-xl"
+          :style="{
+            width: '800px',
+            fontSize: '3rem',
+            fontWeight: palette.fontWeight.bold,
+            color: palette.colors.authorGray,
+          }"
+        >
+          검색 결과가 없습니다.
+        </div>
+        <div v-else :style="{ width: '800px' }">
           <CardArticleList :cardItems="state.articles" />
         </div>
         <div :style="{ width: '400px' }">
