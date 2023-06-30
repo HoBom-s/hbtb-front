@@ -47,7 +47,14 @@
             width: '1200px',
           }"
         >
-          <q-input filled square label="검색어를 입력하세요." bgColor="white" />
+          <q-input
+            filled
+            square
+            label="검색어를 입력하세요."
+            bgColor="white"
+            :modelValue="props.keyword"
+            @keydown="onKeywordChangeEvent($event)"
+          />
           <div
             class="q-mt-md"
             :style="{
@@ -100,13 +107,13 @@ const props = defineProps({
     required: true,
   },
 
-  selectedTag: {
-    type: Object,
+  isSearchItemClick: {
+    type: Boolean,
     required: true,
   },
 
-  isSearchItemClick: {
-    type: Boolean,
+  keyword: {
+    type: String,
     required: true,
   },
 });
@@ -120,6 +127,8 @@ const emits = defineEmits({
   onSearchItemClickEvent: () => true,
 
   onLogoButtonClickEvent: () => true,
+
+  onKeywordChangeEvent: () => true,
 });
 
 onMounted(() => {
@@ -235,6 +244,10 @@ function onSearchItemClickEvent() {
 
 function onLogoButtonClickEvent() {
   emits("onLogoButtonClickEvent");
+}
+
+function onKeywordChangeEvent(e) {
+  emits("onKeywordChangeEvent", e);
 }
 </script>
 
