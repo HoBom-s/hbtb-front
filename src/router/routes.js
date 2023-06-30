@@ -1,10 +1,12 @@
 import MainTechPage from "@/pages/MainTechPage.vue";
-import MainAdminLoginPage from "@/pages/MainAdminLoginPage.vue";
-import MainAdminRegisterPage from "@/pages/MainAdminRegisterPage.vue";
-import MainManagementPage from "@/pages/MainManagementPage.vue";
-import MainArticlePostPage from "@/pages/MainArticlePostPage.vue";
-import MainTechSearchPage from "@/pages/MainTechSearchPage.vue";
-import MainTechTagSearchPage from "@/pages/MainTechTagSearchPage.vue";
+
+const MainAdminLoginPage = import("@/pages/MainAdminLoginPage.vue");
+const MainAdminRegisterPage = import("@/pages/MainAdminRegisterPage.vue");
+const MainManagementPage = import("@/pages/MainManagementPage.vue");
+const MainArticlePostPage = import("@/pages/MainArticlePostPage.vue");
+const MainTechSearchPage = import("@/pages/MainTechSearchPage.vue");
+const MainTechTagSearchPage = import("@/pages/MainTechTagSearchPage.vue");
+const NotFoundPage = import("@/pages/NotFoundPage.vue");
 
 const routes = [
   { path: "/", component: MainTechPage },
@@ -18,6 +20,7 @@ const routes = [
     path: "/tag:searchTag",
     component: MainTechTagSearchPage,
   },
+  { path: "/:catchAll(.*)", component: NotFoundPage },
 ];
 
 export default routes;
