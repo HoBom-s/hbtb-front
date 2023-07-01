@@ -4,9 +4,11 @@
       :userInformation="state.userInofrmation"
       @onHoBomTitleButtonClickEvent="onHoBomTitleButtonClickEvent"
       @onLogoutButtonClickEvent="onLogoutButtonClickEvent"
+      @onSidebarDrawerButtonClickEvent="onSidebarDrawerButtonClickEvent"
     />
     <AppManageSidebar
       :manageSidebarItems="manageSidebarItems"
+      :isSidebarDrawerOpen="state.isSidebarDrawerOpen"
       @onPublishButtonClickEvent="onPublishButtonClickEvent"
     />
     <q-page-container>
@@ -157,6 +159,8 @@ const state = reactive({
 
   isTagCreateDialogOpen: false,
 
+  isSidebarDrawerOpen: true,
+
   inputValues: {
     categoryTitle: "",
     categoryPath: "",
@@ -215,6 +219,10 @@ const validateTagPath = computed(() => {
 // Methods
 function onHoBomTitleButtonClickEvent() {
   router.push("/management");
+}
+
+function onSidebarDrawerButtonClickEvent() {
+  state.isSidebarDrawerOpen = !state.isSidebarDrawerOpen;
 }
 
 async function onLogoutButtonClickEvent() {
