@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-deprecated-v-on-native-modifier -->
 <template>
   <CommonManageLayoutContainer>
     <PostHeaderBox
@@ -12,6 +13,8 @@
           height="auto"
           minHeight="600px"
           maxHeight="100%"
+          :definitions="definitions"
+          :toolbar="toolbars"
           :modelValue="state.contents"
           @update:modelValue="onContentChangeEvent"
         />
@@ -30,6 +33,7 @@
 
 <script setup>
 import { reactive, onMounted, computed } from "vue";
+import { useQuasar } from "quasar";
 
 import CommonManageLayoutContainer from "@/containers/CommonManageLayoutContainer.vue";
 import PostHeaderBox from "@/components/publish/PostHeaderBox.vue";
@@ -43,6 +47,37 @@ import { agent } from "@/types";
 import namespace from "@/static/name";
 
 import validator from "@/utils/validator";
+
+const $q = useQuasar();
+
+const definitions = {
+  upload: {
+    tip: "Upload",
+    icon: "cloud_upload",
+    label: "Upload",
+    handler: onUploadButtonClickEvent,
+  },
+};
+
+const toolbars = [
+  [
+    {
+      label: $q.lang.editor.align,
+      icon: $q.iconSet.editor.align,
+      fixedLabel: true,
+      list: "only-icons",
+      options: ["left", "center", "right", "justify"],
+    },
+    {
+      label: $q.lang.editor.align,
+      icon: $q.iconSet.editor.align,
+      fixedLabel: true,
+      options: ["left", "center", "right", "justify"],
+    },
+  ],
+  ["bold", "italic", "strike", "underline"],
+  ["upload", "save"],
+];
 
 const state = reactive({
   categories: [],
@@ -122,5 +157,10 @@ function onInputValueChangeEvent(name, value) {
 
 function onSelectValueChangeEvent(value) {
   state.inputValues.selectedCategory = value;
+}
+
+function onUploadButtonClickEvent(e) {
+  const input = document.createElement("input");
+  state.contents += input;
 }
 </script>

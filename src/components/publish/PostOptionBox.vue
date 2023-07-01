@@ -35,6 +35,18 @@
           Tag
         </div>
         <TagItemList :tags="props.tags" />
+        <div
+          class="q-mt-md q-mb-sm"
+          :style="{
+            fontWeight: palette.fontWeight.bold,
+            fontSize: palette.fontSize.l,
+          }"
+        >
+          Thumbnail
+        </div>
+        <div>
+          <AppUploader :isMarginTop="false" :uploadLabel="'Thumbnail'" />
+        </div>
       </div>
     </q-card-section>
     <q-separator />
@@ -57,6 +69,7 @@
 import { defineProps, defineEmits } from "vue";
 
 import AppSelect from "@/components/common/AppSelect.vue";
+import AppUploader from "@/components/common/AppUploader.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
 
 import palette from "@/utils/palette";

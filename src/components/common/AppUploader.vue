@@ -4,6 +4,7 @@
       color="teal"
       flat
       bordered
+      :style="{ width: 'inherit' }"
       :label="props.uploadLabel"
       @added="onUploadButtonClickEvent"
     />
