@@ -321,6 +321,58 @@ const validator = {};
   };
 }
 
+{
+  /**
+   * Article을 작성할 때의 Title
+   *
+   * @param {string} value
+   * @returns {ValidateError}
+   */
+  validator.validateArticleTitle = function (value) {
+    const trimedArticleTitle = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedArticleTitle.length < 2) {
+      validateError.setHasError(true);
+      validateError.setMsg(
+        "The article title length must be 2 charactor or longer "
+      );
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
+{
+  /**
+   * Article을 작성할 때의 Subtitle
+   *
+   * @param {string} value
+   * @returns {ValidateError}
+   */
+  validator.validateArticleSubtitle = function (value) {
+    const trimedArticleSubtitle = value.trim();
+
+    const validateError = new ValidateError("ValidateError");
+    validateError.setHasError(false);
+    validateError.setMsg("");
+
+    if (trimedArticleSubtitle.length < 2) {
+      validateError.setHasError(true);
+      validateError.setMsg(
+        "The article subtitle length must be 2 charactor or longer "
+      );
+      return validateError.asObject();
+    }
+
+    return validateError.asObject();
+  };
+}
+
 BaseSymbol.freezeSuperClass(ValidateError, ValidateError);
 
 Object.freeze(validator);
