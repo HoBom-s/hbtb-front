@@ -1,12 +1,11 @@
 import MainTechPage from "@/pages/MainTechPage.vue";
-
-const MainAdminLoginPage = import("@/pages/MainAdminLoginPage.vue");
-const MainAdminRegisterPage = import("@/pages/MainAdminRegisterPage.vue");
-const MainManagementPage = import("@/pages/MainManagementPage.vue");
-const MainArticlePostPage = import("@/pages/MainArticlePostPage.vue");
-const MainTechSearchPage = import("@/pages/MainTechSearchPage.vue");
-const MainTechTagSearchPage = import("@/pages/MainTechTagSearchPage.vue");
-const NotFoundPage = import("@/pages/NotFoundPage.vue");
+import MainAdminLoginPage from "@/pages/MainAdminLoginPage.vue";
+import MainAdminRegisterPage from "@/pages/MainAdminRegisterPage.vue";
+import MainArticlePostPage from "@/pages/MainArticlePostPage.vue";
+import MainManagementPage from "@/pages/MainManagementPage.vue";
+import MainTechSearchPage from "@/pages/MainTechSearchPage.vue";
+import MainTechTagSearchPage from "@/pages/MainTechTagSearchPage.vue";
+import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 const routes = [
   { path: "/", component: MainTechPage },

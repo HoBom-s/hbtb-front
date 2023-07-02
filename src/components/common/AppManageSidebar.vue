@@ -4,6 +4,7 @@
     bordered
     :width="260"
     :breakpoint="500"
+    :modelValue="props.isSidebarDrawerOpen"
     class="bg-grey-9 text-white"
   >
     <q-list>
@@ -63,19 +64,24 @@ import AppMannageSidebarItem from "@/components/common/AppMannageSidebarItem.vue
 import palette from "@/utils/palette";
 
 const props = defineProps({
+  isSidebarDrawerOpen: {
+    type: Boolean,
+    required: true,
+  },
+
   manageSidebarItems: {
     type: Array,
     required: true,
   },
 });
 
-const emtis = defineEmits({
+const emits = defineEmits({
   // No validation
   onPublishButtonClickEvent: () => true,
 });
 
 // Methods
 function onPublishButtonClickEvent() {
-  emtis("onPublishButtonClickEvent");
+  emits("onPublishButtonClickEvent");
 }
 </script>
