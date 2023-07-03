@@ -3,6 +3,7 @@
     v-for="tag of props.tags"
     :key="tag._id"
     :tag="tag"
+    :selectedTag="props.selectedTag"
     @onTagItemClickEvent="onTagItemClickEvent"
   />
 </template>
@@ -15,6 +16,11 @@ const props = defineProps({
   tags: {
     type: Array,
     required: true,
+  },
+
+  selectedTag: {
+    type: Array,
+    required: false,
   },
 });
 
