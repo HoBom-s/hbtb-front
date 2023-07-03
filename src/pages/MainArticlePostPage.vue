@@ -91,6 +91,27 @@ const state = reactive({
 });
 
 onMounted(async () => {
+  // Apply 'display:none' on Editor's loop error
+  window.addEventListener("error", (e) => {
+    if (
+      e.message === "ResizeObserver loop limit exceeded" ||
+      e.message === "Script error."
+    ) {
+      const resizeObserverErrDiv = document.getElementById(
+        "webpack-dev-server-client-overlay-div"
+      );
+      const resizeObserverErr = document.getElementById(
+        "webpack-dev-server-client-overlay"
+      );
+      if (resizeObserverErr) {
+        resizeObserverErr.setAttribute("style", "display: none");
+      }
+      if (resizeObserverErrDiv) {
+        resizeObserverErrDiv.setAttribute("style", "display: none");
+      }
+    }
+  });
+
   const categoryResults = await getAllCategoryRequestService();
 
   const categoryInstanceArray = categoryResults.map((cat) => {
