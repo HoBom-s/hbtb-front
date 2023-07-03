@@ -28,6 +28,19 @@ async function getArticlePerPageRequestService(pageNumber, perPageNumber) {
   }
 }
 
+async function getArticleFindById(_id) {
+  try {
+    const foundArticleResult = await axiosInstance.get(`/article/find/${_id}`);
+    const { data } = foundArticleResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Get article by id request servie fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
 async function getArticleSearchByKeywordService(keyword) {
   try {
     const articleSearchResult = await axiosInstance.get(
@@ -84,6 +97,7 @@ async function createArticleRequestService(
 export {
   getAllArticleRequestService,
   getArticlePerPageRequestService,
+  getArticleFindById,
   getArticleSearchByKeywordService,
   createArticleRequestService,
 };
