@@ -1,5 +1,9 @@
 <template>
-  <div class="q-pb-md cursor-pointer" :style="cardStyle">
+  <div
+    class="q-pb-md cursor-pointer"
+    :style="cardStyle"
+    @click="onArticleCardItemClickEvent(props.item)"
+  >
     <q-card>
       <q-card-section horizontal>
         <q-img :src="props.item.thumbnail" width="280px" height="190px" />
@@ -26,7 +30,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps, defineEmits, computed } from "vue";
 
 import palette from "@/utils/palette";
 
@@ -35,6 +39,11 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+});
+
+const emits = defineEmits({
+  // No validation
+  onArticleCardItemClickEvent: () => true,
 });
 
 const authorInformation = computed(() => {
@@ -65,4 +74,9 @@ const cardAuthorFontStyle = computed(() => {
     color: palette.colors.authorGray,
   };
 });
+
+// Methods
+function onArticleCardItemClickEvent(clickedArticle) {
+  emits("onArticleCardItemClickEvent", clickedArticle);
+}
 </script>
