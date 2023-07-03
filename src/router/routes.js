@@ -5,6 +5,7 @@ import MainArticlePostPage from "@/pages/MainArticlePostPage.vue";
 import MainManagementPage from "@/pages/MainManagementPage.vue";
 import MainTechSearchPage from "@/pages/MainTechSearchPage.vue";
 import MainTechTagSearchPage from "@/pages/MainTechTagSearchPage.vue";
+import MainArticleDetailPage from "@/pages/MainArticleDetailPage.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 const routes = [
@@ -18,6 +19,11 @@ const routes = [
     name: "MainTechTagSearchPage",
     path: "/tag:searchTag",
     component: MainTechTagSearchPage,
+  },
+  {
+    name: "MainArticleDetailPage",
+    path: "/article:articlePath",
+    component: MainArticleDetailPage,
   },
   { path: "/:catchAll(.*)", component: NotFoundPage },
 ];
