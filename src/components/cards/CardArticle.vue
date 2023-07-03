@@ -12,7 +12,7 @@
           </div>
           <div class="q-mt-lg text-subtitle2">
             <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              <img :src="authorProfileImage" />
             </q-avatar>
             by {{ authorInformation }}
           </div>
@@ -40,6 +40,11 @@ const props = defineProps({
 const authorInformation = computed(() => {
   const toNickname = props.item.writers.map((wri) => wri.nickname).join(", ");
   return toNickname;
+});
+
+const authorProfileImage = computed(() => {
+  const toProfileImage = props.item.writers[0].profileImg;
+  return toProfileImage;
 });
 
 const cardStyle = computed(() => {

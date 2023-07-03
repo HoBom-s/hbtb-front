@@ -8,7 +8,7 @@
         </div>
         <div class="q-mt-sm q-mb-sm text-subtitle2">
           <q-avatar size="26px">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <img :src="authorProfileImage" />
           </q-avatar>
           by {{ authorInformation }}
         </div>
@@ -37,6 +37,11 @@ const authorInformation = computed(() => {
     .map((author) => author.nickname)
     .join(", ");
   return toNickname;
+});
+
+const authorProfileImage = computed(() => {
+  const toProfileImage = props.item.writers[0].profileImg;
+  return toProfileImage;
 });
 
 const cardStyle = computed(() => {
