@@ -13,15 +13,29 @@ async function getAllCategoryRequestService() {
   }
 }
 
-async function createCategoryRequestService(title, path, sortIndex, spot) {
+async function createCategoryRequestService(
+  title,
+  path,
+  sortIndex,
+  spot,
+  token
+) {
   try {
     const sendToSpot = spot === "Header" ? "H" : "F";
-    const createCategoryResult = await axiosInstance.post("/category/create", {
-      title: title,
-      path: path,
-      sortIndex: sortIndex,
-      spot: sendToSpot,
-    });
+    const createCategoryResult = await axiosInstance.post(
+      "/category/create",
+      {
+        title: title,
+        path: path,
+        sortIndex: sortIndex,
+        spot: sendToSpot,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const { data } = createCategoryResult;
     return data;
   } catch (error) {
@@ -32,8 +46,9 @@ async function createCategoryRequestService(title, path, sortIndex, spot) {
   }
 }
 
-async function updateCategoryRequestService(category) {
+async function updateCategoryRequestService(category, token) {
   try {
+    console.log(token);
     const { _id, title, path, sortIndex, spot } = category;
     const sendToSpot = spot === "Header" ? "H" : "F";
     const updateedCategoryResult = await axiosInstance.patch(
@@ -44,6 +59,11 @@ async function updateCategoryRequestService(category) {
         path: path,
         sortIndex: sortIndex,
         spot: sendToSpot,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     const { data } = updateedCategoryResult;
@@ -56,10 +76,15 @@ async function updateCategoryRequestService(category) {
   }
 }
 
-async function deleteCategoryRequestService(_id) {
+async function deleteCategoryRequestService(_id, token) {
   try {
     const deletedCategoryResult = await axiosInstance.delete(
-      `/category/${_id}`
+      `/category/${_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     const { data } = deletedCategoryResult;
     return data;

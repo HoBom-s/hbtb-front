@@ -38,6 +38,6 @@ const uploaderMarginStyle = computed(() => {
 // Methods
 function onUploadButtonClickEvent(e) {
   const file = e[0];
-  emits("onUploadButtonClickEvent", file.name);
+  emits("onUploadButtonClickEvent", file);
 }
 </script>

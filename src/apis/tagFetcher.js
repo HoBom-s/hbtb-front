@@ -13,12 +13,20 @@ async function getAllTagRequestService() {
   }
 }
 
-async function createTagRequestService(title, path) {
+async function createTagRequestService(title, path, token) {
   try {
-    const createdTagResult = await axiosInstance.post("/tag/create", {
-      title: title,
-      path: path,
-    });
+    const createdTagResult = await axiosInstance.post(
+      "/tag/create",
+      {
+        title: title,
+        path: path,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const { data } = createdTagResult;
     return data;
   } catch (error) {
@@ -29,15 +37,23 @@ async function createTagRequestService(title, path) {
   }
 }
 
-async function updateTagRequestService(tag) {
+async function updateTagRequestService(tag, token) {
   try {
     const { _id, title, path, count } = tag;
-    const updatedTagResult = await axiosInstance.patch("/tag/update", {
-      _id: _id,
-      title: title,
-      path: path,
-      count: count,
-    });
+    const updatedTagResult = await axiosInstance.patch(
+      "/tag/update",
+      {
+        _id: _id,
+        title: title,
+        path: path,
+        count: count,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     const { data } = updatedTagResult;
     return data;
   } catch (error) {
@@ -48,9 +64,13 @@ async function updateTagRequestService(tag) {
   }
 }
 
-async function deleteTagRequestService(_id) {
+async function deleteTagRequestService(_id, token) {
   try {
-    const removedTagResult = await axiosInstance.delete(`/tag/delete/${_id}`);
+    const removedTagResult = await axiosInstance.delete(`/tag/delete/${_id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const { data } = removedTagResult;
     return data;
   } catch (error) {

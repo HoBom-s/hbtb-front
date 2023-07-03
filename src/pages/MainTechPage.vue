@@ -5,7 +5,10 @@
         Recent articles
       </div>
       <div class="q-mb-md flex" :style="recentArticleBoxStyle">
-        <CardArticleRecentList :cardItems="state.recentArticles" />
+        <CardArticleRecentList
+          :cardItems="state.recentArticles"
+          @onArticleCardItemClickEvent="onArticleCardItemClickEvent"
+        />
       </div>
     </div>
     <div :style="mainContentBoxStyle">
@@ -19,7 +22,10 @@
       </div>
       <div class="flex">
         <div :style="mainArticleBoxStyle">
-          <CardArticleList :cardItems="state.articles" />
+          <CardArticleList
+            :cardItems="state.articles"
+            @onArticleCardItemClickEvent="onArticleCardItemClickEvent"
+          />
         </div>
         <div :style="mainArticleTagBoxStyle">
           <TagItemList
@@ -253,6 +259,18 @@ function onTagItemClickEvent(clickedTag) {
     name: "MainTechTagSearchPage",
     params: {
       searchTag: path,
+    },
+  });
+}
+
+function onArticleCardItemClickEvent(clickedArticle) {
+  const { path } = clickedArticle;
+
+  router.push({
+    path: "/article",
+    name: "MainArticleDetailPage",
+    params: {
+      articlePath: path,
     },
   });
 }

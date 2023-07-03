@@ -28,6 +28,19 @@ async function getArticlePerPageRequestService(pageNumber, perPageNumber) {
   }
 }
 
+async function getArticleFindById(_id) {
+  try {
+    const foundArticleResult = await axiosInstance.get(`/article/find/${_id}`);
+    const { data } = foundArticleResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Get article by id request servie fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
 async function getArticleSearchByKeywordService(keyword) {
   try {
     const articleSearchResult = await axiosInstance.get(
@@ -43,8 +56,48 @@ async function getArticleSearchByKeywordService(keyword) {
   }
 }
 
+async function createArticleRequestService(
+  thumbnail,
+  title,
+  subtitle,
+  contents,
+  tags,
+  writers,
+  path,
+  token
+) {
+  try {
+    const articleCreateResult = await axiosInstance.post(
+      "/article/create",
+      {
+        thumbnail: thumbnail,
+        title: title,
+        subtitle: subtitle,
+        contents: contents,
+        tags: tags,
+        writers,
+        path: path,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const { data } = articleCreateResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Creat article fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
 export {
   getAllArticleRequestService,
   getArticlePerPageRequestService,
+  getArticleFindById,
   getArticleSearchByKeywordService,
+  createArticleRequestService,
 };

@@ -435,6 +435,9 @@ function onBaseEditDialogCloseButtonClickEvent() {
 }
 
 async function onBaseEditDialogConfirmButtonClickEvent() {
+  const [accessTokenValue] = useStorage("accessToken", "session");
+  const accessToken = accessTokenValue.value;
+
   if (state.isUpdateDialogOpen) {
     const updateResult = await funcUtil
       .match(state.selectedTabItem)
@@ -461,13 +464,16 @@ async function onBaseEditDialogConfirmButtonClickEvent() {
           if (!isValidateUpdateCategory) {
             return null;
           }
-          const updatedCategoryResult = await updateCategoryRequestService({
-            _id: state.selectedUpdateItem._id,
-            title: categoryTitle,
-            path: categoryPath,
-            sortIndex: categorySortIndex,
-            spot: categorySpot,
-          });
+          const updatedCategoryResult = await updateCategoryRequestService(
+            {
+              _id: state.selectedUpdateItem._id,
+              title: categoryTitle,
+              path: categoryPath,
+              sortIndex: categorySortIndex,
+              spot: categorySpot,
+            },
+            accessToken
+          );
           return updatedCategoryResult;
         }
       )
@@ -485,12 +491,15 @@ async function onBaseEditDialogConfirmButtonClickEvent() {
             return null;
           }
 
-          const updatedTagResult = await updateTagRequestService({
-            _id: state.selectedUpdateItem._id,
-            title: tagTitle,
-            path: tagPath,
-            count: state.selectedUpdateItem.count,
-          });
+          const updatedTagResult = await updateTagRequestService(
+            {
+              _id: state.selectedUpdateItem._id,
+              title: tagTitle,
+              path: tagPath,
+              count: state.selectedUpdateItem.count,
+            },
+            accessToken
+          );
           return updatedTagResult;
         }
       )
@@ -506,11 +515,16 @@ async function onBaseEditDialogConfirmButtonClickEvent() {
       .match(state.selectedTabItem)
       .on(
         (tabValue) => tabValue === "category",
-        async () => await deleteCategoryRequestService(state.selectedRemoveItem)
+        async () =>
+          await deleteCategoryRequestService(
+            state.selectedRemoveItem,
+            accessToken
+          )
       )
       .on(
         (tabValue) => tabValue === "tag",
-        async () => await deleteTagRequestService(state.selectedRemoveItem)
+        async () =>
+          await deleteTagRequestService(state.selectedRemoveItem, accessToken)
       )
       .otherwise(() => errorUtil.notImplemented());
 

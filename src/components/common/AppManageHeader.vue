@@ -12,13 +12,18 @@
         class="q-ml-sm cursor-pointer"
         @click="onHoBomTitleButtonClickEvent"
       >
+        <q-avatar size="36px">
+          <q-img
+            src="https://res.cloudinary.com/dhcqrthog/image/upload/v1688370491/tune3qwi8ukv2og2bmpl.jpg"
+          />
+        </q-avatar>
         HoBom Tech Blog Service
       </q-toolbar-title>
       <q-space />
       <div class="q-gutter-sm row items-center no-wrap q-mr-sm">
         <q-btn round flat>
           <q-avatar size="26px">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <img :src="props.userInformation.profileImg" />
           </q-avatar>
           <LogoutAuthMenuBox
             :userInformation="props.userInformation"

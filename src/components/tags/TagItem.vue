@@ -15,6 +15,11 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+
+  selectedTag: {
+    type: Array,
+    required: false,
+  },
 });
 
 const emits = defineEmits({
@@ -23,6 +28,13 @@ const emits = defineEmits({
 });
 
 // Computed
+const isSelected = computed(() => {
+  if (!props.selectedTag) return false;
+  const found = props.selectedTag.find((tag) => tag._id === props.tag._id);
+  if (found) return true;
+  return false;
+});
+
 const tagBoxStyle = computed(() => {
   return {
     display: "inline-block",
@@ -31,7 +43,13 @@ const tagBoxStyle = computed(() => {
 
 const tagStyle = computed(() => {
   return {
-    background: `${palette.colors.chipGray} !important`,
+    background: isSelected.value
+      ? `${palette.colors.mainOrange} !important`
+      : `${palette.colors.chipGray} !important`,
+    color: isSelected.value ? palette.colors.mainWhite : "black",
+    fontWeight: isSelected.value
+      ? palette.fontWeight.bold
+      : palette.fontWeight.regular,
     cursor: "pointer",
   };
 });

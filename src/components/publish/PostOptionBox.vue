@@ -34,7 +34,11 @@
         >
           Tag
         </div>
-        <TagItemList :tags="props.tags" />
+        <TagItemList
+          :tags="props.tags"
+          :selectedTag="props.selectedTag"
+          @onTagItemClickEvent="onTagItemClickEvent"
+        />
         <div
           class="q-mt-md q-mb-sm"
           :style="{
@@ -45,7 +49,31 @@
           Thumbnail
         </div>
         <div>
-          <AppUploader :isMarginTop="false" :uploadLabel="'Thumbnail'" />
+          <AppUploader
+            :isMarginTop="false"
+            :uploadLabel="'Thumbnail'"
+            @onUploadButtonClickEvent="onUploadButtonClickEvent"
+          />
+        </div>
+        <div
+          class="q-mt-md q-mb-sm"
+          :style="{
+            fontWeight: palette.fontWeight.bold,
+            fontSize: palette.fontSize.l,
+          }"
+        >
+          Path
+        </div>
+        <div>
+          <AppInput
+            :inputType="'text'"
+            :inputLabel="'Path'"
+            :inputName="'path'"
+            :inputValue="props.inputValues.path"
+            :isMarginTop="false"
+            :validateFormValue="props.validatePath"
+            @onInputValueChangeEvent="onInputValueChangeEvent"
+          />
         </div>
       </div>
     </q-card-section>
@@ -60,6 +88,7 @@
           fontWeight: palette.fontWeight.bigBold,
           fontSize: palette.fontSize.xl,
         }"
+        @click="onPublishButtonClickEvent"
       />
     </q-card-section>
   </q-card>
@@ -70,6 +99,7 @@ import { defineProps, defineEmits } from "vue";
 
 import AppSelect from "@/components/common/AppSelect.vue";
 import AppUploader from "@/components/common/AppUploader.vue";
+import AppInput from "@/components/common/AppInput.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
 
 import palette from "@/utils/palette";
@@ -89,14 +119,54 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  selectedTag: {
+    type: Array,
+    required: true,
+  },
+
+  inputValues: {
+    type: Object,
+    required: true,
+  },
+
+  validatePath: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emits = defineEmits({
   // No validation
   onSelectValueChangeEvent: () => true,
+
+  onUploadButtonClickEvent: () => true,
+
+  onTagItemClickEvent: () => true,
+
+  onPublishButtonClickEvent: () => true,
+
+  onInputValueChangeEvent: () => true,
 });
 
+// Methods
 function onSelectValueChangeEvent(value) {
   emits("onSelectValueChangeEvent", value);
+}
+
+function onUploadButtonClickEvent(file) {
+  emits("onUploadButtonClickEvent", file);
+}
+
+function onTagItemClickEvent(clickedTag) {
+  emits("onTagItemClickEvent", clickedTag);
+}
+
+function onPublishButtonClickEvent() {
+  emits("onPublishButtonClickEvent");
+}
+
+function onInputValueChangeEvent(name, value) {
+  emits("onInputValueChangeEvent", name, value);
 }
 </script>

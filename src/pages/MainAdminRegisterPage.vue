@@ -39,6 +39,7 @@ import RegisterFormBox from "@/components/auth/RegisterFormBox.vue";
 import BaseAlertDialog from "@/components/dialog/BaseAlertDialog.vue";
 
 import { userRegisterRequestService } from "@/apis/userFetcher";
+import { postImageUploadRequestService } from "@/apis/imageFetcher";
 
 import validator from "@/utils/validator";
 
@@ -138,10 +139,15 @@ async function onRegisterSubmitButtonClickEvent() {
 
   // TODO: 기본 이미지로 변경 & 닉네임 중복검사
   const tempImgUrl = "https://cdn.quasar.dev/img/boy-avatar.png";
+  const uploadImageUrl = await postImageUploadRequestService(
+    state.inputValues.profileImg
+  );
+  const imageUrl = uploadImageUrl ? uploadImageUrl : tempImgUrl;
+
   const registerResult = await userRegisterRequestService(
     nickname,
     password,
-    tempImgUrl,
+    imageUrl,
     role,
     introduction
   );
