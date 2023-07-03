@@ -18,7 +18,7 @@
       <div class="q-gutter-sm row items-center no-wrap q-mr-sm">
         <q-btn round flat>
           <q-avatar size="26px">
-            <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+            <img :src="props.userInformation.profileImg" />
           </q-avatar>
           <LogoutAuthMenuBox
             :userInformation="props.userInformation"
