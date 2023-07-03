@@ -283,11 +283,15 @@ async function onBaseCategoryEditDialogAddButtonClickEvent() {
     return;
   }
 
+  const [accessTokenValue] = useStorage("accessToken", "session");
+  const tokenValue = accessTokenValue.value;
+
   const createdCategoryResult = await createCategoryRequestService(
     categoryTitle,
     categoryPath,
     1,
-    categorySpot
+    categorySpot,
+    tokenValue
   );
 
   if (createdCategoryResult._id) {
@@ -317,7 +321,14 @@ async function onBaseTagEditDialogAddButtonClickEvent() {
     return;
   }
 
-  const createdTagResult = await createTagRequestService(tagTitle, tagPath);
+  const [accessTokenValue] = useStorage("accessToken", "session");
+  const tokenValue = accessTokenValue.value;
+
+  const createdTagResult = await createTagRequestService(
+    tagTitle,
+    tagPath,
+    tokenValue
+  );
 
   if (createdTagResult._id) {
     state.inputValues.tagTitle = "";
