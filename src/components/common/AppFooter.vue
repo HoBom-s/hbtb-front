@@ -16,7 +16,7 @@
         <q-menu transitionShow="scale" transitionHide="scale">
           <q-list style="min-width: 100px">
             <q-item
-              v-for="item of relatedPageItems"
+              v-for="item of props.categories"
               :key="item.title"
               clickable
             >
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { defineProps, computed } from "vue";
 import { useRouter } from "vue-router";
 
 import useStorage from "@/hooks/useStorage";
@@ -39,12 +39,12 @@ import palette from "@/utils/palette";
 
 const router = useRouter();
 
-// TODO: BackEnd에서 데이터 가져오기
-const relatedPageItems = [
-  {
-    title: "HoBom Tech Blog",
+const props = defineProps({
+  categories: {
+    type: Array,
+    required: true,
   },
-];
+});
 
 const footerStyle = computed(() => {
   return {
