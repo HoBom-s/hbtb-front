@@ -2,10 +2,13 @@
   <q-layout>
     <AppHeader
       :categories="headerCategory"
+      :tags="state.tags"
       :selectedCategory="state.selectedCategory"
       :isSearchItemClick="state.isSearchItemClick"
       :keyword="state.keyword"
       :thumbnail="props.thumbnail"
+      :title="props.title"
+      :subtitle="props.subtitle"
       :createdDate="props.createdDate"
       @onCategoryItemClickEvent="onCategoryItemClickEvent"
       @onTagItemClickEvent="onTagItemClickEvent"
@@ -48,6 +51,16 @@ const state = reactive({
 
 const props = defineProps({
   thumbnail: {
+    type: String,
+    required: true,
+  },
+
+  title: {
+    type: String,
+    reqired: true,
+  },
+
+  subtitle: {
     type: String,
     required: true,
   },

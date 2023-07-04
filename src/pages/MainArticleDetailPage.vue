@@ -1,6 +1,8 @@
 <template>
   <CommonDetailLayoutContainer
     :thumbnail="state.articleInformation.thumbnail"
+    :title="state.articleInformation.title"
+    :subtitle="state.articleInformation.subtitle"
     :createdDate="state.articleInformation.createdAt"
   >
     <div>
@@ -50,7 +52,12 @@ const route = useRoute();
 const { articlePath } = route.params;
 
 const state = reactive({
-  articleInformation: {},
+  articleInformation: {
+    thumbnail: "",
+    title: "",
+    subtitle: "",
+    createdAt: "",
+  },
 });
 
 onMounted(async () => {

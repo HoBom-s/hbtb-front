@@ -24,7 +24,14 @@
       />
       <img v-else :style="imgStyle" src="../../assets/main-bg.jpg" />
       <div :style="mainFontStyle">
-        <div>
+        <div v-if="props.title">
+          <h1 :style="mainDetailFontFirstStyle">{{ props.title }}</h1>
+          <p :style="mainFontSecondStyle">{{ props.subtitle }}</p>
+          <p class="q-mt-xl" :style="mainFontSecondStyle">
+            {{ props.createdDate.split("T")[0] }}
+          </p>
+        </div>
+        <div v-else>
           <h1 :style="mainFontFirstStyle">Tech Blog</h1>
           <p :style="mainFontSecondStyle">
             HoBom 서비스의 기술과 노하우를 공유합니다.
@@ -126,6 +133,14 @@ const props = defineProps({
     type: String,
   },
 
+  title: {
+    type: String,
+  },
+
+  subtitle: {
+    type: String,
+  },
+
   createdDate: {
     type: String,
   },
@@ -218,7 +233,7 @@ const thumbnailStype = computed(() => {
     objectFit: "cover",
     position: "absolute",
     // 기본 100%
-    filter: "brightness(60%)",
+    filter: "brightness(30%)",
   };
 });
 
@@ -230,6 +245,16 @@ const mainFontStyle = computed(() => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+  };
+});
+
+const mainDetailFontFirstStyle = computed(() => {
+  return {
+    color: palette.colors.mainWhite,
+    height: "70px",
+    fontSize: "32px",
+    fontWeight: palette.fontWeight.bigBold,
+    marginBottom: "24px",
   };
 });
 
