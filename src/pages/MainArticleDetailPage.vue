@@ -1,5 +1,8 @@
 <template>
-  <CommonLayoutContainer>
+  <CommonDetailLayoutContainer
+    :thumbnail="state.articleInformation.thumbnail"
+    :createdDate="state.articleInformation.createdAt"
+  >
     <div>
       <div class="text-h6 q-mb-lg">
         <div
@@ -22,17 +25,17 @@
         </div>
       </div>
       <div class="q-pt-lg q-pb-lg">
-        {{ state.articleInformation.contents }}
+        <v-md-preview :text="state.articleInformation.contents" />
       </div>
     </div>
-  </CommonLayoutContainer>
+  </CommonDetailLayoutContainer>
 </template>
 
 <script setup>
 import { reactive, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
-import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
+import CommonDetailLayoutContainer from "@/containers/CommonDetailLayoutContainer.vue";
 
 import { getArticleFindById } from "@/apis/articleFetcher";
 
