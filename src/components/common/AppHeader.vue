@@ -17,7 +17,12 @@
       />
     </q-toolbar>
     <div :style="mainContentStyle">
-      <img :style="imgStyle" src="../../assets/main-bg.jpg" />
+      <img
+        v-if="props.thumbnail"
+        :style="thumbnailStype"
+        :src="props.thumbnail"
+      />
+      <img v-else :style="imgStyle" src="../../assets/main-bg.jpg" />
       <div :style="mainFontStyle">
         <div>
           <h1 :style="mainFontFirstStyle">Tech Blog</h1>
@@ -116,6 +121,14 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  thumbnail: {
+    type: String,
+  },
+
+  createdDate: {
+    type: String,
+  },
 });
 
 const emits = defineEmits({
@@ -195,6 +208,17 @@ const imgStyle = computed(() => {
     position: "absolute",
     // 기본 100%
     filter: "brightness(100%)",
+  };
+});
+
+const thumbnailStype = computed(() => {
+  return {
+    width: "100%",
+    height: "420px",
+    objectFit: "cover",
+    position: "absolute",
+    // 기본 100%
+    filter: "brightness(60%)",
   };
 });
 
