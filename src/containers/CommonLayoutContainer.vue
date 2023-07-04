@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <AppHeader
-      :categories="state.categories"
+      :categories="headerCategory"
       :tags="state.tags"
       :selectedCategory="state.selectedCategory"
       :isSearchItemClick="state.isSearchItemClick"
@@ -13,7 +13,7 @@
       @onKeywordChangeEvent="onKeywordChangeEvent"
     />
     <div :style="mainContainerStyle"><slot></slot></div>
-    <AppFooter />
+    <AppFooter :categories="footerCategory" />
   </q-layout>
 </template>
 
@@ -53,23 +53,13 @@ const state = reactive({
 onMounted(async () => {
   const categories = await getAllCategoryRequestService();
 
-  const categoryInstanceArray = categories
-    .map((cat) => {
-      const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
-      const catObj = agent
-        .instanceOfName(namespace.categorySchema)
-        .createInstance(
-          _id,
-          title,
-          path,
-          sortIndex,
-          spot,
-          createdAt,
-          updatedAt
-        );
-      return catObj;
-    })
-    .filter((cat) => cat.spot === "H");
+  const categoryInstanceArray = categories.map((cat) => {
+    const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
+    const catObj = agent
+      .instanceOfName(namespace.categorySchema)
+      .createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt);
+    return catObj;
+  });
 
   if (categoryInstanceArray.every((cat) => cat.ofPathCondition(cat.path))) {
     state.categories = categoryInstanceArray;
@@ -97,6 +87,14 @@ const mainContainerStyle = computed(() => {
     height: "100%",
     margin: "100px auto",
   };
+});
+
+const headerCategory = computed(() => {
+  return state.categories.filter((cat) => cat.spot === "H");
+});
+
+const footerCategory = computed(() => {
+  return state.categories.filter((cat) => cat.splot === "F");
 });
 
 // Methods
