@@ -48,7 +48,6 @@ async function createCategoryRequestService(
 
 async function updateCategoryRequestService(category, token) {
   try {
-    console.log(token);
     const { _id, title, path, sortIndex, spot } = category;
     const sendToSpot = spot === "Header" ? "H" : "F";
     const updateedCategoryResult = await axiosInstance.patch(
