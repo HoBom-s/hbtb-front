@@ -39,7 +39,10 @@
           검색 결과가 없습니다.
         </div>
         <div v-else :style="{ width: '800px' }">
-          <CardArticleList :cardItems="state.searchResultArticles" />
+          <CardArticleList
+            :cardItems="state.searchResultArticles"
+            @onArticleCardItemClickEvent="onArticleCardItemClickEvent"
+          />
         </div>
         <div :style="{ width: '400px' }">
           <TagItemList
@@ -99,6 +102,18 @@ function onTagItemClickEvent(clickedTag) {
     name: "MainTechTagSearchPage",
     state: {
       searchTag: clickedTag.path,
+    },
+  });
+}
+
+function onArticleCardItemClickEvent(clickedArticle) {
+  const { path } = clickedArticle;
+
+  pushRouter.push({
+    path: "/article",
+    name: "MainArticleDetailPage",
+    state: {
+      articlePath: path,
     },
   });
 }

@@ -39,7 +39,10 @@
           검색 결과가 없습니다.
         </div>
         <div v-else :style="{ width: '800px' }">
-          <CardArticleList :cardItems="state.articles" />
+          <CardArticleList
+            :cardItems="state.articles"
+            @onArticleCardItemClickEvent="onArticleCardItemClickEvent"
+          />
         </div>
         <div :style="{ width: '400px' }">
           <TagItemList
@@ -54,6 +57,7 @@
 
 <script setup>
 import { reactive, onMounted, watch } from "vue";
+import { useRouter } from "vue-router";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import CardArticleList from "@/components/cards/CardArticleList.vue";
@@ -67,6 +71,8 @@ import { agent } from "@/types";
 import namespace from "@/static/name";
 
 import palette from "@/utils/palette";
+
+const router = useRouter();
 
 const { searchTag } = history.state;
 
@@ -192,8 +198,21 @@ watch(
   }
 );
 
+// Methods
 function onTagItemClickEvent(clickedTag) {
   const { path } = clickedTag;
   state.searchTag = path;
+}
+
+function onArticleCardItemClickEvent(clickedArticle) {
+  const { path } = clickedArticle;
+
+  router.push({
+    path: "/article",
+    name: "MainArticleDetailPage",
+    state: {
+      articlePath: path,
+    },
+  });
 }
 </script>
