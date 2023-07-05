@@ -17,12 +17,12 @@ const routes = [
   { path: "/search", component: MainTechSearchPage },
   {
     name: "MainTechTagSearchPage",
-    path: "/tag:searchTag",
+    path: "/tag",
     component: MainTechTagSearchPage,
   },
   {
     name: "MainArticleDetailPage",
-    path: "/article:articlePath",
+    path: "/article",
     component: MainArticleDetailPage,
   },
   { path: "/:catchAll(.*)", component: NotFoundPage },

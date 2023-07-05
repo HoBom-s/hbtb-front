@@ -35,7 +35,6 @@
 
 <script setup>
 import { reactive, onMounted } from "vue";
-import { useRoute } from "vue-router";
 
 import CommonDetailLayoutContainer from "@/containers/CommonDetailLayoutContainer.vue";
 
@@ -47,9 +46,7 @@ import namespace from "@/static/name";
 
 import palette from "@/utils/palette";
 
-const route = useRoute();
-
-const { articlePath } = route.params;
+const { articlePath } = history.state;
 
 const state = reactive({
   articleInformation: {

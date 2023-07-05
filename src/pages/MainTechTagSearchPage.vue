@@ -54,7 +54,6 @@
 
 <script setup>
 import { reactive, onMounted, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import CardArticleList from "@/components/cards/CardArticleList.vue";
@@ -69,12 +68,11 @@ import namespace from "@/static/name";
 
 import palette from "@/utils/palette";
 
-const route = useRoute();
-const router = useRouter();
-
-const { searchTag } = route.params;
+const { searchTag } = history.state;
 
 const state = reactive({
+  searchTag: searchTag,
+
   articles: [],
 
   tags: [],
@@ -120,7 +118,7 @@ onMounted(async () => {
   articleInstanceArray.forEach((art) => {
     const { tags } = art;
     tags.forEach((tag) => {
-      if (tag.path === searchTag) {
+      if (tag.path === state.searchTag) {
         filteredArticles.push(art);
       }
     });
@@ -143,10 +141,8 @@ onMounted(async () => {
 });
 
 watch(
-  () => route.params,
+  () => state.searchTag,
   async (newPath) => {
-    const { searchTag } = newPath;
-
     const articlesResult = await getAllArticleRequestService();
 
     const articleInstanceArray = articlesResult.map((art) => {
@@ -186,7 +182,7 @@ watch(
     articleInstanceArray.forEach((art) => {
       const { tags } = art;
       tags.forEach((tag) => {
-        if (tag.path === searchTag) {
+        if (tag.path === newPath) {
           filteredArticles.push(art);
         }
       });
@@ -198,13 +194,6 @@ watch(
 
 function onTagItemClickEvent(clickedTag) {
   const { path } = clickedTag;
-
-  router.push({
-    path: "/tag",
-    name: "MainTechTagSearchPage",
-    params: {
-      searchTag: path,
-    },
-  });
+  state.searchTag = path;
 }
 </script>

@@ -122,13 +122,12 @@ function onCategoryItemClickEvent(clickedCategory) {
 }
 
 function onTagItemClickEvent(clickedTag) {
-  const { path } = clickedTag;
+  const { title } = clickedTag;
 
   router.push({
-    path: "/tag",
-    name: "MainTechTagSearchPage",
-    params: {
-      searchTag: path,
+    path: "/search",
+    query: {
+      keyword: title,
     },
   });
 }

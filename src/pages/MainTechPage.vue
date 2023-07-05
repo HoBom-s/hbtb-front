@@ -257,7 +257,7 @@ function onTagItemClickEvent(clickedTag) {
   router.push({
     path: "/tag",
     name: "MainTechTagSearchPage",
-    params: {
+    state: {
       searchTag: path,
     },
   });
@@ -269,7 +269,7 @@ function onArticleCardItemClickEvent(clickedArticle) {
   router.push({
     path: "/article",
     name: "MainArticleDetailPage",
-    params: {
+    state: {
       articlePath: path,
     },
   });

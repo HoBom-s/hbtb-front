@@ -53,8 +53,8 @@
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { reactive, onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import CommonLayoutContainer from "@/containers/CommonLayoutContainer.vue";
 import CardArticleList from "@/components/cards/CardArticleList.vue";
@@ -70,6 +70,7 @@ import namespace from "@/static/name";
 import palette from "@/utils/palette";
 
 const router = useRoute();
+const pushRouter = useRouter();
 
 const { keyword } = router.query;
 
@@ -80,6 +81,29 @@ const state = reactive({
 });
 
 onMounted(async () => {
+  doFetchAll(keyword);
+});
+
+watch(
+  () => router.query,
+  async (newQuery) => {
+    const { keyword } = newQuery;
+    doFetchAll(keyword);
+  }
+);
+
+// Methods
+function onTagItemClickEvent(clickedTag) {
+  pushRouter.push({
+    path: "/tag",
+    name: "MainTechTagSearchPage",
+    state: {
+      searchTag: clickedTag.path,
+    },
+  });
+}
+
+async function doFetchAll(keyword) {
   const articleSearchResult = await getArticleSearchByKeywordService(keyword);
 
   const articleInstanceArray = articleSearchResult.map((art) => {
@@ -128,10 +152,5 @@ onMounted(async () => {
 
   state.searchResultArticles = articleInstanceArray;
   state.tags = tagInstanceArray;
-});
-
-// Methods
-function onTagItemClickEvent(clickedTag) {
-  console.log(clickedTag);
 }
 </script>
