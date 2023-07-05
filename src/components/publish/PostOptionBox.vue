@@ -9,23 +9,6 @@
     <q-card-section>
       <div class="col q-row-gutter-sm">
         <div
-          :style="{
-            fontWeight: palette.fontWeight.bold,
-            fontSize: palette.fontSize.l,
-          }"
-        >
-          Category
-        </div>
-        <div>
-          <AppSelect
-            :selectLabel="'Choose category'"
-            :options="props.categories"
-            :modelValues="props.selectedCategory"
-            :isMarginTop="true"
-            @onSelectValueChangeEvent="onSelectValueChangeEvent"
-          />
-        </div>
-        <div
           class="q-mt-md q-mb-sm"
           :style="{
             fontWeight: palette.fontWeight.bold,
@@ -97,7 +80,6 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 
-import AppSelect from "@/components/common/AppSelect.vue";
 import AppUploader from "@/components/common/AppUploader.vue";
 import AppInput from "@/components/common/AppInput.vue";
 import TagItemList from "@/components/tags/TagItemList.vue";
@@ -105,18 +87,8 @@ import TagItemList from "@/components/tags/TagItemList.vue";
 import palette from "@/utils/palette";
 
 const props = defineProps({
-  categories: {
-    type: Array,
-    required: true,
-  },
-
   tags: {
     type: Array,
-    required: true,
-  },
-
-  selectedCategory: {
-    type: String,
     required: true,
   },
 
@@ -138,8 +110,6 @@ const props = defineProps({
 
 const emits = defineEmits({
   // No validation
-  onSelectValueChangeEvent: () => true,
-
   onUploadButtonClickEvent: () => true,
 
   onTagItemClickEvent: () => true,
@@ -150,10 +120,6 @@ const emits = defineEmits({
 });
 
 // Methods
-function onSelectValueChangeEvent(value) {
-  emits("onSelectValueChangeEvent", value);
-}
-
 function onUploadButtonClickEvent(file) {
   emits("onUploadButtonClickEvent", file);
 }

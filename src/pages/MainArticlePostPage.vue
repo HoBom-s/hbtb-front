@@ -18,13 +18,10 @@
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
         <PostOptionBox
-          :categories="categoryOptions"
           :tags="state.tags"
-          :selectedCategory="state.inputValues.selectedCategory"
           :selectedTag="state.selectedTag"
           :inputValues="state.inputValues"
           :validatePath="validatePath"
-          @onSelectValueChangeEvent="onSelectValueChangeEvent"
           @onTagItemClickEvent="onTagItemClickEvent"
           @onUploadButtonClickEvent="onUploadButtonClickEvent"
           @onInputValueChangeEvent="onInputValueChangeEvent"
@@ -55,7 +52,6 @@ import PostHeaderBox from "@/components/publish/PostHeaderBox.vue";
 import PostOptionBox from "@/components/publish/PostOptionBox.vue";
 import BaseAlertDialog from "@/components/dialog/BaseAlertDialog.vue";
 
-import { getAllCategoryRequestService } from "@/apis/categoryFetcher";
 import { getAllTagRequestService } from "@/apis/tagFetcher";
 import { postImageUploadRequestService } from "@/apis/imageFetcher";
 import { createArticleRequestService } from "@/apis/articleFetcher";
@@ -72,8 +68,6 @@ const router = useRouter();
 const contentsRef = ref(null);
 
 const state = reactive({
-  categories: [],
-
   tags: [],
 
   articleThumbnail: "",
@@ -83,7 +77,6 @@ const state = reactive({
   inputValues: {
     title: "",
     subtitle: "",
-    selectedCategory: "",
     path: "",
   },
 
@@ -112,18 +105,6 @@ onMounted(async () => {
     }
   });
 
-  const categoryResults = await getAllCategoryRequestService();
-
-  const categoryInstanceArray = categoryResults.map((cat) => {
-    const { _id, title, path, sortIndex, spot, createdAt, updatedAt } = cat;
-
-    const categoryObject = agent
-      .instanceOfName(namespace.categorySchema)
-      .createInstance(_id, title, path, sortIndex, spot, createdAt, updatedAt);
-
-    return categoryObject;
-  });
-
   const tagResults = await getAllTagRequestService();
 
   const tagInstanceArray = tagResults.map((tag) => {
@@ -136,11 +117,7 @@ onMounted(async () => {
     return tagObject;
   });
 
-  state.categories = categoryInstanceArray;
-
   state.tags = tagInstanceArray;
-
-  state.inputValues.selectedCategory = categoryInstanceArray[0].title;
 });
 
 const validateArticleTitle = computed(() => {
@@ -161,22 +138,9 @@ const validatePath = computed(() => {
   return validateObject;
 });
 
-const categoryOptions = computed(() => {
-  const options = state.categories.map((cat) => {
-    const categoryTitle = cat.title;
-    return categoryTitle;
-  });
-
-  return options;
-});
-
 // Methods
 function onInputValueChangeEvent(name, value) {
   state.inputValues[name] = value;
-}
-
-function onSelectValueChangeEvent(value) {
-  state.inputValues.selectedCategory = value;
 }
 
 function onTagItemClickEvent(clickedTag) {
