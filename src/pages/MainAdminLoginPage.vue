@@ -9,7 +9,6 @@
           @onInputValueChangeEvent="onInputValueChangeEvent"
           @onLoginSubmitButtonClickEvent="onLoginSubmitButtonClickEvent"
           @onHomeButtonClickEvent="onHomeButtonClickEvent"
-          @onSignUpButtonClickEvent="onSignUpButtonClickEvent"
         />
       </q-page>
     </q-page-container>
@@ -107,10 +106,6 @@ async function onLoginSubmitButtonClickEvent() {
 
 function onHomeButtonClickEvent() {
   router.push("/");
-}
-
-function onSignUpButtonClickEvent() {
-  router.push("/admin/register");
 }
 
 function onBaseAlertDialogCloseButtonClickEvent(isClose) {

@@ -47,11 +47,6 @@
           class="cursor-pointer"
           @click="onHomeButtonClickEvent"
         />
-        <q-breadcrumbs-el
-          label="Sign up"
-          class="cursor-pointer"
-          @click="onSignUpButtonClickEvent"
-        />
       </q-breadcrumbs>
     </q-card-section>
   </q-card>
@@ -90,9 +85,6 @@ const emits = defineEmits({
 
   // No validation
   onHomeButtonClickEvent: () => true,
-
-  // No validation
-  onSignUpButtonClickEvent: () => true,
 });
 
 const signInButtonStyle = computed(() => {
@@ -115,9 +107,5 @@ function onLoginSubmitButtonClickEvent() {
 
 function onHomeButtonClickEvent() {
   emits("onHomeButtonClickEvent");
-}
-
-function onSignUpButtonClickEvent() {
-  emits("onSignUpButtonClickEvent");
 }
 </script>
