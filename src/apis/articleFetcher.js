@@ -89,7 +89,27 @@ async function createArticleRequestService(
   } catch (error) {
     const { status, message } = error;
     throw new Error(
-      `Creat article fail status: ${status}, message: ${message}`
+      `Create article fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
+async function deelteArticleRequestService(articleId, token) {
+  try {
+    const deleteArticleResult = await axiosInstance.delete(
+      `/article/delete/${articleId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const { data } = deleteArticleResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Delete article fail status: ${status}, message: ${message}`
     );
   }
 }
@@ -100,4 +120,5 @@ export {
   getArticleFindById,
   getArticleSearchByKeywordService,
   createArticleRequestService,
+  deelteArticleRequestService,
 };
