@@ -4,6 +4,7 @@ import {
   ArcElement,
   Tooltip,
   Legend,
+  LinearScale,
 } from "chart.js";
 
 /**
@@ -13,7 +14,7 @@ class ChartUtil {
   constructor() {}
 
   static chartRegist() {
-    ChartJS.register(Colors, ArcElement, Tooltip, Legend);
+    ChartJS.register(Colors, ArcElement, Tooltip, Legend, LinearScale);
   }
 }
 
