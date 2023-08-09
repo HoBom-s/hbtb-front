@@ -94,6 +94,45 @@ async function createArticleRequestService(
   }
 }
 
+async function updateArticleRequestService(
+  _id,
+  thumbnail,
+  title,
+  subtitle,
+  contents,
+  tags,
+  writers,
+  path,
+  token
+) {
+  try {
+    const articleUpdateResult = await axiosInstance.patch(
+      `/article/update/${_id}`,
+      {
+        thumbnail,
+        title,
+        subtitle,
+        contents,
+        tags,
+        writers,
+        path,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const { data } = articleUpdateResult;
+    return data;
+  } catch (error) {
+    const { status, message } = error;
+    throw new Error(
+      `Update article fail status: ${status}, message: ${message}`
+    );
+  }
+}
+
 async function deelteArticleRequestService(articleId, token) {
   try {
     const deleteArticleResult = await axiosInstance.delete(
@@ -120,5 +159,6 @@ export {
   getArticleFindById,
   getArticleSearchByKeywordService,
   createArticleRequestService,
+  updateArticleRequestService,
   deelteArticleRequestService,
 };

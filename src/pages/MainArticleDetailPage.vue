@@ -72,6 +72,7 @@ import {
   getArticleFindById,
   deelteArticleRequestService,
 } from "@/apis/articleFetcher";
+import { userGetMyInformationService } from "@/apis/userFetcher";
 
 import { agent } from "@/types";
 
@@ -143,8 +144,22 @@ onMounted(async () => {
 });
 
 // Methods
-function onEditButtonClickEvent() {
-  //
+async function onEditButtonClickEvent() {
+  const [accessToken] = useStorage("accessToken", "session");
+
+  const writerInformation = state.articleInformation.writers[0];
+
+  const myInformation = await userGetMyInformationService(accessToken.value);
+
+  if (writerInformation._id === myInformation._id) {
+    router.push({
+      path: "/edit",
+      name: "MainArticleEditPage",
+      state: {
+        path: state.articleInformation.path,
+      },
+    });
+  }
 }
 
 async function onDeleteButtonClickEvent() {

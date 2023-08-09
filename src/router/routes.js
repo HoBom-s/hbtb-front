@@ -6,6 +6,7 @@ import MainManagementPage from "@/pages/MainManagementPage.vue";
 import MainTechSearchPage from "@/pages/MainTechSearchPage.vue";
 import MainTechTagSearchPage from "@/pages/MainTechTagSearchPage.vue";
 import MainArticleDetailPage from "@/pages/MainArticleDetailPage.vue";
+import MainArticleEditPage from "@/pages/MainArticleEditPage.vue";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
     component: MainArticleDetailPage,
   },
   { path: "/:catchAll(.*)", component: NotFoundPage },
+  {
+    name: "MainArticleEditPage",
+    path: "/edit",
+    component: MainArticleEditPage,
+  },
 ];
 
 export default routes;
